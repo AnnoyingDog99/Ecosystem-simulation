@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bunny : Animal
+public class AnimalGenerator : MonoBehaviour
 {
+    [SerializeField] private GameObject bunny;
+    [SerializeField] private GameObject fox;
+
     // Start is called before the first frame update
-    protected override void Start()
+    void Start()
     {
-        base.Start();
     }
 
     // Update is called once per frame
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-        base.Walk(new Vector3(0, 0, -1));
+
     }
 }

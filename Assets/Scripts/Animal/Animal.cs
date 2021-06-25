@@ -2,105 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animal : MonoBehaviour
+public class Animal : ELActor
 {
-    [SerializeField] private float walkingSpeed;
-    [SerializeField] private float runningSpeed;
+    [SerializeField] private float walkingSpeed = 1f;
+    [SerializeField] private float runningSpeed = 2f;
+    [SerializeField] private GameObject offspringGameObject = null;
+    [SerializeField] private float babyScale = 0.5f;
+    [SerializeField] private float adultScale = 1f;
+    [SerializeField] protected Sex sex = Sex.F;
+    [SerializeField] protected uint age = 0;
+    [SerializeField] protected uint maxAge = 100;
 
-    private Vector3 direction;
-
-    private CharacterController _characterController;
     private Animator _animator;
 
-    private int _isWalkingHash, _isRunningHash;
+    private int _isWalkingHash, _isRunningHash, _isDeadHash;
 
-    private bool _isWalking, _isRunning;
+    private bool _isWalking, _isRunning, _isDead;
 
-    private Vector3 _currentMovement, _positionToLookAt = new Vector3(0, 0, 0);
+    protected List<Animal> offspring = new List<Animal>();
 
-    private float rotationFactorPerFrame = 1.0f;
+    protected Animal mother;
+
+    protected internal enum Sex { M,F }
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected override void Start()
     {
-        _characterController = GetComponentInChildren<CharacterController>();
+        base.Start();
         _animator = GetComponentInChildren<Animator>();
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
+        _isDeadHash = Animator.StringToHash("isDead");
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
         _isWalking = _animator.GetBool("isWalking");
         _isRunning = _animator.GetBool("isRunning");
-
-        this.handleRotation();
-        this.handleGravity();
-
-        _characterController.Move(_currentMovement * Time.deltaTime);
+        _isDead = _animator.GetBool("isDead");
     }
 
-    /// <summary>
-    /// Rotates Animal based on where it would be facing given the current movement.
-    /// </summary>
-    private void handleRotation()
+    protected void Die()
     {
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = _currentMovement.x;
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = _currentMovement.z;
-
-        Quaternion currentRotation = transform.rotation;
-
-        Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame);
-    }
-
-    /// <summary>
-    /// Simulates gravity, causing the animal to fall to the surface.
-    /// </summary>
-    private void handleGravity()
-    {
-        if (_characterController.isGrounded)
-        {
-            float groundedGravity = -0.05f;
-            _currentMovement.y = groundedGravity;
-        }
-        else
-        {
-            float gravity = -9.80665f;
-            _currentMovement.y += gravity;
-        }
-    }
-
-    /// <summary>
-    /// Sit still and face a given direction.
-    /// </summary>
-    /// <param name="direction"></param>    
-    protected void Idle(Vector3 direction)
-    {
-        _animator.SetBool(_isWalkingHash, false);
-        _animator.SetBool(_isRunningHash, false);
-
-        this.Move(direction, _characterController.minMoveDistance/1.1f);
-    }
-
-    /// <summary>
-    /// Move towards a certain direction.
-    /// </summary>
-    /// <param name="movement">
-    /// Vector will be normalized to fit within a range of -1.0f to 1.0f.
-    /// </param>
-    /// <param name="speed">
-    /// The movement speed.
-    /// </param>
-    private void Move(Vector3 movement, float speed)
-    {
-        // Allow a directional movement in a range of -1.0f to 1.0f
-        movement.Normalize();
-        _currentMovement = (movement * speed);
+        _animator.SetBool("isDead", true);
     }
 
     /// <summary>
@@ -120,7 +66,8 @@ public class Animal : MonoBehaviour
             _animator.SetBool(_isRunningHash, false);
         }
 
-        this.Move(movement, walkingSpeed);
+        base.Move(movement, walkingSpeed);
+        base.Look(movement);
     }
 
     /// <summary>
@@ -140,6 +87,30 @@ public class Animal : MonoBehaviour
             _animator.SetBool(_isRunningHash, true);
         }
 
-        this.Move(movement, runningSpeed);
+        base.Move(movement, runningSpeed);
+        base.Look(movement);
+    }
+
+    public List<Animal> getOffspring()
+    {
+        return offspring;
+    }
+
+    /// <summary>
+    /// Instantiates offspring which this instance will be the parent of.
+    /// Animal has to be of the Female biological sex.
+    /// </summary>
+    protected void instantiateOffspring()
+    {
+        if (this.sex != Sex.F) return;
+        Animal newOffspring = Instantiate(offspringGameObject, transform.position, transform.rotation).GetComponent<Animal>();
+        newOffspring.SetScale(babyScale);
+        newOffspring.SetMother(this);
+        offspring.Add(newOffspring);
+    }
+
+    public void SetMother(Animal mother)
+    {
+        this.mother = mother;
     }
 }

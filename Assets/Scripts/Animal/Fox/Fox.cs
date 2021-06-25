@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bunny : Animal
+public class Fox : Animal
 {
     // Start is called before the first frame update
     protected override void Start()
