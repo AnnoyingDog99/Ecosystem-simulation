@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +13,23 @@ public class Bunny : Animal
     protected override void Update()
     {
         base.Update();
-        base.Walk(new Vector3(0, 0, -1));
+        List<Transform> visibleTargets = sight.GetVisibleTargets();
+        foreach(Transform visibleTarget in visibleTargets)
+        {
+            // Ignore self
+            if (visibleTarget.transform == transform) continue;
+            switch(visibleTarget.tag)
+            {
+                case "Fox":
+                    ReactToPredator(visibleTarget.transform.gameObject.GetComponent<Animal>());
+                    break;
+            }
+        }
+    }
+
+    private void ReactToPredator(Animal predator)
+    {
+        Debug.Log("Reacting to predator");
+        base.WalkTo(predator.GetPosition());
     }
 }

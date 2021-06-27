@@ -12,8 +12,11 @@ public class Animal : ELActor
     [SerializeField] protected Sex sex = Sex.F;
     [SerializeField] protected uint age = 0;
     [SerializeField] protected uint maxAge = 100;
+    [SerializeField] private float viewRadius = 360;
+    [SerializeField] private float viewAngle = 90;
 
     private Animator _animator;
+    protected BasicSight sight;
 
     private int _isWalkingHash, _isRunningHash, _isDeadHash;
 
@@ -23,13 +26,14 @@ public class Animal : ELActor
 
     protected Animal mother;
 
-    protected internal enum Sex { M,F }
+    protected internal enum Sex { M, F }
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         _animator = GetComponentInChildren<Animator>();
+        sight = GetComponent<BasicSight>();
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
         _isDeadHash = Animator.StringToHash("isDead");
@@ -42,11 +46,41 @@ public class Animal : ELActor
         _isWalking = _animator.GetBool("isWalking");
         _isRunning = _animator.GetBool("isRunning");
         _isDead = _animator.GetBool("isDead");
+        this.HandleMoveToTarget();
+    }
+
+    /// <summary>
+    /// Handles current movement to target destination;
+    /// </summary>
+    /// <returns>
+    /// Returns true if the current target destination has been reached, return false if it hasn't been reached.
+    /// </returns>
+    protected bool HandleMoveToTarget()
+    {
+        if ((currentTargetPosition - transform.position).magnitude < targetReachedOffsetMagnitude)
+        {
+            // Reached target
+            Idle();
+            return true;
+        }
+        return false;
     }
 
     protected void Die()
     {
         _animator.SetBool("isDead", true);
+    }
+
+    protected void Idle()
+    {
+        if (_isWalking)
+        {
+            _animator.SetBool(_isWalkingHash, false);
+        }
+        if (_isRunning)
+        {
+            _animator.SetBool(_isRunningHash, false);
+        }
     }
 
     /// <summary>
@@ -55,7 +89,7 @@ public class Animal : ELActor
     /// <param name="movement">
     /// Direction to walk to, give Vector will be normalized.
     /// </param>
-    protected void Walk(Vector3 movement)
+    protected void WalkTo(Vector3 position)
     {
         if (!_isWalking)
         {
@@ -66,8 +100,8 @@ public class Animal : ELActor
             _animator.SetBool(_isRunningHash, false);
         }
 
-        base.Move(movement, walkingSpeed);
-        base.Look(movement);
+        base.MoveTo(position, walkingSpeed);
+        base.Look(position);
     }
 
     /// <summary>
@@ -76,7 +110,7 @@ public class Animal : ELActor
     /// <param name="movement">
     /// Direction to run to, give Vector will be normalized.
     /// </param>
-    protected void Run(Vector3 movement)
+    protected void RunTo(Vector3 position)
     {
         if (_isWalking)
         {
@@ -87,8 +121,8 @@ public class Animal : ELActor
             _animator.SetBool(_isRunningHash, true);
         }
 
-        base.Move(movement, runningSpeed);
-        base.Look(movement);
+        base.MoveTo(position, runningSpeed);
+        base.Look(position);
     }
 
     public List<Animal> getOffspring()

@@ -14,6 +14,5 @@ public class Fox : Animal
     protected override void Update()
     {
         base.Update();
-        base.Walk(new Vector3(0, 0, -1));
     }
 }
