@@ -6,6 +6,7 @@ public class Animal : ELActor
 {
     [SerializeField] private float walkingSpeed = 1f;
     [SerializeField] private float runningSpeed = 2f;
+    [SerializeField] private float jumpForce = 12f;
     [SerializeField] private GameObject offspringGameObject = null;
     [SerializeField] private float babyScale = 0.5f;
     [SerializeField] private float adultScale = 1f;
@@ -18,9 +19,9 @@ public class Animal : ELActor
     private Animator _animator;
     protected BasicSight sight;
 
-    private int _isWalkingHash, _isRunningHash, _isDeadHash;
+    private int _isWalkingHash, _isRunningHash, _isDeadHash, _isAirbornHash;
 
-    private bool _isWalking, _isRunning, _isDead;
+    private bool _isWalking, _isRunning, _isDead, _isAirborn;
 
     protected List<Animal> offspring = new List<Animal>();
 
@@ -37,16 +38,19 @@ public class Animal : ELActor
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
         _isDeadHash = Animator.StringToHash("isDead");
+        _isAirbornHash = Animator.StringToHash("isAirborn");
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        _isWalking = _animator.GetBool("isWalking");
-        _isRunning = _animator.GetBool("isRunning");
-        _isDead = _animator.GetBool("isDead");
+        _isWalking = _animator.GetBool(_isWalkingHash);
+        _isRunning = _animator.GetBool(_isRunningHash);
+        _isDead = _animator.GetBool(_isDeadHash);
+        _isAirborn = _animator.GetBool(_isAirbornHash);
         this.HandleMoveToTarget();
+        this.HandleAirborn();
     }
 
     /// <summary>
@@ -66,9 +70,29 @@ public class Animal : ELActor
         return false;
     }
 
+    protected void HandleAirborn()
+    {
+        if (_isAirborn && base.isGrounded)
+        {
+            _animator.SetBool(_isAirbornHash, false);
+            // Reset vertical force once airborn to prevent the same force from being applied once grounded again
+            base.ApplyVerticalForce(0);
+        }
+        else if (!_isAirborn && !base.isGrounded)
+        {
+            _animator.SetBool(_isAirbornHash, true);
+        }
+
+    }
+
     protected void Die()
     {
         _animator.SetBool("isDead", true);
+    }
+
+    protected void Jump()
+    {
+        base.ApplyVerticalForce(jumpForce);
     }
 
     protected void Idle()

@@ -3,10 +3,14 @@ using UnityEngine;
 [RequireComponent (typeof (CharacterController))]
 public class ELActor : MonoBehaviour
 {
+    [SerializeField] protected float gravity = -9.80665f;
     private CharacterController _characterController;
+    
+    protected bool isGrounded = true;
 
-    private Vector3 _currentMovement, _positionToLookAt = new Vector3(0, 0, 0);
-    private float _currentMoveSpeed;
+    protected Vector3 velocity = new Vector3(0, 0, 0);
+    private Vector3 _positionToLookAt = new Vector3(0, 0, 0);
+    private float _currentMoveSpeed, _currentVerticalForce = 0;
     protected float targetReachedOffsetMagnitude = .1f;
     protected Vector3 currentTargetPosition = new Vector3(0, 0, 0);
 
@@ -56,7 +60,8 @@ public class ELActor : MonoBehaviour
         this.HandleMoveTowardsPosition();
         this.HandleRotation();
         this.HandleGravity();
-        _characterController.Move(_currentMovement * Time.deltaTime);
+        this.HandleVerticalForce();
+        _characterController.Move(velocity * Time.deltaTime);
     }
 
     private void HandleMoveTowardsPosition()
@@ -67,8 +72,13 @@ public class ELActor : MonoBehaviour
             // Further away than .1f
             // Move towards target
             offset = offset.normalized * this._currentMoveSpeed;
-            this._currentMovement = offset;
+            this.velocity = offset;
         }
+    }
+
+    private void HandleVerticalForce()
+    {
+        this.velocity.y += _currentVerticalForce;
     }
 
     /// <summary>
@@ -90,18 +100,18 @@ public class ELActor : MonoBehaviour
     /// </summary>
     private void HandleGravity()
     {
+        float groundedGravity = 1;
         if (_characterController.isGrounded)
         {
-            float groundedGravity = -0.05f;
             fallingSpeed = 0;
-            _currentMovement.y = groundedGravity;
+            velocity.y = -groundedGravity;
         }
         else
         {
-            float gravity = -9.80665f;
             fallingSpeed += (gravity * Time.deltaTime);
-            _currentMovement.y += fallingSpeed;
+            velocity.y += fallingSpeed;
         }
+        isGrounded = velocity.y <= groundedGravity && velocity.y >= -groundedGravity;
     }
 
     private void handleLifeTime()
@@ -135,12 +145,17 @@ public class ELActor : MonoBehaviour
         this.currentTargetPosition = position;
         this._currentMoveSpeed = speed;
         // Allow directional movement in a range of -1.0f to 1.0f
-        this._currentMovement = (this.currentTargetPosition.normalized * speed);
+        this.velocity = (this.currentTargetPosition.normalized * speed);
     }
 
     protected void Teleport(Vector3 position)
     {
         transform.position = position;
+    }
+
+    protected void ApplyVerticalForce(float force)
+    {
+        _currentVerticalForce = force;
     }
 
     /// <summary>

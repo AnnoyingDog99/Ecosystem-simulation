@@ -978,6 +978,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8696694488378679868, guid: c6e3c02bf49db564a8033a485ed4fcbe,
         type: 3}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696694488378679868, guid: c6e3c02bf49db564a8033a485ed4fcbe,
+        type: 3}
+      propertyPath: jumpHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696694488378679868, guid: c6e3c02bf49db564a8033a485ed4fcbe,
+        type: 3}
       propertyPath: tags.Array.size
       value: 2
       objectReference: {fileID: 0}
