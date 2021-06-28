@@ -6,12 +6,14 @@ public class BasicSight : MonoBehaviour
 {
     [SerializeField] public float viewRadius;
 
-    [Range(0,360)]
+    [Range(0, 360)]
     [SerializeField] public float viewAngle;
 
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private LayerMask obstacleMask;
-    
+    [SerializeField] public float heightMultiplier = 1.36f;
+
+    [SerializeField] private List<LayerMask> targetMasks;
+    [SerializeField] private List<LayerMask> obstacleMasks;
+
     private List<Transform> visibleTargets = new List<Transform>();
 
     void Start()
@@ -21,7 +23,7 @@ public class BasicSight : MonoBehaviour
 
     IEnumerator FindTargetsWithDelay(float delay)
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
@@ -32,18 +34,30 @@ public class BasicSight : MonoBehaviour
     {
         visibleTargets.Clear();
 
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        List<Collider> targetsInViewRadius = new List<Collider>();
+        foreach (LayerMask targetMask in targetMasks)
+        {
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, viewRadius, targetMask));
+        }
 
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        for (int i = 0; i < targetsInViewRadius.Count; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
-            {
-                // Target is within view angle
-                float distToTarget = Vector3.Distance(transform.position, target.position);
+            if (Vector3.Angle(transform.forward, dirToTarget) > viewAngle / 2) continue;
 
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
+            // Target is within view angle
+            float distToTarget = Vector3.Distance(transform.position, target.position);
+
+            if (obstacleMasks.Count == 0)
+            {
+                // No obstacle masks so no obstacles inbetween actor and target (target is visible)
+                visibleTargets.Add(target);
+                continue;
+            }
+            for (int j = 0; j < obstacleMasks.Count; j++)
+            {
+                if (!Physics.Raycast(transform.position + Vector3.up * heightMultiplier, dirToTarget, distToTarget, obstacleMasks[j]))
                 {
                     // No obstacles inbetween actor and target (target is visible)
                     visibleTargets.Add(target);

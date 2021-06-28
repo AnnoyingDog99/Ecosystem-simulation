@@ -21,7 +21,7 @@ public class BasicSightEditor : Editor
         Handles.color = Color.red;
         foreach (Transform visibleTarget in basicSight.GetVisibleTargets())
         {
-            Handles.DrawLine(basicSight.transform.position, visibleTarget.position);
+            Handles.DrawLine(basicSight.transform.position + Vector3.up * basicSight.heightMultiplier, visibleTarget.position + Vector3.up * basicSight.heightMultiplier);
         }
     }
 }
