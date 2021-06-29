@@ -7,7 +7,6 @@ public class Bunny : Animal
     protected override void Start()
     {
         base.Start();
-        base.Jump();
     }
 
     // Update is called once per frame

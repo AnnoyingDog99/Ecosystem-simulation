@@ -1,14 +1,12 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent (typeof (CharacterController))]
 public class ELActor : MonoBehaviour
 {
-    [SerializeField] protected float gravity = -9.80665f;
-    private CharacterController _characterController;
+    [SerializeField] protected Collider collider;
+    [SerializeField] protected Rigidbody body;
+    [SerializeField] protected NavMeshAgent agent;
     
-    protected bool isGrounded = true;
-
-    protected Vector3 velocity = new Vector3(0, 0, 0);
     private Vector3 _positionToLookAt = new Vector3(0, 0, 0);
     private float _currentMoveSpeed, _currentVerticalForce = 0;
     protected float targetReachedOffsetMagnitude = .1f;
@@ -50,85 +48,21 @@ public class ELActor : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        _characterController = GetComponentInChildren<CharacterController>();
         InvokeRepeating("handleLifeTime", 1, 1);
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        this.HandleMoveTowardsPosition();
-        this.HandleRotation();
-        this.HandleGravity();
-        this.HandleVerticalForce();
-        _characterController.Move(velocity * Time.deltaTime);
-    }
-
-    private void HandleMoveTowardsPosition()
-    {
-        Vector3 offset = this.currentTargetPosition - transform.position;
-        if (offset.magnitude > targetReachedOffsetMagnitude)
-        {
-            // Further away than .1f
-            // Move towards target
-            offset = offset.normalized * this._currentMoveSpeed;
-            this.velocity = offset;
-        }
-    }
-
-    private void HandleVerticalForce()
-    {
-        this.velocity.y += _currentVerticalForce;
-    }
-
-    /// <summary>
-    /// Rotates Actor based on where it would be facing given the current movement.
-    /// </summary>
-    private void HandleRotation()
-    {
-        if (_positionToLookAt == Vector3.zero) return;
-
-        Quaternion currentRotation = transform.rotation;
-
-        Quaternion targetRotation = Quaternion.LookRotation(this._positionToLookAt);
-        float rotationFactor = rotationFactorPerSecond < 0 ? 1 : (rotationFactorPerSecond * Time.deltaTime);
-        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactor);
-    }
-
-    /// <summary>
-    /// Simulates gravity, causing the animal to fall to the surface.
-    /// </summary>
-    private void HandleGravity()
-    {
-        float groundedGravity = 1;
-        if (_characterController.isGrounded)
-        {
-            fallingSpeed = 0;
-            velocity.y = -groundedGravity;
-        }
-        else
-        {
-            fallingSpeed += (gravity * Time.deltaTime);
-            velocity.y += fallingSpeed;
-        }
-        isGrounded = velocity.y <= groundedGravity && velocity.y >= -groundedGravity;
+        // this.HandleMoveTowardsPosition();
+        // this.HandleRotation();
+        // this.HandleGravity();
+        // this.HandleVerticalForce();
     }
 
     private void handleLifeTime()
     {
         lifeTime.addSecond();
-    }
-
-    /// <summary>
-    /// Look towards a certain direction
-    /// </summary>
-    /// <param name="direction">
-    /// Vector will be normalized to fit within a range of -1.0f to 1.0f.
-    /// </param>    
-    protected void Look(Vector3 direction)
-    {
-        // Allow directional looking in a range of -1.0f to 1.0f
-        this._positionToLookAt = direction.normalized;
     }
 
     /// <summary>
@@ -142,20 +76,13 @@ public class ELActor : MonoBehaviour
     /// </param>
     protected void MoveTo(Vector3 position, float speed)
     {
-        this.currentTargetPosition = position;
-        this._currentMoveSpeed = speed;
-        // Allow directional movement in a range of -1.0f to 1.0f
-        this.velocity = (this.currentTargetPosition.normalized * speed);
+        agent.speed = speed;
+        agent.SetDestination(position);
     }
 
     protected void Teleport(Vector3 position)
     {
         transform.position = position;
-    }
-
-    protected void ApplyVerticalForce(float force)
-    {
-        _currentVerticalForce = force;
     }
 
     /// <summary>

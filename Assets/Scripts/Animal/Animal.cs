@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Animal : ELActor
 {
-    [SerializeField] private float walkingSpeed = 1f;
-    [SerializeField] private float runningSpeed = 2f;
-    [SerializeField] private float jumpForce = 12f;
+    [SerializeField] protected float walkSpeed = 1;
+    [SerializeField] protected float runSpeed = 2;
     [SerializeField] private GameObject offspringGameObject = null;
     [SerializeField] private float babyScale = 0.5f;
     [SerializeField] private float adultScale = 1f;
@@ -16,12 +14,13 @@ public class Animal : ELActor
     [SerializeField] private float viewRadius = 360;
     [SerializeField] private float viewAngle = 90;
 
-    private Animator _animator;
     protected BasicSight sight;
+
+    private Animator _animator;
 
     private int _isWalkingHash, _isRunningHash, _isDeadHash, _isAirbornHash;
 
-    private bool _isWalking, _isRunning, _isDead, _isAirborn;
+    protected bool isWalking, isRunning, isDead, isAirborn;
 
     protected List<Animal> offspring = new List<Animal>();
 
@@ -45,44 +44,11 @@ public class Animal : ELActor
     protected override void Update()
     {
         base.Update();
-        _isWalking = _animator.GetBool(_isWalkingHash);
-        _isRunning = _animator.GetBool(_isRunningHash);
-        _isDead = _animator.GetBool(_isDeadHash);
-        _isAirborn = _animator.GetBool(_isAirbornHash);
-        this.HandleMoveToTarget();
-        this.HandleAirborn();
-    }
-
-    /// <summary>
-    /// Handles current movement to target destination;
-    /// </summary>
-    /// <returns>
-    /// Returns true if the current target destination has been reached, return false if it hasn't been reached.
-    /// </returns>
-    protected bool HandleMoveToTarget()
-    {
-        if ((currentTargetPosition - transform.position).magnitude < targetReachedOffsetMagnitude)
-        {
-            // Reached target
-            Idle();
-            return true;
-        }
-        return false;
-    }
-
-    protected void HandleAirborn()
-    {
-        if (_isAirborn && base.isGrounded)
-        {
-            _animator.SetBool(_isAirbornHash, false);
-            // Reset vertical force once airborn to prevent the same force from being applied once grounded again
-            base.ApplyVerticalForce(0);
-        }
-        else if (!_isAirborn && !base.isGrounded)
-        {
-            _animator.SetBool(_isAirbornHash, true);
-        }
-
+        if (isDead) return;
+        isWalking = _animator.GetBool(_isWalkingHash);
+        isRunning = _animator.GetBool(_isRunningHash);
+        isDead = _animator.GetBool(_isDeadHash);
+        isAirborn = _animator.GetBool(_isAirbornHash);
     }
 
     protected void Die()
@@ -90,21 +56,18 @@ public class Animal : ELActor
         _animator.SetBool("isDead", true);
     }
 
-    protected void Jump()
-    {
-        base.ApplyVerticalForce(jumpForce);
-    }
-
     protected void Idle()
     {
-        if (_isWalking)
+        if (isWalking)
         {
             _animator.SetBool(_isWalkingHash, false);
         }
-        if (_isRunning)
+        if (isRunning)
         {
             _animator.SetBool(_isRunningHash, false);
         }
+
+        base.MoveTo(GetPosition(), 0);
     }
 
     /// <summary>
@@ -115,17 +78,16 @@ public class Animal : ELActor
     /// </param>
     protected void WalkTo(Vector3 position)
     {
-        if (!_isWalking)
+        if (!isWalking)
         {
             _animator.SetBool(_isWalkingHash, true);
         }
-        if (_isRunning)
+        if (isRunning)
         {
             _animator.SetBool(_isRunningHash, false);
         }
 
-        base.MoveTo(position, walkingSpeed);
-        base.Look(position);
+        base.MoveTo(position, walkSpeed);
     }
 
     /// <summary>
@@ -136,17 +98,16 @@ public class Animal : ELActor
     /// </param>
     protected void RunTo(Vector3 position)
     {
-        if (_isWalking)
+        if (isWalking)
         {
             _animator.SetBool(_isWalkingHash, false);
         }
-        if (!_isRunning)
+        if (!isRunning)
         {
             _animator.SetBool(_isRunningHash, true);
         }
 
-        base.MoveTo(position, runningSpeed);
-        base.Look(position);
+        base.MoveTo(position, runSpeed);
     }
 
     public List<Animal> getOffspring()
@@ -170,5 +131,10 @@ public class Animal : ELActor
     public void SetMother(Animal mother)
     {
         this.mother = mother;
+    }
+
+    public BasicSight GetSight()
+    {
+        return sight;
     }
 }

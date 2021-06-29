@@ -15,6 +15,7 @@ public class BasicSight : MonoBehaviour
     [SerializeField] private List<LayerMask> obstacleMasks;
 
     private List<Transform> visibleTargets = new List<Transform>();
+    private List<Transform> possibleObstacles = new List<Transform>();
 
     void Start()
     {
@@ -33,11 +34,18 @@ public class BasicSight : MonoBehaviour
     void FindVisibleTargets()
     {
         visibleTargets.Clear();
+        possibleObstacles.Clear();
 
         List<Collider> targetsInViewRadius = new List<Collider>();
         foreach (LayerMask targetMask in targetMasks)
         {
             targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, viewRadius, targetMask));
+        }
+
+        foreach (LayerMask obstacleMask in obstacleMasks)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, viewRadius, obstacleMask);
+            foreach(Collider collider in colliders) possibleObstacles.Add(collider.transform);
         }
 
         for (int i = 0; i < targetsInViewRadius.Count; i++)
@@ -78,5 +86,10 @@ public class BasicSight : MonoBehaviour
     public List<Transform> GetVisibleTargets()
     {
         return visibleTargets;
+    }
+
+    public List<Transform> GetPossibleObstacles()
+    {
+        return possibleObstacles;
     }
 }
