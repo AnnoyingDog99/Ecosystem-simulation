@@ -15,6 +15,7 @@ public class MeshGenerator : MonoBehaviour
     public int zSize = 20;
     public float xOffset = .3f;
     public float zOffset = .3f;
+    public float multipier = 2f;
 
     public Gradient gradient;
 
@@ -37,23 +38,23 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x < xSize; x++)
             {
-                y = Mathf.PerlinNoise((0 + x) * xOffset, (0 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((0 + x) * xOffset, (0 + z) * zOffset) * multipier;
                 vertices[tri] = new Vector3(0 + x, y, 0 + z);
                 SetMinMaxHeight(y);
-                y = Mathf.PerlinNoise((0 + x) * xOffset, (1 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((0 + x) * xOffset, (1 + z) * zOffset) * multipier;
                 vertices[1 + tri] = new Vector3(0 + x, y, 1 + z);
                 SetMinMaxHeight(y);
-                y = Mathf.PerlinNoise((1 + x) * xOffset, (0 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((1 + x) * xOffset, (0 + z) * zOffset) * multipier;
                 vertices[2 + tri] = new Vector3(1 + x, y, 0 + z);
                 SetMinMaxHeight(y);
 
-                y = Mathf.PerlinNoise((1 + x) * xOffset, (1 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((1 + x) * xOffset, (1 + z) * zOffset) * multipier;
                 vertices[3 + tri] = new Vector3(1 + x, y, 1 + z);
                 SetMinMaxHeight(y);
-                y = Mathf.PerlinNoise((1 + x) * xOffset, (0 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((1 + x) * xOffset, (0 + z) * zOffset) * multipier;
                 vertices[4 + tri] = new Vector3(1 + x, y, 0 + z);
                 SetMinMaxHeight(y);
-                y = Mathf.PerlinNoise((0 + x) * xOffset, (1 + z) * zOffset) * 2f;
+                y = Mathf.PerlinNoise((0 + x) * xOffset, (1 + z) * zOffset) * multipier;
                 vertices[5 + tri] = new Vector3(0 + x, y, 1 + z);
                 SetMinMaxHeight(y);
                 
