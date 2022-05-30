@@ -11,10 +11,8 @@ public class Animal : ELActor
     [SerializeField] protected Sex sex = Sex.F;
     [SerializeField] protected uint age = 0;
     [SerializeField] protected uint maxAge = 100;
-    [SerializeField] private float viewRadius = 360;
-    [SerializeField] private float viewAngle = 90;
-
-    protected BasicSight sight;
+    [SerializeField] protected List<string> predatorTags;
+    [SerializeField] protected List<string> preyTags;
 
     private Animator _animator;
 
@@ -28,12 +26,17 @@ public class Animal : ELActor
 
     protected internal enum Sex { M, F }
 
+    private BasicSight _sight;
+
+    private ELActorMemory _memory;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         _animator = GetComponentInChildren<Animator>();
-        sight = GetComponent<BasicSight>();
+        _sight = GetComponent<BasicSight>();
+        _memory = GetComponent<ELActorMemory>();
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
         _isDeadHash = Animator.StringToHash("isDead");
@@ -49,14 +52,18 @@ public class Animal : ELActor
         isRunning = _animator.GetBool(_isRunningHash);
         isDead = _animator.GetBool(_isDeadHash);
         isAirborn = _animator.GetBool(_isAirbornHash);
+
+        if (ReachedDestination()) {
+            Idle();
+        }
     }
 
-    protected void Die()
+    public void Die()
     {
-        _animator.SetBool("isDead", true);
+        _animator.SetBool(_isDeadHash, true);
     }
 
-    protected void Idle()
+    public void Idle()
     {
         if (isWalking)
         {
@@ -76,7 +83,7 @@ public class Animal : ELActor
     /// <param name="movement">
     /// Direction to walk to, give Vector will be normalized.
     /// </param>
-    protected void WalkTo(Vector3 position)
+    public void WalkTo(Vector3 position)
     {
         if (!isWalking)
         {
@@ -96,7 +103,7 @@ public class Animal : ELActor
     /// <param name="movement">
     /// Direction to run to, give Vector will be normalized.
     /// </param>
-    protected void RunTo(Vector3 position)
+    public void RunTo(Vector3 position)
     {
         if (isWalking)
         {
@@ -119,7 +126,7 @@ public class Animal : ELActor
     /// Instantiates offspring which this instance will be the parent of.
     /// Animal has to be of the Female biological sex.
     /// </summary>
-    protected void instantiateOffspring()
+    public void instantiateOffspring()
     {
         if (this.sex != Sex.F) return;
         Animal newOffspring = Instantiate(offspringGameObject, transform.position, transform.rotation).GetComponent<Animal>();
@@ -135,6 +142,19 @@ public class Animal : ELActor
 
     public BasicSight GetSight()
     {
-        return sight;
+        return _sight;
+    }
+
+    public ELActorMemory GetMemory()
+    {
+        return _memory;
+    }
+
+    public List<string> GetPredatorTags() {
+        return predatorTags;
+    }
+
+    public List<string> GetPreyTags() {
+        return preyTags;
     }
 }

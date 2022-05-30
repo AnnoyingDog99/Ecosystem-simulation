@@ -3,23 +3,14 @@ using UnityEngine.AI;
 
 public class ELActor : MonoBehaviour
 {
-    [SerializeField] protected Collider collider;
-    [SerializeField] protected Rigidbody body;
+    [SerializeField] protected BehaviourTree behaviourTree;
+    [SerializeField] protected ELActorMemory memory;
+    // [SerializeField] protected Rigidbody body;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected float rotationSpeed = 180f;
+    [SerializeField] protected float acceleration = 1f;
     
-    private Vector3 _positionToLookAt = new Vector3(0, 0, 0);
-    private float _currentMoveSpeed, _currentVerticalForce = 0;
-    protected float targetReachedOffsetMagnitude = .1f;
-    protected Vector3 currentTargetPosition = new Vector3(0, 0, 0);
-
-    // Speed at which an Actor can rotate where 4.0f equals a full 360 degrees rotation within one second.
-    // A negative value will default to an instant rotation.
-    [SerializeField] private float rotationFactorPerSecond = -1f;
-
-    private float fallingSpeed = 0;
-
-    private float scale = 1;
-
+    private float m_scale = 1;
     protected LifeTime lifeTime = new LifeTime();
     protected internal class LifeTime
     {
@@ -49,15 +40,13 @@ public class ELActor : MonoBehaviour
     protected virtual void Start()
     {
         InvokeRepeating("handleLifeTime", 1, 1);
+        agent.angularSpeed = rotationSpeed;
+        agent.acceleration = acceleration;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        // this.HandleMoveTowardsPosition();
-        // this.HandleRotation();
-        // this.HandleGravity();
-        // this.HandleVerticalForce();
     }
 
     private void handleLifeTime()
@@ -74,13 +63,13 @@ public class ELActor : MonoBehaviour
     /// <param name="speed">
     /// The movement speed.
     /// </param>
-    protected void MoveTo(Vector3 position, float speed)
+    public void MoveTo(Vector3 position, float speed)
     {
         agent.speed = speed;
         agent.SetDestination(position);
     }
 
-    protected void Teleport(Vector3 position)
+    public void Teleport(Vector3 position)
     {
         transform.position = position;
     }
@@ -97,17 +86,26 @@ public class ELActor : MonoBehaviour
     /// </param>
     protected void SetScale(float newScale)
     {
-        scale = newScale < 0 ? 0 : newScale;
-        transform.localScale = new Vector3(scale, scale, scale);
+        m_scale = newScale < 0 ? 0 : newScale;
+        transform.localScale = new Vector3(m_scale, m_scale, m_scale);
     }
 
     protected float GetScale()
     {
-        return scale;
+        return m_scale;
     }
 
     public Vector3 GetPosition()
     {
         return gameObject.transform.position;
+    }
+
+    public bool ReachedDestination() {
+        return agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
+    }
+
+    public int GetID()
+    {
+        return gameObject.GetInstanceID();
     }
 }

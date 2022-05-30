@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bunny
   - Fox
+  - Surface
   layers:
   - Default
   - TransparentFX
