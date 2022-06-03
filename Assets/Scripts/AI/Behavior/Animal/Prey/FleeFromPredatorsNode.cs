@@ -13,7 +13,6 @@ public class FleeFromPredatorsNode : Node
 
     public override NodeStates Evaluate()
     {
-        float beginTime = Time.time;
         /**
             Run opposite direction of predator
         */
@@ -30,7 +29,7 @@ public class FleeFromPredatorsNode : Node
         foreach (ELActor predator in nearbyPredators)
         {
             float distance = Vector3.Distance(animal.GetPosition(), predator.GetPosition());
-            if (minDistance == -1 || distance < minDistance) minDistance = distance;
+            if (minDistance == -1f || distance < minDistance) minDistance = distance;
             if (distance > maxDistance) maxDistance = distance;
             positions.Add(new Tuple<Vector3, float>(predator.GetPosition(), distance));
         }
@@ -45,7 +44,6 @@ public class FleeFromPredatorsNode : Node
         }
         float obstaclePreventionWeight = 0.5f;
         List<Collider> obstacles = memory.GetObstaclesInMemory();
-        Debug.Log(obstacles.Count);
         foreach (Collider obstacle in obstacles)
         {
             float distance = Vector3.Distance(animal.GetPosition(), obstacle.transform.position);

@@ -17,6 +17,11 @@ public class ELActorMemory : MonoBehaviour
             this.Refresh();
         }
 
+        public void SetMemoryContent(T content)
+        {
+            this.content = content;
+        }
+
         public T GetMemoryContent()
         {
             return this.content;

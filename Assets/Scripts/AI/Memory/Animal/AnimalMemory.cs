@@ -7,7 +7,6 @@ public class AnimalMemory : ELActorMemory
 {
     [SerializeField] private float predatorMemorySpan;
     [SerializeField] private float ownKindMemorySpan;
-    [SerializeField] private float preyMemorySpan;
     [SerializeField] private float obstacleMemorySpan;
 
     private List<Memory<ELActor>> predators = new List<Memory<ELActor>>();

@@ -12,7 +12,6 @@ public class Animal : ELActor
     [SerializeField] protected uint age = 0;
     [SerializeField] protected uint maxAge = 100;
     [SerializeField] protected List<string> predatorTags;
-    [SerializeField] protected List<string> preyTags;
 
     private Animator _animator;
 
@@ -152,9 +151,5 @@ public class Animal : ELActor
 
     public List<string> GetPredatorTags() {
         return predatorTags;
-    }
-
-    public List<string> GetPreyTags() {
-        return preyTags;
     }
 }
