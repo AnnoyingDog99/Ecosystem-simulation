@@ -5,10 +5,12 @@ using System;
 public class FleeFromPredatorsNode : Node
 {
     private Animal animal;
+    private float maxPredatorDistance;
 
-    public FleeFromPredatorsNode(Animal animal)
+    public FleeFromPredatorsNode(Animal animal, float maxPredatorDistance)
     {
         this.animal = animal;
+        this.maxPredatorDistance = maxPredatorDistance;
     }
 
     public override NodeStates Evaluate()
@@ -19,9 +21,13 @@ public class FleeFromPredatorsNode : Node
         AnimalMemory memory = (animal.GetMemory() as AnimalMemory);
 
         List<ELActor> nearbyPredators = memory.GetPredatorsInMemory();
+        if (nearbyPredators.Count <= 0)
+        {
+            return NodeStates.FAILURE;
+        }
 
         float minDistance = -1f;
-        float maxDistance = 0f;
+        float maxDistance = -1f;
         /**
             Add nearby predators into the equation
         */
@@ -30,10 +36,16 @@ public class FleeFromPredatorsNode : Node
         {
             float distance = Vector3.Distance(animal.GetPosition(), predator.GetPosition());
             if (minDistance == -1f || distance < minDistance) minDistance = distance;
-            if (distance > maxDistance) maxDistance = distance;
+            if (maxDistance == -1f || distance > maxDistance) maxDistance = distance;
             positions.Add(new Tuple<Vector3, float>(predator.GetPosition(), distance));
         }
-        
+
+        // Predator is too far away to consider a threat
+        if (minDistance > maxPredatorDistance)
+        {
+            return NodeStates.FAILURE;
+        }
+
         /**
             Add possible obstacles into the equation
         */

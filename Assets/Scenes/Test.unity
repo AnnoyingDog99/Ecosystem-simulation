@@ -777,6 +777,10 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: viewRadius
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
       propertyPath: heightMultiplier
       value: 2
       objectReference: {fileID: 0}
@@ -791,6 +795,11 @@ PrefabInstance:
     - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
       propertyPath: targetMasks.Array.data[1].m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: maxPredatorDistance
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3437094518659626983, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -1024,6 +1033,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7136047097241510415, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136047097241510415, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: maxPreyDistance
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_RootOrder
