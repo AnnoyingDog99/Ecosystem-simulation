@@ -1,16 +1,7 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ELActor : MonoBehaviour
 {
-    [SerializeField] protected BehaviourTree behaviourTree;
-    [SerializeField] protected ELActorMemory memory;
-    // [SerializeField] protected Rigidbody body;
-    [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] protected float rotationSpeed = 180f;
-    [SerializeField] protected float acceleration = 1f;
-    
-    private float m_scale = 1;
     protected LifeTime lifeTime = new LifeTime();
     protected internal class LifeTime
     {
@@ -40,8 +31,6 @@ public class ELActor : MonoBehaviour
     protected virtual void Start()
     {
         InvokeRepeating("handleLifeTime", 1, 1);
-        agent.angularSpeed = rotationSpeed;
-        agent.acceleration = acceleration;
     }
 
     // Update is called once per frame
@@ -54,19 +43,8 @@ public class ELActor : MonoBehaviour
         lifeTime.addSecond();
     }
 
-    /// <summary>
-    /// Move towards a certain direction.
-    /// </summary>
-    /// <param name="movement">
-    /// Vector will be normalized to fit within a range of -1.0f to 1.0f.
-    /// </param>
-    /// <param name="speed">
-    /// The movement speed.
-    /// </param>
-    public void MoveTo(Vector3 position, float speed)
-    {
-        agent.speed = speed;
-        agent.SetDestination(position);
+    public Vector3 GetLifeTime() {
+        return new Vector3(this.lifeTime.hours, this.lifeTime.minutes, this.lifeTime.seconds);
     }
 
     public void Teleport(Vector3 position)
@@ -84,24 +62,19 @@ public class ELActor : MonoBehaviour
     /// > 1 == larger than default.
     /// newScale can not be lower than 0
     /// </param>
-    protected void SetScale(float newScale)
+    protected void SetScale(Vector3 newScale)
     {
-        m_scale = newScale < 0 ? 0 : newScale;
-        transform.localScale = new Vector3(m_scale, m_scale, m_scale);
+        transform.localScale = newScale;
     }
 
-    protected float GetScale()
+    protected Vector3 GetScale()
     {
-        return m_scale;
+        return transform.localScale;
     }
 
     public Vector3 GetPosition()
     {
         return gameObject.transform.position;
-    }
-
-    public bool ReachedDestination() {
-        return agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
     }
 
     public int GetID()

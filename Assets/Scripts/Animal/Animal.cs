@@ -1,8 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Animal : ELActor
 {
+    [SerializeField] protected BehaviourTree behaviourTree;
+    [SerializeField] protected ELActorMemory memory;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected float rotationSpeed = 180f;
+    [SerializeField] protected float acceleration = 1f;
+
     [SerializeField] protected float walkSpeed = 1;
     [SerializeField] protected float runSpeed = 2;
     [SerializeField] private GameObject offspringGameObject = null;
@@ -33,6 +40,9 @@ public class Animal : ELActor
     protected override void Start()
     {
         base.Start();
+        agent.angularSpeed = rotationSpeed;
+        agent.acceleration = acceleration;
+
         _animator = GetComponentInChildren<Animator>();
         _sight = GetComponent<BasicSight>();
         _memory = GetComponent<ELActorMemory>();
@@ -52,7 +62,7 @@ public class Animal : ELActor
         isDead = _animator.GetBool(_isDeadHash);
         isAirborn = _animator.GetBool(_isAirbornHash);
 
-        if (ReachedDestination()) {
+        if (this.ReachedDestination()) {
             Idle();
         }
     }
@@ -60,6 +70,21 @@ public class Animal : ELActor
     public void Die()
     {
         _animator.SetBool(_isDeadHash, true);
+    }
+
+    /// <summary>
+    /// Move towards a certain direction.
+    /// </summary>
+    /// <param name="movement">
+    /// Vector will be normalized to fit within a range of -1.0f to 1.0f.
+    /// </param>
+    /// <param name="speed">
+    /// The movement speed.
+    /// </param>
+    public void MoveTo(Vector3 position, float speed)
+    {
+        agent.speed = speed;
+        agent.SetDestination(position);
     }
 
     public void Idle()
@@ -73,7 +98,7 @@ public class Animal : ELActor
             _animator.SetBool(_isRunningHash, false);
         }
 
-        base.MoveTo(GetPosition(), 0);
+        this.MoveTo(GetPosition(), 0);
     }
 
     /// <summary>
@@ -93,7 +118,7 @@ public class Animal : ELActor
             _animator.SetBool(_isRunningHash, false);
         }
 
-        base.MoveTo(position, walkSpeed);
+        this.MoveTo(position, walkSpeed);
     }
 
     /// <summary>
@@ -113,7 +138,11 @@ public class Animal : ELActor
             _animator.SetBool(_isRunningHash, true);
         }
 
-        base.MoveTo(position, runSpeed);
+        this.MoveTo(position, runSpeed);
+    }
+
+    public bool ReachedDestination() {
+        return agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
     }
 
     public List<Animal> getOffspring()
@@ -129,7 +158,7 @@ public class Animal : ELActor
     {
         if (this.sex != Sex.F) return;
         Animal newOffspring = Instantiate(offspringGameObject, transform.position, transform.rotation).GetComponent<Animal>();
-        newOffspring.SetScale(babyScale);
+        newOffspring.SetScale(new Vector3(this.babyScale, this.babyScale, this.babyScale));
         newOffspring.SetMother(this);
         offspring.Add(newOffspring);
     }
