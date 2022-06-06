@@ -973,6 +973,7 @@ MonoBehaviour:
   startScale: {x: 0, y: 0, z: 0}
   endScale: {x: 6, y: 2.5, z: 6}
   growTime: 10
+  totalFoodPoints: 10
 --- !u!1001 &1484662407
 PrefabInstance:
   m_ObjectHideFlags: 0

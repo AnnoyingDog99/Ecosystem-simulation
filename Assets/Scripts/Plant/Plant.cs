@@ -7,10 +7,12 @@ public class Plant : ELActor
     [SerializeField] Vector3 startScale = new Vector3(0, 0, 0);
     [SerializeField] Vector3 endScale = new Vector3(1, 1, 10);
     [SerializeField] int growTime = 10;
+    [SerializeField] int totalFoodPoints = 10;
+    public bool isDead { get; private set; } = false;
 
     private Vector3 growthStep;
-    private int recoveryTime = 10;
-    private float recoveryTimer = 0;
+    private int growthRecoveryTime = 10;
+    private float growthRecoveryTimer = 0;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -24,24 +26,50 @@ public class Plant : ELActor
     protected override void Update()
     {
         base.Update();
-        recoveryTimer -= Time.deltaTime;
-        if (HasRecovered() && !this.IsFullyGrown()) {
+        growthRecoveryTimer -= Time.deltaTime;
+        if (HasRecovered() && !this.IsFullyGrown())
+        {
             base.SetScale(base.GetScale() + (this.growthStep * Time.deltaTime));
         }
     }
 
-    public bool IsFullyGrown() {
-        Vector3 diff = (endScale - base.GetScale());
-        return diff.x <= 0 && diff.y <= 0 && diff.z <= 0;
+    public void Shrink(int percentage)
+    {
+        base.SetScale(base.GetScale() - ((this.endScale / 100) * percentage));
     }
 
-    private bool HasRecovered() {
-        return this.recoveryTimer <= 0;
+    public int GetCurrentFoodPoints()
+    {
+        return (this.totalFoodPoints / 100) * this.GetGrowthPercent(); ;
     }
 
-    public virtual int Eat() {
-        recoveryTimer = recoveryTime;
-        // Return amount of "food points" or something like that
-        return 1;
+    public int GetGrowthPercent()
+    {
+        float max_distance = Vector3.Distance(this.endScale, this.startScale);
+        float current_distance = Vector3.Distance(this.endScale, base.GetScale());
+        return (int)Mathf.RoundToInt((100 / max_distance) * (max_distance - current_distance));
+    }
+
+    public bool IsFullyGrown()
+    {
+        return this.GetGrowthPercent() >= 100;
+    }
+
+    private bool HasRecovered()
+    {
+        return this.growthRecoveryTimer <= 0;
+    }
+
+    public virtual float Eat(float biteSize)
+    {
+        growthRecoveryTimer = growthRecoveryTime;
+        float eatenFoodPoints = this.totalFoodPoints * (biteSize / 10);
+        int percentageEaten = (int)Mathf.RoundToInt((100 / this.totalFoodPoints) * eatenFoodPoints);
+        this.Shrink(percentageEaten);
+        if (GetGrowthPercent() <= 0)
+        {
+            this.isDead = true;
+        }
+        return eatenFoodPoints;
     }
 }
