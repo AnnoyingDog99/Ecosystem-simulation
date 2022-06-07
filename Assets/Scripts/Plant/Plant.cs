@@ -31,6 +31,14 @@ public class Plant : ELActor
         {
             base.SetScale(base.GetScale() + (this.growthStep * Time.deltaTime));
         }
+        if (this.IsFullyGrown())
+        {
+            this.Eat(1);
+            this.Eat(1);
+            this.Eat(1);
+            this.Eat(1);
+            this.Eat(1);
+        }
     }
 
     public void Shrink(int percentage)

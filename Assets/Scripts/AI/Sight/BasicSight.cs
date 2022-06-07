@@ -2,30 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicSight : MonoBehaviour
+public class BasicSight : Sight
 {
-    [SerializeField] public float reactionSpeed = 0.2f;
-    [SerializeField] public float viewRadius;
+    [SerializeField] private float reactionSpeed = 0.2f;
 
-    [Range(0, 360)]
-    [SerializeField] public float viewAngle;
-
-    [SerializeField] public float heightMultiplier = 1.36f;
-
-    [SerializeField] private List<LayerMask> targetMasks;
-    [SerializeField] private List<LayerMask> obstacleMasks;
-
-    private List<Transform> visibleTargets = new List<Transform>();
-    private List<Transform> visibleObstacles = new List<Transform>();
-
-    void Start()
+    private void Start()
     {
         // Find anything in view with delay
         StartCoroutine(FindTargetsWithDelay(reactionSpeed));
         StartCoroutine(FindObstaclesWithDelay(reactionSpeed));
     }
 
-    void Update()
+    private void Update()
     {
         // Find anything straight ahead immediately
         AddTargetsStraightAhead();
@@ -184,13 +172,23 @@ public class BasicSight : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
+    public float GetViewAngle()
+    {
+        return this.viewAngle;
+    }
+
+    public float GetViewRadius()
+    {
+        return this.viewRadius;
+    }
+
     public List<Transform> GetVisibleTargets()
     {
-        return visibleTargets;
+        return this.visibleTargets;
     }
 
     public List<Transform> GetVisibleObstacles()
     {
-        return visibleObstacles;
+        return this.visibleObstacles;
     }
 }

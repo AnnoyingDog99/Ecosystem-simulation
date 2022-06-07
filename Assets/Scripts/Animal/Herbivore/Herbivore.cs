@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bunny : Herbivore
+public class Herbivore : Animal
 {
+    [SerializeField] protected List<string> plantTags = new List<string>();
 
     // Start is called before the first frame update
     protected override void Start()
@@ -14,5 +15,10 @@ public class Bunny : Herbivore
     protected override void Update()
     {
         base.Update();
+    }
+
+    public List<string> GetPlantTags()
+    {
+        return this.plantTags;
     }
 }

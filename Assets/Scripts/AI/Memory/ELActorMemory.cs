@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ELActorMemory : MonoBehaviour
+public abstract class ELActorMemory : MonoBehaviour
 {
     protected class Memory<T>
     {

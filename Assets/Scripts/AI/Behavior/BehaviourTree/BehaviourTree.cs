@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class BehaviourTree : MonoBehaviour
+public abstract class BehaviourTree : MonoBehaviour
 {
     protected Selector rootNode;
 

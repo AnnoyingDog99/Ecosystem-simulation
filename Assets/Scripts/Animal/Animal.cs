@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Animal : ELActor
+public abstract class Animal : ELActor
 {
     [SerializeField] protected BehaviourTree behaviourTree;
-    [SerializeField] protected ELActorMemory memory;
+    [SerializeField] protected AnimalMemory memory;
+    [SerializeField] protected Sight sight;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
@@ -18,7 +19,7 @@ public class Animal : ELActor
     [SerializeField] protected Sex sex = Sex.F;
     [SerializeField] protected uint age = 0;
     [SerializeField] protected uint maxAge = 100;
-    [SerializeField] protected List<string> predatorTags;
+    [SerializeField] protected List<string> predatorTags = new List<string>();
 
     private Animator _animator;
 
@@ -32,10 +33,6 @@ public class Animal : ELActor
 
     protected internal enum Sex { M, F }
 
-    private BasicSight _sight;
-
-    private ELActorMemory _memory;
-
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -44,8 +41,6 @@ public class Animal : ELActor
         agent.acceleration = acceleration;
 
         _animator = GetComponentInChildren<Animator>();
-        _sight = GetComponent<BasicSight>();
-        _memory = GetComponent<ELActorMemory>();
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
         _isDeadHash = Animator.StringToHash("isDead");
@@ -62,7 +57,8 @@ public class Animal : ELActor
         isDead = _animator.GetBool(_isDeadHash);
         isAirborn = _animator.GetBool(_isAirbornHash);
 
-        if (this.ReachedDestination()) {
+        if (this.ReachedDestination())
+        {
             Idle();
         }
     }
@@ -81,7 +77,7 @@ public class Animal : ELActor
     /// <param name="speed">
     /// The movement speed.
     /// </param>
-    public void MoveTo(Vector3 position, float speed)
+    private void MoveTo(Vector3 position, float speed)
     {
         agent.speed = speed;
         agent.SetDestination(position);
@@ -141,7 +137,8 @@ public class Animal : ELActor
         this.MoveTo(position, runSpeed);
     }
 
-    public bool ReachedDestination() {
+    public bool ReachedDestination()
+    {
         return agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
     }
 
@@ -168,17 +165,18 @@ public class Animal : ELActor
         this.mother = mother;
     }
 
-    public BasicSight GetSight()
+    public List<string> GetPredatorTags()
     {
-        return _sight;
-    }
-
-    public ELActorMemory GetMemory()
-    {
-        return _memory;
-    }
-
-    public List<string> GetPredatorTags() {
         return predatorTags;
+    }
+
+    public AnimalMemory GetMemory()
+    {
+        return this.memory;
+    }
+
+    public Sight GetSight()
+    {
+        return this.sight;
     }
 }

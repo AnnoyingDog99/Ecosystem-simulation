@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ELActor : MonoBehaviour
+public abstract class ELActor : MonoBehaviour
 {
     protected LifeTime lifeTime = new LifeTime();
     protected internal class LifeTime
@@ -52,22 +52,12 @@ public class ELActor : MonoBehaviour
         transform.position = position;
     }
 
-    /// <summary>
-    /// Scale Actor.
-    /// </summary>
-    /// <param name="newScale">
-    /// The new scale of the actor
-    /// 1 == default.
-    /// < 1 == smaller than default.
-    /// > 1 == larger than default.
-    /// newScale can not be lower than 0
-    /// </param>
     protected void SetScale(Vector3 newScale)
     {
         transform.localScale = newScale;
     }
 
-    protected Vector3 GetScale()
+    public Vector3 GetScale()
     {
         return transform.localScale;
     }

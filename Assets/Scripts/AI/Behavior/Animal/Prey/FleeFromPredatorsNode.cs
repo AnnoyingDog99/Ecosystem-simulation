@@ -20,7 +20,7 @@ public class FleeFromPredatorsNode : Node
         */
         AnimalMemory memory = (animal.GetMemory() as AnimalMemory);
 
-        List<ELActor> nearbyPredators = memory.GetPredatorsInMemory();
+        List<Animal> nearbyPredators = memory.GetPredatorsInMemory();
         if (nearbyPredators.Count <= 0)
         {
             return NodeStates.FAILURE;
