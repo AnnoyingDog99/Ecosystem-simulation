@@ -72,11 +72,15 @@ public class FleeFromPredatorsNode : Node
         }
         averagePosition = averagePosition / nearbyPredators.Count;
 
-        Vector3 direction = animal.GetPosition() - averagePosition;
+        Vector3 direction = (animal.GetPosition() - averagePosition).normalized;
 
-        Vector3 newPosition = animal.GetPosition() + direction * 1.5f;
+        Vector3 newPosition = animal.GetPosition() + (direction * 1.15f);
 
-        animal.RunTo(newPosition);
+        if (!animal.RunTo(newPosition))
+        {
+            animal.Idle();
+            return NodeStates.FAILURE;
+        }
 
         return NodeStates.SUCCESS;
     }

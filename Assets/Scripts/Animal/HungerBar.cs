@@ -5,7 +5,7 @@ using UnityEngine;
 public class HungerBar : MonoBehaviour
 {
     Animal animal;
-    [SerializeField] uint max;
+    [SerializeField] uint max = 100;
 
     [Range(0, 100)]
     [SerializeField] uint efficiency;

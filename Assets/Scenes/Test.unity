@@ -242,8 +242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46da1ac9fc44fe1893a0e06ea955763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPlant: {fileID: 1418939958}
+  referencePlant: {fileID: 1418939958}
   maxAmountOfPlants: 10
+  size: {x: 10, y: 10}
   spreadTime: 3
 --- !u!4 &516534808
 Transform:
@@ -272,6 +273,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9c614e2b88cdca0a1a0f097ba73660f5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9c614e2b88cdca0a1a0f097ba73660f5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9c614e2b88cdca0a1a0f097ba73660f5,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c614e2b88cdca0a1a0f097ba73660f5,
         type: 3}
@@ -1000,7 +1016,7 @@ Transform:
   m_GameObject: {fileID: 1418939956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.7401314, y: 9.161392, z: 2.1407185}
-  m_LocalScale: {x: 6, y: 2.5, z: 6}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 562342110}
@@ -1023,7 +1039,7 @@ MonoBehaviour:
   agent: {fileID: 1418939959}
   startScale: {x: 0, y: 0, z: 0}
   minimumScalePercentage: 10
-  endScale: {x: 6, y: 2.5, z: 6}
+  endScale: {x: 2, y: 1, z: 2}
   growTime: 3
   growthRecoveryTime: 3
   totalFoodPoints: 10
@@ -1120,6 +1136,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: staminaBar
+      value: 
+      objectReference: {fileID: 2059865742}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: ownKindGameObject
@@ -1407,6 +1428,21 @@ MonoBehaviour:
   idlePenalty: 1
   walkingPenalty: 2
   runningPenalty: 5
+--- !u!114 &2059865742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  walkingCost: 1
+  runningCost: 3
 --- !u!1 &2126545859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7136047097241510424, guid: 5ea34e5e3550605c1943cb3799451ad7,

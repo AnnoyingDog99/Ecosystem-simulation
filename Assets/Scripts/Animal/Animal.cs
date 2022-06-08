@@ -8,6 +8,7 @@ public abstract class Animal : ELActor
     [SerializeField] protected AnimalMemory memory;
     [SerializeField] protected Sight sight;
     [SerializeField] protected HungerBar hungerBar;
+    [SerializeField] protected StaminaBar staminaBar;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
     [SerializeField] protected float walkSpeed = 1;
@@ -60,7 +61,6 @@ public abstract class Animal : ELActor
         this.isAirborn = _animator.GetBool(_isAirbornHash);
         // TODO:
         // this.isEating = _animator.GetBool(_isEatingHash);
-        this.isIdle = !isWalking && !isRunning && !isEating;
 
         if (this.ReachedDestination())
         {
@@ -74,19 +74,10 @@ public abstract class Animal : ELActor
         _animator.SetBool(_isDeadHash, true);
     }
 
-    /// <summary>
-    /// Move towards a certain direction.
-    /// </summary>
-    /// <param name="movement">
-    /// Vector will be normalized to fit within a range of -1.0f to 1.0f.
-    /// </param>
-    /// <param name="speed">
-    /// The movement speed.
-    /// </param>
-    private void MoveTo(Vector3 position, float speed)
+    private bool MoveTo(Vector3 position, float speed)
     {
         this.agent.speed = speed;
-        this.agent.SetDestination(position);
+        return this.agent.SetDestination(position);
     }
 
     public void Idle()
@@ -100,17 +91,16 @@ public abstract class Animal : ELActor
             _animator.SetBool(_isRunningHash, false);
         }
 
-        this.MoveTo(GetPosition(), 0);
+        this.agent.ResetPath();
     }
 
-    /// <summary>
-    /// Walk towards a certain direction.
-    /// </summary>
-    /// <param name="movement">
-    /// Direction to walk to, give Vector will be normalized.
-    /// </param>
-    public void WalkTo(Vector3 position)
+    public bool WalkTo(Vector3 position)
     {
+        if (this.staminaBar.GetStaminaPercentage() < this.staminaBar.minimumWalkPercentage)
+        {
+            this.Idle();
+            return true;
+        }
         if (!isWalking)
         {
             _animator.SetBool(_isWalkingHash, true);
@@ -120,17 +110,21 @@ public abstract class Animal : ELActor
             _animator.SetBool(_isRunningHash, false);
         }
 
-        this.MoveTo(position, walkSpeed);
+        if (!this.MoveTo(position, walkSpeed))
+        {
+            // Failed to reach position
+            this.Idle();
+            return false;
+        }
+        return true;
     }
 
-    /// <summary>
-    /// Run towards a certain direction.
-    /// </summary>
-    /// <param name="movement">
-    /// Direction to run to, give Vector will be normalized.
-    /// </param>
-    public void RunTo(Vector3 position)
+    public bool RunTo(Vector3 position)
     {
+        if (this.staminaBar.GetStaminaPercentage() < this.staminaBar.minimumRunPercentage)
+        {
+            return this.WalkTo(position);
+        }
         if (isWalking)
         {
             _animator.SetBool(_isWalkingHash, false);
@@ -140,12 +134,31 @@ public abstract class Animal : ELActor
             _animator.SetBool(_isRunningHash, true);
         }
 
-        this.MoveTo(position, runSpeed);
+        if (!this.MoveTo(position, runSpeed))
+        {
+            // Failed to reach position
+            this.Idle();
+            return false;
+        }
+        return true;
     }
 
     public bool ReachedDestination()
     {
-        return this.agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
+        if (this.agent.pathPending)
+        {
+            return false;
+        }
+        // Ignore y-coördinate
+        if (this.agent.remainingDistance > Mathf.Abs(this.agent.pathEndPosition.y - this.GetPosition().y))
+        {
+            return false;
+        }
+        if (this.agent.hasPath && this.agent.velocity.sqrMagnitude != 0f)
+        {
+            return false;
+        }
+        return true;
     }
 
     public List<Animal> getOffspring()
