@@ -34,8 +34,6 @@ public abstract class ELActor : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        InvokeRepeating("handleLifeTime", 1, 1);
-
         // Place ELActor on NavMesh
         NavMeshHit closestHit;
         if (NavMesh.SamplePosition(this.GetPosition(), out closestHit, 50, 1))
@@ -46,6 +44,8 @@ public abstract class ELActor : MonoBehaviour
         {
             Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
         }
+        
+        InvokeRepeating("handleLifeTime", 1, 1);
     }
 
     // Update is called once per frame

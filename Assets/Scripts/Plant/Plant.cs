@@ -67,7 +67,7 @@ public class Plant : ELActor
     public virtual float Eat(float biteSize)
     {
         growthRecoveryTimer = growthRecoveryTime;
-        float eatenFoodPoints = biteSize > GetCurrentFoodPoints() ? GetCurrentFoodPoints() : biteSize;
+        float eatenFoodPoints = Mathf.Min(biteSize, GetCurrentFoodPoints());
         int percentageEaten = Mathf.RoundToInt((100 / this.totalFoodPoints) * biteSize);
         this.Shrink(percentageEaten);
         if (GetGrowthPercent() <= minimumScalePercentage)
@@ -75,5 +75,15 @@ public class Plant : ELActor
             this.isDead = true;
         }
         return eatenFoodPoints;
+    }
+
+    public Vector3 GetStartScale()
+    {
+        return this.startScale;
+    }
+
+    public Vector3 GetEndScale()
+    {
+        return this.endScale;
     }
 }

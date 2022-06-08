@@ -4,29 +4,39 @@ using UnityEngine;
 
 public abstract class Field : MonoBehaviour
 {
-    [SerializeField] private Plant initialPlant;
-    [SerializeField] protected uint maxAmountOfPlants;
+    [SerializeField] private Plant referencePlant;
+    [SerializeField] protected int maxAmountOfPlants;
+    [SerializeField] protected Vector2 size;
 
     [SerializeField] private uint spreadTime;
     private float spreadTimer;
 
     List<Plant> plants = new List<Plant>();
 
+    private List<Vector2> points = new List<Vector2>();
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        this.plants.Add(initialPlant);
         this.spreadTimer = this.spreadTime;
+        float avgPointRadius = (referencePlant.GetEndScale().x + referencePlant.GetEndScale().y) / 2;
+        Debug.Log(avgPointRadius);
+        this.points = PoissonDiscSampling.GeneratePoints(avgPointRadius, size, maxAmountOfPlants, 20);
+        if (this.points.Count <= 0)
+        {
+            Debug.LogError("Field does not have enough room to initialize");
+            return;
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (this.plants.Count >= maxAmountOfPlants) return;
+        if (this.plants.Count >= maxAmountOfPlants || this.plants.Count >= this.points.Count) return;
         this.spreadTimer -= Time.deltaTime;
         if (this.spreadTimer <= 0)
         {
-            this.Spread();
+            this.SpreadV2();
             this.spreadTimer = this.spreadTime;
         }
     }
@@ -45,6 +55,21 @@ public abstract class Field : MonoBehaviour
         newPosition += (Vector3.forward * offset);
 
         GameObject childPlantGameObject = Instantiate(parentPlantGameObject.gameObject, newPosition, transform.rotation);
+        childPlantGameObject.transform.parent = this.gameObject.transform;
+        this.plants.Add(childPlantGameObject.GetComponent<Plant>());
+    }
+
+    protected virtual void SpreadV2()
+    {
+        // Translate Vector2 to Vector3, the y position is determined at the start of the ELACtor so an estimation is enough.
+        Vector2 newPositionVector2 = this.points[this.plants.Count];
+        Vector3 newPositionVector3 = new Vector3(newPositionVector2.x, transform.position.y, newPositionVector2.y);
+
+        // Random rotation, just because
+        float randomNumber = Random.Range(-1, 1);
+        Quaternion randomRotation = new Quaternion(randomNumber, 0, randomNumber, 1);
+
+        GameObject childPlantGameObject = Instantiate(referencePlant.gameObject, newPositionVector3, randomRotation);
         childPlantGameObject.transform.parent = this.gameObject.transform;
         this.plants.Add(childPlantGameObject.GetComponent<Plant>());
     }
