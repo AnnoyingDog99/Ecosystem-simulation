@@ -106,23 +106,23 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 1
     agentHeight: 1
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 0.75
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
-    minRegionArea: 2
+    minRegionArea: 1
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.33333334
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    accuratePlacement: 1
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 87c11bf093f67243888762391a66d7b4, type: 2}
 --- !u!1 &286589026
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +213,54 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 562342109}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &516534806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516534808}
+  - component: {fileID: 516534807}
+  m_Layer: 0
+  m_Name: GrassField
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &516534807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516534806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46da1ac9fc44fe1893a0e06ea955763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPlant: {fileID: 1418939958}
+  maxAmountOfPlants: 10
+  spreadTime: 3
+--- !u!4 &516534808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516534806}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.859869, y: -10.0913925, z: -11.674589}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1418939957}
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &562342109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -621,7 +669,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025971551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: 1.5, z: -6}
+  m_LocalPosition: {x: 23.1, y: 1.5, z: -6}
   m_LocalScale: {x: 1, y: 5, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -935,6 +983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1418939957}
   - component: {fileID: 1418939958}
+  - component: {fileID: 1418939959}
   m_Layer: 8
   m_Name: Grass
   m_TagString: Grass
@@ -949,14 +998,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418939956}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.6, y: -0.93, z: -9.533871}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.7401314, y: 9.161392, z: 2.1407185}
   m_LocalScale: {x: 6, y: 2.5, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 562342110}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 516534808}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1418939958
 MonoBehaviour:
@@ -971,13 +1020,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownKindGameObject: {fileID: 1418939956}
+  agent: {fileID: 1418939959}
   startScale: {x: 0, y: 0, z: 0}
-  minimumScalePercentage: 60
+  minimumScalePercentage: 10
   endScale: {x: 6, y: 2.5, z: 6}
   growTime: 3
   growthRecoveryTime: 3
   totalFoodPoints: 10
-  spreadTime: 3
+--- !u!195 &1418939959
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418939956}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.01
+  m_Speed: 0
+  m_Acceleration: 0
+  avoidancePriority: 0
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.01
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 0
 --- !u!1001 &1484662407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1039,6 +1110,11 @@ PrefabInstance:
       propertyPath: sight
       value: 
       objectReference: {fileID: 2059865732}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: hungerBar
+      value: 
+      objectReference: {fileID: 2059865741}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_Enabled
@@ -1313,6 +1389,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2059865741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  efficiency: 75
+  rate: 1
+  idlePenalty: 1
+  walkingPenalty: 2
+  runningPenalty: 5
 --- !u!1 &2126545859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7136047097241510424, guid: 5ea34e5e3550605c1943cb3799451ad7,
@@ -1396,6 +1490,11 @@ PrefabInstance:
       propertyPath: sight
       value: 
       objectReference: {fileID: 1867726454}
+    - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: rotationSpeed

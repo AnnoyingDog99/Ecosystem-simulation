@@ -171,24 +171,4 @@ public class BasicSight : Sight
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
-    public float GetViewAngle()
-    {
-        return this.viewAngle;
-    }
-
-    public float GetViewRadius()
-    {
-        return this.viewRadius;
-    }
-
-    public List<Transform> GetVisibleTargets()
-    {
-        return this.visibleTargets;
-    }
-
-    public List<Transform> GetVisibleObstacles()
-    {
-        return this.visibleObstacles;
-    }
 }

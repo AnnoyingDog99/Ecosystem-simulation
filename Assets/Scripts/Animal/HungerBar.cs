@@ -45,7 +45,6 @@ public class HungerBar : MonoBehaviour
 
     public uint GetHungerPercentage()
     {
-        Debug.Log(this.current);
         int percentage = Mathf.RoundToInt((100 / max) * current);
         if (percentage < 0) percentage = 0;
         return (uint)percentage;

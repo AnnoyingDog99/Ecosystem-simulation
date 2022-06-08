@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Plant : ELActor
 {
     [SerializeField] Vector3 startScale = new Vector3(0, 0, 0);
+
     // The scale percentage this plant needs to be considered alive
     [SerializeField] int minimumScalePercentage = 1;
     [SerializeField] Vector3 endScale = new Vector3(1, 1, 10);
@@ -27,14 +29,11 @@ public class Plant : ELActor
     {
         base.Update();
         if (this.isDead) return;
+        if (this.IsFullyGrown()) return;
         growthRecoveryTimer -= Time.deltaTime;
         if (HasRecovered() && !this.IsFullyGrown())
         {
             base.SetScale(base.GetScale() + (this.growthStep * Time.deltaTime));
-        }
-        if (this.IsFullyGrown())
-        {
-            // this.Eat(1);
         }
     }
 

@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class ELActor : MonoBehaviour
 {
     [SerializeField] protected GameObject ownKindGameObject = null;
+    [SerializeField] protected NavMeshAgent agent;
     protected LifeTime lifeTime = new LifeTime();
     public bool isDead { get; protected set; } = false;
     protected internal class LifeTime
@@ -33,6 +35,17 @@ public abstract class ELActor : MonoBehaviour
     protected virtual void Start()
     {
         InvokeRepeating("handleLifeTime", 1, 1);
+
+        // Place ELActor on NavMesh
+        NavMeshHit closestHit;
+        if (NavMesh.SamplePosition(this.GetPosition(), out closestHit, 50, 1))
+        {
+            this.agent.Warp(closestHit.position);
+        }
+        else
+        {
+            Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
+        }
     }
 
     // Update is called once per frame
@@ -45,7 +58,8 @@ public abstract class ELActor : MonoBehaviour
         lifeTime.addSecond();
     }
 
-    public Vector3 GetLifeTime() {
+    public Vector3 GetLifeTime()
+    {
         return new Vector3(this.lifeTime.hours, this.lifeTime.minutes, this.lifeTime.seconds);
     }
 

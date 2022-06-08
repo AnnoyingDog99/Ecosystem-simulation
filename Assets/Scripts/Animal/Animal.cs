@@ -7,11 +7,9 @@ public abstract class Animal : ELActor
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] protected AnimalMemory memory;
     [SerializeField] protected Sight sight;
-    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected HungerBar hungerBar;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
-
     [SerializeField] protected float walkSpeed = 1;
     [SerializeField] protected float runSpeed = 2;
     [SerializeField] private float babyScale = 0.5f;
@@ -41,8 +39,8 @@ public abstract class Animal : ELActor
     protected override void Start()
     {
         base.Start();
-        agent.angularSpeed = rotationSpeed;
-        agent.acceleration = acceleration;
+        this.agent.angularSpeed = rotationSpeed;
+        this.agent.acceleration = acceleration;
 
         _animator = GetComponentInChildren<Animator>();
         this._isWalkingHash = Animator.StringToHash("isWalking");
@@ -56,7 +54,6 @@ public abstract class Animal : ELActor
     protected override void Update()
     {
         base.Update();
-        Debug.Log(this.hungerBar.GetHungerPercentage());
         if (this.isDead) return;
         this.isWalking = _animator.GetBool(_isWalkingHash);
         this.isRunning = _animator.GetBool(_isRunningHash);
@@ -88,8 +85,8 @@ public abstract class Animal : ELActor
     /// </param>
     private void MoveTo(Vector3 position, float speed)
     {
-        agent.speed = speed;
-        agent.SetDestination(position);
+        this.agent.speed = speed;
+        this.agent.SetDestination(position);
     }
 
     public void Idle()
@@ -148,7 +145,7 @@ public abstract class Animal : ELActor
 
     public bool ReachedDestination()
     {
-        return agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
+        return this.agent.remainingDistance != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0;
     }
 
     public List<Animal> getOffspring()
