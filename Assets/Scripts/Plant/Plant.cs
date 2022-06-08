@@ -5,13 +5,13 @@ using UnityEngine;
 public class Plant : ELActor
 {
     [SerializeField] Vector3 startScale = new Vector3(0, 0, 0);
+    // The scale percentage this plant needs to be considered alive
+    [SerializeField] int minimumScalePercentage = 1;
     [SerializeField] Vector3 endScale = new Vector3(1, 1, 10);
-    [SerializeField] int growTime = 10;
+    [SerializeField] private int growTime = 10;
+    [SerializeField] private int growthRecoveryTime = 10;
     [SerializeField] int totalFoodPoints = 10;
-    public bool isDead { get; private set; } = false;
-
     private Vector3 growthStep;
-    private int growthRecoveryTime = 10;
     private float growthRecoveryTimer = 0;
 
     // Start is called before the first frame update
@@ -26,6 +26,7 @@ public class Plant : ELActor
     protected override void Update()
     {
         base.Update();
+        if (this.isDead) return;
         growthRecoveryTimer -= Time.deltaTime;
         if (HasRecovered() && !this.IsFullyGrown())
         {
@@ -33,11 +34,7 @@ public class Plant : ELActor
         }
         if (this.IsFullyGrown())
         {
-            this.Eat(1);
-            this.Eat(1);
-            this.Eat(1);
-            this.Eat(1);
-            this.Eat(1);
+            // this.Eat(1);
         }
     }
 
@@ -48,14 +45,14 @@ public class Plant : ELActor
 
     public int GetCurrentFoodPoints()
     {
-        return (this.totalFoodPoints / 100) * this.GetGrowthPercent(); ;
+        return Mathf.RoundToInt(((float)this.totalFoodPoints / 100) * (float)this.GetGrowthPercent());
     }
 
     public int GetGrowthPercent()
     {
         float max_distance = Vector3.Distance(this.endScale, this.startScale);
         float current_distance = Vector3.Distance(this.endScale, base.GetScale());
-        return (int)Mathf.RoundToInt((100 / max_distance) * (max_distance - current_distance));
+        return Mathf.RoundToInt((100 / max_distance) * (max_distance - current_distance));
     }
 
     public bool IsFullyGrown()
@@ -71,10 +68,10 @@ public class Plant : ELActor
     public virtual float Eat(float biteSize)
     {
         growthRecoveryTimer = growthRecoveryTime;
-        float eatenFoodPoints = this.totalFoodPoints * (biteSize / 10);
-        int percentageEaten = (int)Mathf.RoundToInt((100 / this.totalFoodPoints) * eatenFoodPoints);
+        float eatenFoodPoints = biteSize > GetCurrentFoodPoints() ? GetCurrentFoodPoints() : biteSize;
+        int percentageEaten = Mathf.RoundToInt((100 / this.totalFoodPoints) * biteSize);
         this.Shrink(percentageEaten);
-        if (GetGrowthPercent() <= 0)
+        if (GetGrowthPercent() <= minimumScalePercentage)
         {
             this.isDead = true;
         }

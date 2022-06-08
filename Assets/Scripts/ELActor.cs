@@ -2,7 +2,9 @@ using UnityEngine;
 
 public abstract class ELActor : MonoBehaviour
 {
+    [SerializeField] protected GameObject ownKindGameObject = null;
     protected LifeTime lifeTime = new LifeTime();
+    public bool isDead { get; protected set; } = false;
     protected internal class LifeTime
     {
         public int seconds = 0;

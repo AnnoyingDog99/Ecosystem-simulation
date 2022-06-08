@@ -970,10 +970,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f4aa3dc6fc65e6e8a708fec59d30d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownKindGameObject: {fileID: 1418939956}
   startScale: {x: 0, y: 0, z: 0}
+  minimumScalePercentage: 60
   endScale: {x: 6, y: 2.5, z: 6}
-  growTime: 10
+  growTime: 3
+  growthRecoveryTime: 3
   totalFoodPoints: 10
+  spreadTime: 3
 --- !u!1001 &1484662407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1040,6 +1044,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: ownKindGameObject
+      value: 
+      objectReference: {fileID: 1795524880}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: plantTags.Array.size
@@ -1268,13 +1277,19 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 562342109}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1795524880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484662407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1867726454 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7136047097241510422, guid: 5ea34e5e3550605c1943cb3799451ad7,
     type: 3}
   m_PrefabInstance: {fileID: 7136047097315896479}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2126545859}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
@@ -1292,12 +1307,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1484662407}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2126545859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7136047097241510424, guid: 5ea34e5e3550605c1943cb3799451ad7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7136047097315896479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7136047097315896479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1380,6 +1401,11 @@ PrefabInstance:
       propertyPath: rotationSpeed
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: ownKindGameObject
+      value: 
+      objectReference: {fileID: 2126545859}
     - target: {fileID: 7136047097241510422, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: viewAngle

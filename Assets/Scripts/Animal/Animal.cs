@@ -8,12 +8,12 @@ public abstract class Animal : ELActor
     [SerializeField] protected AnimalMemory memory;
     [SerializeField] protected Sight sight;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected HungerBar hungerBar;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
 
     [SerializeField] protected float walkSpeed = 1;
     [SerializeField] protected float runSpeed = 2;
-    [SerializeField] private GameObject offspringGameObject = null;
     [SerializeField] private float babyScale = 0.5f;
     [SerializeField] private float adultScale = 1f;
     [SerializeField] protected Sex sex = Sex.F;
@@ -23,9 +23,13 @@ public abstract class Animal : ELActor
 
     private Animator _animator;
 
-    private int _isWalkingHash, _isRunningHash, _isDeadHash, _isAirbornHash;
+    private int _isIdleHash, _isWalkingHash, _isRunningHash, _isDeadHash, _isAirbornHash, _isEatingHash;
 
-    protected bool isWalking, isRunning, isDead, isAirborn;
+    public bool isIdle { get; protected set; }
+    public bool isWalking { get; protected set; }
+    public bool isRunning { get; protected set; }
+    public bool isAirborn { get; protected set; }
+    public bool isEating { get; protected set; }
 
     protected List<Animal> offspring = new List<Animal>();
 
@@ -41,21 +45,25 @@ public abstract class Animal : ELActor
         agent.acceleration = acceleration;
 
         _animator = GetComponentInChildren<Animator>();
-        _isWalkingHash = Animator.StringToHash("isWalking");
-        _isRunningHash = Animator.StringToHash("isRunning");
-        _isDeadHash = Animator.StringToHash("isDead");
-        _isAirbornHash = Animator.StringToHash("isAirborn");
+        this._isWalkingHash = Animator.StringToHash("isWalking");
+        this._isRunningHash = Animator.StringToHash("isRunning");
+        this._isDeadHash = Animator.StringToHash("isDead");
+        this._isAirbornHash = Animator.StringToHash("isAirborn");
+        this._isEatingHash = Animator.StringToHash("isEating");
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (isDead) return;
-        isWalking = _animator.GetBool(_isWalkingHash);
-        isRunning = _animator.GetBool(_isRunningHash);
-        isDead = _animator.GetBool(_isDeadHash);
-        isAirborn = _animator.GetBool(_isAirbornHash);
+        Debug.Log(this.hungerBar.GetHungerPercentage());
+        if (this.isDead) return;
+        this.isWalking = _animator.GetBool(_isWalkingHash);
+        this.isRunning = _animator.GetBool(_isRunningHash);
+        this.isAirborn = _animator.GetBool(_isAirbornHash);
+        // TODO:
+        // this.isEating = _animator.GetBool(_isEatingHash);
+        this.isIdle = !isWalking && !isRunning && !isEating;
 
         if (this.ReachedDestination())
         {
@@ -63,8 +71,9 @@ public abstract class Animal : ELActor
         }
     }
 
-    public void Die()
+    protected void Die()
     {
+        this.isDead = true;
         _animator.SetBool(_isDeadHash, true);
     }
 
@@ -154,7 +163,7 @@ public abstract class Animal : ELActor
     public void instantiateOffspring()
     {
         if (this.sex != Sex.F) return;
-        Animal newOffspring = Instantiate(offspringGameObject, transform.position, transform.rotation).GetComponent<Animal>();
+        Animal newOffspring = Instantiate(this.ownKindGameObject, transform.position, transform.rotation).GetComponent<Animal>();
         newOffspring.SetScale(new Vector3(this.babyScale, this.babyScale, this.babyScale));
         newOffspring.SetMother(this);
         offspring.Add(newOffspring);
@@ -178,5 +187,10 @@ public abstract class Animal : ELActor
     public Sight GetSight()
     {
         return this.sight;
+    }
+
+    public HungerBar GetHungerBar()
+    {
+        return this.hungerBar;
     }
 }
