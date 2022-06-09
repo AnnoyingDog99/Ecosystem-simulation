@@ -12,7 +12,6 @@ public class Plant : ELActor
     [SerializeField] Vector3 endScale = new Vector3(1, 1, 10);
     [SerializeField] private int growTime = 10;
     [SerializeField] private int growthRecoveryTime = 10;
-    [SerializeField] int totalFoodPoints = 10;
     private Vector3 growthStep;
     private float growthRecoveryTimer = 0;
 
@@ -44,7 +43,7 @@ public class Plant : ELActor
 
     public int GetCurrentFoodPoints()
     {
-        return Mathf.RoundToInt(((float)this.totalFoodPoints / 100) * (float)this.GetGrowthPercent());
+        return Mathf.RoundToInt(((float)this.foodPoints / 100) * (float)this.GetGrowthPercent());
     }
 
     public int GetGrowthPercent()
@@ -64,11 +63,11 @@ public class Plant : ELActor
         return this.growthRecoveryTimer <= 0;
     }
 
-    public virtual float Eat(float biteSize)
+    public override float Eat(float biteSize)
     {
         growthRecoveryTimer = growthRecoveryTime;
         float eatenFoodPoints = Mathf.Min(biteSize, GetCurrentFoodPoints());
-        int percentageEaten = Mathf.RoundToInt((100 / this.totalFoodPoints) * biteSize);
+        int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * biteSize);
         this.Shrink(percentageEaten);
         if (GetGrowthPercent() <= minimumScalePercentage)
         {

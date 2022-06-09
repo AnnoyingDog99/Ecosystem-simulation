@@ -28,6 +28,7 @@ public class FleeFromPredatorsNode : Node
 
         float minDistance = -1f;
         float maxDistance = -1f;
+        
         /**
             Add nearby predators into the equation
         */

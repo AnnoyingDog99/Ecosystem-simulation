@@ -6,8 +6,8 @@ using System;
 public class HerbivoreMemory : AnimalMemory
 {
     [SerializeField] private float plantMemorySpan;
-    protected List<Memory<ELActor>> plants = new List<Memory<ELActor>>();
-    
+    protected List<Memory<Plant>> plants = new List<Memory<Plant>>();
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -19,5 +19,25 @@ public class HerbivoreMemory : AnimalMemory
     {
         base.Update();
         UpdateMemories(plants);
+    }
+
+    public void AddPlantMemory(Plant plant)
+    {
+        // Check if memory doesn't already exist
+        Memory<Plant> existingMemory = plants.Find((memory) => memory.GetMemoryContent().GetID() == plant.GetID());
+        if (existingMemory != null)
+        {
+            // Refresh existing memory instead of adding new one
+            existingMemory.Refresh();
+            return;
+        }
+
+        plants.Add(new Memory<Plant>(plant, plantMemorySpan));
+    }
+
+    public List<Plant> GetPlantsInMemory()
+    {
+        // Return plants, filter out plants that were destroyed
+        return plants.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((plant) => plant != null);
     }
 }

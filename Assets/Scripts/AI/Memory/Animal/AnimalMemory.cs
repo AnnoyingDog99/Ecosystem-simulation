@@ -43,7 +43,8 @@ public class AnimalMemory : ELActorMemory
 
     public List<Animal> GetPredatorsInMemory()
     {
-        return predators.ConvertAll((fragment) => fragment.GetMemoryContent());
+        // Return predators, filter out predators that were destroyed
+        return predators.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((predator) => predator != null);
     }
 
     public void AddObstacleMemory(Collider obstacle)

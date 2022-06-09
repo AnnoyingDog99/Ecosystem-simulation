@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
 
 public abstract class ELActor : MonoBehaviour
 {
+    [SerializeField] protected BoxCollider boxCollider;
     [SerializeField] protected GameObject ownKindGameObject = null;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected float foodPoints = 10;
     protected LifeTime lifeTime = new LifeTime();
     public bool isDead { get; protected set; } = false;
+    private List<ELActor> actorsBeingTouched = new List<ELActor>();
     protected internal class LifeTime
     {
         public int seconds = 0;
@@ -44,13 +49,56 @@ public abstract class ELActor : MonoBehaviour
         {
             Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
         }
-        
+
         InvokeRepeating("handleLifeTime", 1, 1);
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        // Remove dead actor
+        if (this.isDead)
+        {
+            StartCoroutine(DestroyAfterDelay(1));
+        }
+    }
+
+    IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(this.gameObject);
+        Destroy(this);
+    }
+
+
+    protected virtual void OnTriggerEnter(Collider collider)
+    {
+        // TODO: Handle mouse click
+
+        ELActor actor = collider.gameObject.GetComponent<ELActor>();
+        if (actor != null)
+        {
+            if (!this.actorsBeingTouched.Contains(actor))
+            {
+                this.actorsBeingTouched.Add(actor);
+            }
+        }
+    }
+
+    protected virtual void OnTriggerStay(Collider collider)
+    {
+    }
+
+    protected virtual void OnTriggerExit(Collider collider)
+    {
+        ELActor actor = collider.gameObject.GetComponent<ELActor>();
+        if (actor != null)
+        {
+            if (this.actorsBeingTouched.Contains(actor))
+            {
+                this.actorsBeingTouched.Remove(actor);
+            }
+        }
     }
 
     private void handleLifeTime()
@@ -75,7 +123,8 @@ public abstract class ELActor : MonoBehaviour
 
     public Vector3 GetScale()
     {
-        return transform.localScale;
+        // return boxCollider.transform.localScale;
+        return this.transform.lossyScale;
     }
 
     public Vector3 GetPosition()
@@ -86,5 +135,16 @@ public abstract class ELActor : MonoBehaviour
     public int GetID()
     {
         return gameObject.GetInstanceID();
+    }
+
+    public List<ELActor> GetActorsBeingTouched()
+    {
+        return this.actorsBeingTouched;
+    }
+
+    // Eat this Actor
+    public virtual float Eat(float biteSize)
+    {
+        return biteSize;
     }
 }

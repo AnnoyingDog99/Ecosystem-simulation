@@ -20,7 +20,6 @@ public abstract class Field : MonoBehaviour
     {
         this.spreadTimer = this.spreadTime;
         float avgPointRadius = (referencePlant.GetEndScale().x + referencePlant.GetEndScale().y) / 2;
-        Debug.Log(avgPointRadius);
         this.points = PoissonDiscSampling.GeneratePoints(avgPointRadius, size, maxAmountOfPlants, 20);
         if (this.points.Count <= 0)
         {

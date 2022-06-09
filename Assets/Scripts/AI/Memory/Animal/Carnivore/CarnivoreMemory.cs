@@ -41,6 +41,7 @@ public class CarnivoreMemory : AnimalMemory
 
     public List<Tuple<Animal, Vector3>> GetPreyInMemory()
     {
-        return prey.ConvertAll((fragment) => fragment.GetMemoryContent());
+        // Return prey, filter out prey that were destroyed
+        return prey.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((prey) => prey.Item1 != null);
     }
 }

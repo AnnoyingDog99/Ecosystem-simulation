@@ -19,6 +19,7 @@ public abstract class Animal : ELActor
     [SerializeField] protected uint age = 0;
     [SerializeField] protected uint maxAge = 100;
     [SerializeField] protected List<string> predatorTags = new List<string>();
+    [SerializeField] protected uint biteSize = 1;
 
     private Animator _animator;
 
@@ -49,6 +50,8 @@ public abstract class Animal : ELActor
         this._isDeadHash = Animator.StringToHash("isDead");
         this._isAirbornHash = Animator.StringToHash("isAirborn");
         this._isEatingHash = Animator.StringToHash("isEating");
+
+        this.Idle();
     }
 
     // Update is called once per frame
@@ -59,6 +62,7 @@ public abstract class Animal : ELActor
         this.isWalking = _animator.GetBool(_isWalkingHash);
         this.isRunning = _animator.GetBool(_isRunningHash);
         this.isAirborn = _animator.GetBool(_isAirbornHash);
+        this.isIdle = !this.isWalking && !this.isRunning;
         // TODO:
         // this.isEating = _animator.GetBool(_isEatingHash);
 
@@ -74,10 +78,11 @@ public abstract class Animal : ELActor
         _animator.SetBool(_isDeadHash, true);
     }
 
-    private bool MoveTo(Vector3 position, float speed)
+    private bool MoveTo(NavMeshPath path, float speed)
     {
         this.agent.speed = speed;
-        return this.agent.SetDestination(position);
+        // return this.agent.SetDestination(position);
+        return this.agent.SetPath(path);
     }
 
     public void Idle()
@@ -96,11 +101,24 @@ public abstract class Animal : ELActor
 
     public bool WalkTo(Vector3 position)
     {
+        NavMeshPath path = new NavMeshPath();
+        if (!this.IsReachable(position, out path))
+        {
+            // Position is unreachable
+            return false;
+        }
+
+        return this.WalkTo(path);
+    }
+
+    public bool WalkTo(NavMeshPath path)
+    {
         if (this.staminaBar.GetStaminaPercentage() < this.staminaBar.minimumWalkPercentage)
         {
             this.Idle();
             return true;
         }
+
         if (!isWalking)
         {
             _animator.SetBool(_isWalkingHash, true);
@@ -109,8 +127,7 @@ public abstract class Animal : ELActor
         {
             _animator.SetBool(_isRunningHash, false);
         }
-
-        if (!this.MoveTo(position, walkSpeed))
+        if (!this.MoveTo(path, walkSpeed))
         {
             // Failed to reach position
             this.Idle();
@@ -121,10 +138,23 @@ public abstract class Animal : ELActor
 
     public bool RunTo(Vector3 position)
     {
+        NavMeshPath path = new NavMeshPath();
+        if (!this.IsReachable(position, out path))
+        {
+            // Position is unreachable
+            return false;
+        }
+
+        return this.RunTo(path);
+    }
+
+    public bool RunTo(NavMeshPath path)
+    {
         if (this.staminaBar.GetStaminaPercentage() < this.staminaBar.minimumRunPercentage)
         {
-            return this.WalkTo(position);
+            return this.WalkTo(path);
         }
+
         if (isWalking)
         {
             _animator.SetBool(_isWalkingHash, false);
@@ -134,13 +164,23 @@ public abstract class Animal : ELActor
             _animator.SetBool(_isRunningHash, true);
         }
 
-        if (!this.MoveTo(position, runSpeed))
+        if (!this.MoveTo(path, runSpeed))
         {
             // Failed to reach position
             this.Idle();
             return false;
         }
         return true;
+    }
+
+    public bool IsReachable(Vector3 position, out NavMeshPath path)
+    {
+        path = new NavMeshPath();
+        if (this.agent.CalculatePath(position, path) && path.status == NavMeshPathStatus.PathComplete)
+        {
+            return true;
+        }
+        return false;
     }
 
     public bool ReachedDestination()
@@ -202,5 +242,10 @@ public abstract class Animal : ELActor
     public HungerBar GetHungerBar()
     {
         return this.hungerBar;
+    }
+
+    public uint GetBiteSize()
+    {
+        return this.biteSize;
     }
 }

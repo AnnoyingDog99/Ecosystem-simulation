@@ -18,7 +18,7 @@ public class ChasePreyNode : Node
         /**
             Run to prey
         */
-        CarnivoreMemory memory = (animal.GetMemory() as CarnivoreMemory);
+        CarnivoreMemory memory = (this.animal.GetMemory() as CarnivoreMemory);
 
         List<Tuple<Animal, Vector3>> nearbyPrey = memory.GetPreyInMemory();
         if (nearbyPrey.Count <= 0)
@@ -34,7 +34,7 @@ public class ChasePreyNode : Node
         */
         foreach (Tuple<Animal, Vector3> prey in nearbyPrey)
         {
-            float distance = Vector3.Distance(animal.GetPosition(), prey.Item2);
+            float distance = Vector3.Distance(this.animal.GetPosition(), prey.Item2);
             if (minDistance == -1f || distance < minDistance)
             {
                 minDistance = distance;
@@ -48,7 +48,7 @@ public class ChasePreyNode : Node
             return NodeStates.FAILURE;
         }
 
-        animal.RunTo(closestPreyPosition);
+        this.animal.RunTo(closestPreyPosition);
 
         return NodeStates.SUCCESS;
     }

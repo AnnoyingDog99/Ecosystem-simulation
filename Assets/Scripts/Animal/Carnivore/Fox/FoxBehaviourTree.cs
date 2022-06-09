@@ -5,13 +5,13 @@ using UnityEngine;
 public class FoxBehaviourTree : CarnivoreBehaviourTree
 {
     [SerializeField] Fox fox;
-    
+
     protected override void Start()
     {
         base.Start();
         rootNode = new Selector(new List<Node>() {
             new Sequence(new List<Node>() {
-                new CheckForPrey(fox),
+                new CheckForPreyNode(fox),
                 new ChasePreyNode(fox, this.maxPreyDistance)
             })
         });
