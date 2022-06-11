@@ -15,7 +15,7 @@ public class IsHungryNode : Node
         /**
             Evaluate whether the animal is hungry
         */
-        Debug.Log(this.animal.GetHungerBar().GetHungerPercentage());
+        return NodeStates.SUCCESS;
         return this.animal.GetHungerBar().IsHungry() ? NodeStates.SUCCESS : NodeStates.FAILURE;
     }
 }

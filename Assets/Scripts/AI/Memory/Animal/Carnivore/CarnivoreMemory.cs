@@ -25,8 +25,8 @@ public class CarnivoreMemory : AnimalMemory
 
     public void AddPreyMemory(Tuple<Animal, Vector3> animalAndPosition)
     {
-        // Check if memory doesn´t already exist
-        Memory<Tuple<Animal, Vector3>> existingMemory = this.prey.Find((memory) => memory.GetMemoryContent().Item1.GetID() == animalAndPosition.Item1.GetID());
+        // Check if memory doesn´t already exist, filter out prey that were destroyed
+        Memory<Tuple<Animal, Vector3>> existingMemory = this.prey.FindAll((memory) => memory.GetMemoryContent().Item1 != null).Find((memory) => memory.GetMemoryContent().Item1.GetID() == animalAndPosition.Item1.GetID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one

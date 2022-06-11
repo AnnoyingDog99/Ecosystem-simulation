@@ -98,7 +98,7 @@ public class ForageNode : Node
             // Eat Plant
             if ((this.eatDelayTimer -= Time.deltaTime) < 0)
             {
-                this.animal.GetHungerBar().Eat(closestPlant);
+                this.animal.GetHungerBar().AddFoodPoints(closestPlant.GetEaten(this.animal.GetBiteSize()));
                 this.eatDelayTimer = this.eatDelay;
             }
 

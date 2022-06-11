@@ -29,8 +29,8 @@ public class AnimalMemory : ELActorMemory
 
     public void AddPredatorMemory(Animal predator)
     {
-        // Check if memory doesn't already exist
-        Memory<Animal> existingMemory = predators.Find((memory) => memory.GetMemoryContent().GetID() == predator.GetID());
+        // Check if memory doesn't already exist, filter out predators that were destroyed
+        Memory<Animal> existingMemory = predators.FindAll((memory) => memory.GetMemoryContent() != null).Find((memory) => memory.GetMemoryContent().GetID() == predator.GetID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one

@@ -23,8 +23,8 @@ public class HerbivoreMemory : AnimalMemory
 
     public void AddPlantMemory(Plant plant)
     {
-        // Check if memory doesn't already exist
-        Memory<Plant> existingMemory = plants.Find((memory) => memory.GetMemoryContent().GetID() == plant.GetID());
+        // Check if memory doesn't already exist, filter out plants that were destroyed
+        Memory<Plant> existingMemory = this.plants.FindAll((memory) => memory.GetMemoryContent() != null).Find((memory) => memory.GetMemoryContent().GetID() == plant.GetID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one

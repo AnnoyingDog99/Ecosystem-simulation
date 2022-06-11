@@ -45,9 +45,9 @@ public class HungerBar : MonoBehaviour
         this.current = (this.current - penalties) > 0 ? this.current - penalties : 0;
     }
 
-    public void Eat(ELActor actor)
+    public void AddFoodPoints(float foodPoints)
     {
-        this.current += actor.Eat(this.animal.GetBiteSize());
+        this.current += foodPoints;
     }
 
     public uint GetHungerPercentage()

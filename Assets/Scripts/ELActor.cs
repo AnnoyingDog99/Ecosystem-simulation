@@ -9,6 +9,8 @@ public abstract class ELActor : MonoBehaviour
     [SerializeField] protected GameObject ownKindGameObject = null;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected float foodPoints = 10;
+    [SerializeField] protected Vector3 minScale = new Vector3(1, 1, 1);
+    [SerializeField] protected Vector3 maxScale = new Vector3(1, 1, 1);
     protected LifeTime lifeTime = new LifeTime();
     public bool isDead { get; protected set; } = false;
     private List<ELActor> actorsBeingTouched = new List<ELActor>();
@@ -139,12 +141,48 @@ public abstract class ELActor : MonoBehaviour
 
     public List<ELActor> GetActorsBeingTouched()
     {
+        this.actorsBeingTouched = this.actorsBeingTouched.FindAll((actor) => actor != null);
         return this.actorsBeingTouched;
     }
 
-    // Eat this Actor
-    public virtual float Eat(float biteSize)
+    public void Shrink(int percentage)
     {
-        return biteSize;
+        this.SetScale(this.GetScale() - ((this.maxScale / 100) * percentage));
+    }
+
+    // Take a bite of this actor and return the amount of foodpoints.
+    public virtual float GetEaten(float biteSize)
+    {
+        float eatenFoodPoints = Mathf.Min(biteSize, GetCurrentFoodPoints());
+        int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * biteSize);
+        this.Shrink(percentageEaten);
+        return eatenFoodPoints;
+    }
+
+    public int GetCurrentFoodPoints()
+    {
+        return Mathf.RoundToInt(((float)this.foodPoints / 100) * (float)this.GetGrowthPercent());
+    }
+
+    public int GetGrowthPercent()
+    {
+        float maxDistance = Vector3.Distance(this.maxScale, this.minScale);
+        float currentDistance = Vector3.Distance(this.maxScale, this.GetScale());
+        return Mathf.RoundToInt((100 / maxDistance) * (maxDistance - currentDistance));
+    }
+
+    public Vector3 GetMinScale()
+    {
+        return this.minScale;
+    }
+
+    public Vector3 GetMaxScale()
+    {
+        return this.maxScale;
+    }
+
+    public bool IsFullyGrown()
+    {
+        return (this.GetGrowthPercent() >= 100);
     }
 }
