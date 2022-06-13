@@ -13,9 +13,11 @@ public class Selector : Node
         m_nodes = nodes;
     }
 
-    /* If any of the children reports a success, the selector will
-     * immediately report a success upwards. If all children fail,
-     * it will report a failure instead.*/
+    /* 
+     * If any of the children reports a success, the selector will
+     * immediately report a success upwards. 
+     * If all children fail, it will report a failure instead.
+    */
     public override NodeStates Evaluate()
     {
         foreach (Node node in m_nodes)

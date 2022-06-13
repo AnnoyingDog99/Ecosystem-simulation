@@ -9,6 +9,8 @@ public abstract class Animal : ELActor
     [SerializeField] protected Sight sight;
     [SerializeField] protected HungerBar hungerBar;
     [SerializeField] protected StaminaBar staminaBar;
+    [SerializeField] protected HealthBar healthBar;
+    [SerializeField] protected float damage = 1f;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
     [SerializeField] protected float walkSpeed = 1;
@@ -59,6 +61,12 @@ public abstract class Animal : ELActor
     {
         base.Update();
         if (this.isDead) return;
+        if (this.GetHealthBar().GetHealthPercentage() <= 0)
+        {
+            this.Die();
+        }
+        this.behaviourTree.Evaluate();
+
         this.isWalking = _animator.GetBool(_isWalkingHash);
         this.isRunning = _animator.GetBool(_isRunningHash);
         this.isAirborn = _animator.GetBool(_isAirbornHash);
@@ -68,13 +76,18 @@ public abstract class Animal : ELActor
 
         if (this.ReachedDestination())
         {
-            Idle();
+            this.Idle();
         }
     }
 
     protected void Die()
     {
         this.isDead = true;
+        _animator.SetBool(_isWalkingHash, false);
+        _animator.SetBool(_isRunningHash, false);
+        _animator.SetBool(_isAirbornHash, false);
+        _animator.SetBool(_isIdleHash, false);
+        _animator.SetBool(_isEatingHash, false);
         _animator.SetBool(_isDeadHash, true);
     }
 
@@ -244,8 +257,25 @@ public abstract class Animal : ELActor
         return this.hungerBar;
     }
 
+    public HealthBar GetHealthBar()
+    {
+        return this.healthBar;
+    }
+
     public uint GetBiteSize()
     {
         return this.biteSize;
+    }
+
+    public void Attack(Animal animal)
+    {
+        animal.GetDamaged(this.damage);
+        // TODO: Animations
+    }
+
+    public void GetDamaged(float damage)
+    {
+        this.GetHealthBar().RemoveHealthPoints(damage);
+        // TODO: Animations
     }
 }

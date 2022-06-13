@@ -50,7 +50,7 @@ MonoBehaviour:
   boxCollider: {fileID: 3147075203913276375}
   ownKindGameObject: {fileID: 3147075203913276379}
   agent: {fileID: 3147075203913276376}
-  foodPoints: 10
+  foodPoints: 20
   minScale: {x: 0, y: 0, z: 0}
   maxScale: {x: 5, y: 2, z: 5}
   minimumScalePercentage: 10

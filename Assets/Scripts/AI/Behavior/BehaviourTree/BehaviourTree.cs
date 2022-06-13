@@ -12,6 +12,11 @@ public abstract class BehaviourTree : MonoBehaviour
 
     protected virtual void Update()
     {
+        // rootNode?.Evaluate();
+    }
+
+    public void Evaluate()
+    {
         rootNode?.Evaluate();
     }
 }

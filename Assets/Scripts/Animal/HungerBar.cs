@@ -13,8 +13,10 @@ public class HungerBar : MonoBehaviour
     [SerializeField] float idlePenalty = 0.5f;
     [SerializeField] float walkingPenalty = 1f;
     [SerializeField] float runningPenalty = 1.5f;
+    [SerializeField] float regeneratingPenalty = 1f;
     [SerializeField] protected uint hungryPercentage = 50;
     [SerializeField] protected uint starvingPercentage = 10;
+
     float current;
 
     // Start is called before the first frame update
@@ -27,15 +29,20 @@ public class HungerBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animal.isDead) return;
         float penalties = 0f;
         float constantRate = Time.deltaTime * rate;
-        if (animal.isWalking)
+        if (this.animal.isWalking)
         {
             penalties += (constantRate * this.walkingPenalty);
         }
-        else if (animal.isRunning)
+        else if (this.animal.isRunning)
         {
             penalties += (constantRate * this.runningPenalty);
+        }
+        else if (this.animal.GetHealthBar().IsRegenerating())
+        {
+            penalties += (constantRate * this.regeneratingPenalty);
         }
         else
         {
@@ -48,6 +55,13 @@ public class HungerBar : MonoBehaviour
     public void AddFoodPoints(float foodPoints)
     {
         this.current += foodPoints;
+        if (this.current > this.max) this.current = this.max;
+    }
+
+    public void RemoveFoodPoints(float foodPoints)
+    {
+        this.current -= foodPoints;
+        if (this.current < 0) this.current = 0;
     }
 
     public uint GetHungerPercentage()

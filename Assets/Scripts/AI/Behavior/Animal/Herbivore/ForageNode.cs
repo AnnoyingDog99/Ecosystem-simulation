@@ -49,39 +49,25 @@ public class ForageNode : Node
         /**
             Get closest plant
         */
-        bool foundReachablePlant = false;
+        float minDistance = -1f;
         Plant closestPlant = null;
         NavMeshPath pathToClosestPlant = new NavMeshPath();
-        while (!foundReachablePlant)
+        foreach (Plant plant in nearbyPlants)
         {
-            float minDistance = -1f;
-            foreach (Plant plant in nearbyPlants)
+            float distance = Vector3.Distance(this.animal.GetPosition(), plant.GetPosition());
+            // Discard plant if it is too far away to consider foraging
+            if (distance > this.maxPlantDistance) continue;
+            if (minDistance == -1f || distance < minDistance)
             {
-                float distance = Vector3.Distance(animal.GetPosition(), plant.GetPosition());
-                if (!plant.isDead && distance > this.maxPlantDistance && (minDistance == -1f || distance < minDistance))
+                minDistance = distance;
+                if (this.animal.IsReachable(plant.GetPosition(), out pathToClosestPlant))
                 {
-                    minDistance = distance;
                     closestPlant = plant;
                 }
             }
-
-            if (closestPlant == null)
-            {
-                // No plants closeby
-                break;
-            }
-
-            if (!animal.IsReachable(closestPlant.GetPosition(), out pathToClosestPlant))
-            {
-                // Plant is not reachable
-                nearbyPlants.Remove(closestPlant);
-                continue;
-            }
-
-            foundReachablePlant = true;
         }
 
-        if (!foundReachablePlant)
+        if (closestPlant == null)
         {
             return NodeStates.FAILURE;
         }

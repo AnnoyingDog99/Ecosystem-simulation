@@ -55,7 +55,7 @@ public class FleeFromPredatorsNode : Node
             if (obstacle.tag == "Surface") continue;
             memory.AddObstacleMemory(obstacle.gameObject.GetComponent<Collider>());
         }
-        float obstaclePreventionWeight = 0.5f;
+        float obstaclePreventionWeight = 0.35f;
         List<Collider> obstacles = memory.GetObstaclesInMemory();
         foreach (Collider obstacle in obstacles)
         {

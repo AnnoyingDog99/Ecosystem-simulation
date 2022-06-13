@@ -61,7 +61,7 @@ public abstract class ELActor : MonoBehaviour
         // Remove dead actor
         if (this.isDead)
         {
-            StartCoroutine(DestroyAfterDelay(1));
+            StartCoroutine(DestroyAfterDelay(10));
         }
     }
 

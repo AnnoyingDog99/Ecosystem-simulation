@@ -7,9 +7,9 @@ public class StaminaBar : MonoBehaviour
     Animal animal;
     [SerializeField] uint max = 100;
     [SerializeField] float recoveryRate = 1;
-    [SerializeField] float recoveryDelay = 5;
-    [SerializeField] float walkingCost = 1;
-    [SerializeField] float runningCost = 3;
+    [SerializeField] float recoveryDelay = 5f;
+    [SerializeField] float walkingCost = 1f;
+    [SerializeField] float runningCost = 3f;
     [SerializeField] public uint minimumRunPercentage { get; protected set; } = 25;
     [SerializeField] public uint minimumWalkPercentage { get; protected set; } = 5;
     float current;
@@ -26,6 +26,7 @@ public class StaminaBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animal.isDead) return;
         float cost = animal.isWalking ? walkingCost : animal.isRunning ? runningCost : 0;
         if (cost == 0)
         {
@@ -33,7 +34,7 @@ public class StaminaBar : MonoBehaviour
             if (this.recoveryDelayTimer <= 0)
             {
                 // Recharge Stamina
-                this.current += (recoveryRate * Time.deltaTime);
+                this.current += (this.recoveryRate * Time.deltaTime);
             }
         }
         else

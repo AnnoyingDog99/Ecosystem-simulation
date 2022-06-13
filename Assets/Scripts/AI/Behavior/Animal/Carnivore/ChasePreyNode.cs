@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections.Generic;
 using System;
 
@@ -6,6 +7,10 @@ public class ChasePreyNode : Node
 {
     private Carnivore animal;
     private float maxPreyDistance;
+    private float attackDelay = 2;
+    private float attackDelayTimer;
+    private float eatDelay = 2;
+    private float eatDelayTimer;
 
     public ChasePreyNode(Carnivore animal, float maxPreyDistance)
     {
@@ -26,30 +31,77 @@ public class ChasePreyNode : Node
             return NodeStates.FAILURE;
         }
 
-        float minDistance = -1f;
-        Vector3 closestPreyPosition = Vector3.zero;
-
         /**
             Get closest prey
         */
+        float minDistance = -1f;
+        NavMeshPath pathToClosesPrey = new NavMeshPath();
+        Animal closestPrey = null;
         foreach (Tuple<Animal, Vector3> prey in nearbyPrey)
         {
             float distance = Vector3.Distance(this.animal.GetPosition(), prey.Item2);
-            if (minDistance == -1f || distance < minDistance)
+            // Discard prey if it is too far away to consider chasing
+            if (distance > this.maxPreyDistance) continue;
+            if (minDistance == -1f || distance < minDistance || prey.Item1.isDead)
             {
-                minDistance = distance;
-                closestPreyPosition = prey.Item2;
+                minDistance = minDistance == -1f || distance < minDistance ? distance : minDistance;
+                if (closestPrey != null && (closestPrey.isDead && !prey.Item1.isDead))
+                {
+                    // Prioritize dead prey if the other prey is alive
+                    continue;
+                }
+                if (closestPrey != null && (!closestPrey.isDead && !prey.Item1.isDead && distance > minDistance))
+                {
+                    // Prioritize closer prey if both prey are alive
+                    continue;
+                }
+                if (this.animal.IsReachable(prey.Item2, out pathToClosesPrey))
+                {
+                    closestPrey = prey.Item1;
+                }
             }
         }
 
-        // Prey is too far away to consider chasing
-        if (minDistance > maxPreyDistance)
+        if (closestPrey == null)
         {
+            // Prey is not reachable
             return NodeStates.FAILURE;
         }
 
-        this.animal.RunTo(closestPreyPosition);
+        /**
+            Attack/ Eat Prey
+        */
+        foreach (ELActor actor in this.animal.GetActorsBeingTouched())
+        {
+            if (closestPrey.GetID() != actor.GetID())
+            {
+                continue;
+            }
 
-        return NodeStates.SUCCESS;
+            if (closestPrey.isDead)
+            {
+                // Eat Prey
+                if ((this.eatDelayTimer -= Time.deltaTime) < 0)
+                {
+                    this.animal.GetHungerBar().AddFoodPoints(closestPrey.GetEaten(this.animal.GetBiteSize()));
+                    this.eatDelayTimer = this.eatDelay;
+                }
+            }
+            else
+            {
+                // Attack Prey
+                if ((this.attackDelayTimer -= Time.deltaTime) < 0)
+                {
+                    this.animal.Attack(closestPrey);
+                    this.attackDelayTimer = this.attackDelay;
+                }
+            }
+
+            return NodeStates.SUCCESS;
+        }
+
+        this.animal.RunTo(pathToClosesPrey);
+
+        return NodeStates.RUNNING;
     }
 }
