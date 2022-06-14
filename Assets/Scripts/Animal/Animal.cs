@@ -202,14 +202,17 @@ public abstract class Animal : ELActor
         {
             return false;
         }
-        // Ignore y-coördinate
-        if (this.agent.remainingDistance > Mathf.Abs(this.agent.pathEndPosition.y - this.GetPosition().y))
+        if (this.agent.hasPath)
         {
-            return false;
-        }
-        if (this.agent.hasPath && this.agent.velocity.sqrMagnitude != 0f)
-        {
-            return false;
+            // Ignore y-coördinate
+            if (this.agent.remainingDistance > Mathf.Abs(this.agent.pathEndPosition.y - this.GetPosition().y))
+            {
+                return false;
+            }
+            if (this.agent.velocity.sqrMagnitude != 0f)
+            {
+                return false;
+            }
         }
         return true;
     }
@@ -250,6 +253,11 @@ public abstract class Animal : ELActor
     public Sight GetSight()
     {
         return this.sight;
+    }
+
+    public StaminaBar GetStaminaBar()
+    {
+        return this.staminaBar;
     }
 
     public HungerBar GetHungerBar()

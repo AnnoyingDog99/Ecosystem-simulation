@@ -9,8 +9,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float regenRate = 1f;
     [SerializeField] float regenDelay = 5f;
 
-    // FIXME: Serialized for Debugging purposes
-    [SerializeField] float current;
+    float current;
     float regenDelayTimer;
 
     // Start is called before the first frame update

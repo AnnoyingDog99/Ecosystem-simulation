@@ -10,8 +10,10 @@ public class StaminaBar : MonoBehaviour
     [SerializeField] float recoveryDelay = 5f;
     [SerializeField] float walkingCost = 1f;
     [SerializeField] float runningCost = 3f;
+    [SerializeField] public uint isTiredPercentage = 50;
     [SerializeField] public uint minimumRunPercentage { get; protected set; } = 25;
     [SerializeField] public uint minimumWalkPercentage { get; protected set; } = 5;
+
     float current;
     float recoveryDelayTimer;
 
@@ -36,6 +38,10 @@ public class StaminaBar : MonoBehaviour
                 // Recharge Stamina
                 this.current += (this.recoveryRate * Time.deltaTime);
             }
+            if (this.current > this.max)
+            {
+                this.current = this.max;
+            }
         }
         else
         {
@@ -50,5 +56,10 @@ public class StaminaBar : MonoBehaviour
         int percentage = Mathf.RoundToInt((100 / max) * current);
         if (percentage < 0) percentage = 0;
         return (uint)percentage;
+    }
+
+    public bool IsTired()
+    {
+        return this.GetStaminaPercentage() < this.isTiredPercentage;
     }
 }

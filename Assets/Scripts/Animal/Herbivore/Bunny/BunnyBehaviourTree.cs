@@ -17,6 +17,13 @@ public class BunnyBehaviourTree : HerbivoreBehaviourTree
             new Sequence(new List<Node>() {
                 new IsHungryNode(bunny),
                 new ForageNode(bunny, maxPlantDistance)
+            }),
+            new Sequence(new List<Node>() {
+                new IsTiredNode(bunny, this.minRestTime),
+                new RestNode(bunny)
+            }),
+            new Sequence(new List<Node>() {
+                new WanderNode(bunny)
             })
         });
     }
