@@ -17,7 +17,7 @@ public class HungerBar : MonoBehaviour
     [SerializeField] protected uint hungryPercentage = 50;
     [SerializeField] protected uint starvingPercentage = 10;
 
-    float current;
+    [SerializeField] float current;
 
     // Start is called before the first frame update
     void Start()

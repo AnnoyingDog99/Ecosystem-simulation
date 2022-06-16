@@ -23,6 +23,11 @@ public class BunnyBehaviourTree : HerbivoreBehaviourTree
                 new RestNode(bunny)
             }),
             new Sequence(new List<Node>() {
+                new IsInHeatNode(bunny),
+                new CheckForPotentialPartnersNode(bunny),
+                new MateWithPartnerNode(bunny, this.maxMatingDistance)
+            }),
+            new Sequence(new List<Node>() {
                 new WanderNode(bunny)
             })
         });

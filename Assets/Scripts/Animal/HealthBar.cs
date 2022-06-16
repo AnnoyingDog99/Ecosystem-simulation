@@ -9,7 +9,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float regenRate = 1f;
     [SerializeField] float regenDelay = 5f;
 
-    float current;
+    [SerializeField] float current;
     float regenDelayTimer;
 
     // Start is called before the first frame update

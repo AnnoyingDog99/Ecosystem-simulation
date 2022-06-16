@@ -857,6 +857,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
+      propertyPath: maxMatingDistance
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
       propertyPath: maxPredatorDistance
       value: 90
       objectReference: {fileID: 0}
@@ -897,13 +902,28 @@ PrefabInstance:
       objectReference: {fileID: 2059865732}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
+      propertyPath: ageBar
+      value: 
+      objectReference: {fileID: 2059865760}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
       propertyPath: damage
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
+      propertyPath: maxAge
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
       propertyPath: biteSize
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: startAge
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -968,7 +988,7 @@ PrefabInstance:
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -978,7 +998,7 @@ PrefabInstance:
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.9
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -1150,12 +1170,373 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1753537995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1753537996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 10
+  regenRate: 1
+  regenDelay: 5
+  current: 0
+--- !u!114 &1753537997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  recoveryRate: 1
+  recoveryDelay: 5
+  walkingCost: 1
+  runningCost: 3
+  isTiredPercentage: 50
+  current: 0
+--- !u!114 &1753537998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  efficiency: 50
+  rate: 0.5
+  idlePenalty: 0.5
+  walkingPenalty: 1
+  runningPenalty: 1.5
+  regeneratingPenalty: 1
+  hungryPercentage: 50
+  starvingPercentage: 5
+  current: 0
+--- !u!65 &1753538000 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1753538005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1753538008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  babyAge: 0
+  childAge: 10
+  adultAge: 20
+  max: 100
+  current: 0
 --- !u!1 &1795524880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
     type: 3}
   m_PrefabInstance: {fileID: 1484662407}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1825774589
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: viewAngle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: viewRadius
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: heightMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: targetMasks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: targetMasks.Array.data[0].m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428171420315788, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
+      propertyPath: targetMasks.Array.data[1].m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: minRestTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: maxPlantDistance
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: maxMatingDistance
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1134835464505260623, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: maxPredatorDistance
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437094518659626983, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: plantMemorySpan
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437094518659626983, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: ownKindMemorySpan
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437094518659626983, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: obstacleMemorySpan
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437094518659626983, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: predatorMemorySpan
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: sex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: sight
+      value: 
+      objectReference: {fileID: 1753538005}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: ageBar
+      value: 
+      objectReference: {fileID: 1753538008}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: maxAge
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: biteSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: startAge
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1753537996}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: hungerBar
+      value: 
+      objectReference: {fileID: 1753537998}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: staminaBar
+      value: 
+      objectReference: {fileID: 1753537997}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: boxCollider
+      value: 
+      objectReference: {fileID: 1753538000}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: ownKindGameObject
+      value: 
+      objectReference: {fileID: 1753537995}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: plantTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: plantTags.Array.data[0]
+      value: Grass
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.711074
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.812724
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.988369
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.18123074
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9834407
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 159.117
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Name
+      value: Bunny (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_TagString
+      value: Bunny
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323249531715589686, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124935124707699958, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124935124707699958, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31db349cde1078aa4abc6c333e7f2621, type: 3}
 --- !u!114 &1867726454 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7136047097241510422, guid: 5ea34e5e3550605c1943cb3799451ad7,
@@ -1201,6 +1582,7 @@ MonoBehaviour:
   regeneratingPenalty: 1
   hungryPercentage: 50
   starvingPercentage: 5
+  current: 0
 --- !u!114 &2059865742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,6 +1601,7 @@ MonoBehaviour:
   walkingCost: 1
   runningCost: 3
   isTiredPercentage: 50
+  current: 0
 --- !u!65 &2059865744 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
@@ -1240,6 +1623,24 @@ MonoBehaviour:
   max: 10
   regenRate: 1
   regenDelay: 5
+  current: 0
+--- !u!114 &2059865760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  babyAge: 0
+  childAge: 10
+  adultAge: 20
+  max: 100
+  current: 0
 --- !u!1 &2126545859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7136047097241510424, guid: 5ea34e5e3550605c1943cb3799451ad7,
@@ -1270,6 +1671,7 @@ MonoBehaviour:
   walkingCost: 1
   runningCost: 3
   isTiredPercentage: 50
+  current: 0
 --- !u!114 &2126545869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,6 +1693,7 @@ MonoBehaviour:
   regeneratingPenalty: 1
   hungryPercentage: 40
   starvingPercentage: 5
+  current: 0
 --- !u!114 &2126545879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1709,24 @@ MonoBehaviour:
   max: 10
   regenRate: 1
   regenDelay: 5
+  current: 0
+--- !u!114 &2126545889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126545859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  babyAge: 0
+  childAge: 10
+  adultAge: 20
+  max: 50
+  current: 0
 --- !u!1001 &7136047097315896479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1395,6 +1816,11 @@ PrefabInstance:
       objectReference: {fileID: 1867726454}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
+      propertyPath: ageBar
+      value: 
+      objectReference: {fileID: 2126545889}
+    - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
       propertyPath: damage
       value: 5
       objectReference: {fileID: 0}
@@ -1402,6 +1828,11 @@ PrefabInstance:
         type: 3}
       propertyPath: biteSize
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: startAge
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}

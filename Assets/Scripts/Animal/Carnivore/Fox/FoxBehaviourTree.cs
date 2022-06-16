@@ -20,6 +20,11 @@ public class FoxBehaviourTree : CarnivoreBehaviourTree
                 new ChasePreyNode(fox, this.maxPreyDistance)
             }),
             new Sequence(new List<Node>() {
+                new IsInHeatNode(fox),
+                new CheckForPotentialPartnersNode(fox),
+                new MateWithPartnerNode(fox, this.maxMatingDistance)
+            }),
+            new Sequence(new List<Node>() {
                 new WanderNode(fox)
             })
         });

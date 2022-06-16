@@ -15,34 +15,37 @@ public class WanderNode : Node
     float randomizeNewPositionTimer;
     float randomizeNewPositionTime = 2f;
 
+    float minIdleTime = 2f;
+    float maxIdleTime = 10f;
+    float idleTime = 5f;
+    float idleTimer;
+    float minIdleCooldownTime = 3f;
+    float maxIdleCooldownTime = 10f;
+    float idleCooldownTime = 5f;
+    float idleCooldownTimer;
+
     public WanderNode(Animal animal)
     {
         this.animal = animal;
+        this.idleTimer = 0f;
         this.randomizeTimer = 0f;
         this.randomizeCooldownTimer = this.randomizeCooldownTime;
+        this.idleCooldownTime = UnityEngine.Random.Range(this.minIdleCooldownTime, this.maxIdleCooldownTime);
+        this.idleCooldownTimer = this.idleCooldownTime;
     }
 
     public override NodeStates Evaluate()
     {
+        // Idle for some time
+        if (this.IdleForAWhile())
+        {
+            return NodeStates.SUCCESS;
+        }
+        
         // Go into random direction for some time
-        if ((this.randomizeCooldownTimer -= Time.deltaTime) < 0 && (this.randomizeTimer -= Time.deltaTime) > 0)
+        if (this.RandomizeWandering())
         {
-            if ((this.randomizeNewPositionTimer -= Time.deltaTime) < 0 || this.animal.ReachedDestination())
-            {
-                this.randomizeNewPositionTimer = this.randomizeNewPositionTime;
-                if (this.GoToRandomPosition())
-                {
-                    return NodeStates.SUCCESS;
-                }
-            }
-        }
-        if (this.randomizeCooldownTimer > 0)
-        {
-            this.randomizeTimer = this.randomizeTime;
-        }
-        if (this.randomizeTimer < 0)
-        {
-            this.randomizeCooldownTimer = this.randomizeCooldownTime;
+            return NodeStates.SUCCESS;
         }
 
         if (!animal.ReachedDestination())
@@ -84,8 +87,34 @@ public class WanderNode : Node
         */
         NavMeshPath pathToPOI = new NavMeshPath();
 
+        List<Animal> ownKindMemory = animal.GetMemory().GetOwnKindInMemory();
+
+        // Prioritize partners
+        List<Vector3> partnerPOIs = ownKindMemory.FindAll(
+                    (ownKind) => (this.animal.GetPartner() != null && ownKind.GetID() == this.animal.GetPartner().GetID()))
+                    .ConvertAll((animal) => (animal.GetPosition() + (animal.GetScale() * 2f)));
+        this.POI = GetClosestPOI(partnerPOIs, out pathToPOI);
+        if (this.POI != Vector3.zero)
+        {
+            this.animal.WalkTo(pathToPOI);
+            return NodeStates.SUCCESS;
+        }
+
+        // Prioritize parents // TODO: Unless old enough
+        List<Vector3> parentPOIs = ownKindMemory.FindAll(
+            (ownKind) => (this.animal.GetMother() != null && ownKind.GetID() == this.animal.GetMother().GetID())
+            || (this.animal.GetFather() != null && ownKind.GetID() == this.animal.GetFather().GetID()))
+            .ConvertAll((animal) => (animal.GetPosition() + (animal.GetScale() * 2f)));
+
+        this.POI = GetClosestPOI(parentPOIs, out pathToPOI);
+        if (this.POI != Vector3.zero)
+        {
+            this.animal.WalkTo(pathToPOI);
+            return NodeStates.SUCCESS;
+        }
+
         // Prioritize own kind (TODO: Seperate to group animal behaviour)
-        List<Vector3> ownKindPOIs = animal.GetMemory().GetOwnKindInMemory().ConvertAll((animal) => (animal.GetPosition() + (animal.GetScale() * 2f)));
+        List<Vector3> ownKindPOIs = ownKindMemory.ConvertAll((animal) => (animal.GetPosition() + (animal.GetScale() * 2f)));
         this.POI = GetClosestPOI(ownKindPOIs, out pathToPOI);
         if (this.POI != Vector3.zero)
         {
@@ -146,5 +175,51 @@ public class WanderNode : Node
         float distance = 15f;
         Vector3 newPosition = animal.GetPosition() + (new Vector3(UnityEngine.Random.Range(-distance, distance), UnityEngine.Random.Range(-distance, distance), UnityEngine.Random.Range(-distance, distance)));
         return animal.WalkTo(newPosition);
+    }
+
+    private bool RandomizeWandering()
+    {
+        if ((this.randomizeCooldownTimer -= Time.deltaTime) < 0 && (this.randomizeTimer -= Time.deltaTime) > 0)
+        {
+            if ((this.randomizeNewPositionTimer -= Time.deltaTime) < 0 || this.animal.ReachedDestination())
+            {
+                this.randomizeNewPositionTimer = this.randomizeNewPositionTime;
+                if (this.GoToRandomPosition())
+                {
+                    return true;
+                }
+            }
+        }
+        if (this.randomizeCooldownTimer > 0)
+        {
+            this.randomizeTimer = this.randomizeTime;
+        }
+        if (this.randomizeTimer < 0)
+        {
+            this.randomizeCooldownTimer = this.randomizeCooldownTime;
+        }
+        return false;
+    }
+
+    private bool IdleForAWhile()
+    {
+        if ((this.idleCooldownTimer -= Time.deltaTime) < 0)
+        {
+            if ((this.idleTimer -= Time.deltaTime) > 0)
+            {
+                this.animal.Idle();
+                return true;
+            }
+            else
+            {
+                this.idleCooldownTime = UnityEngine.Random.Range(this.minIdleCooldownTime, this.idleCooldownTime + this.maxIdleCooldownTime);
+                this.idleCooldownTimer = this.idleCooldownTime;
+            }
+        }
+        else
+        {
+            this.idleTimer = UnityEngine.Random.Range(this.minIdleTime, this.maxIdleTime);
+        }
+        return false;
     }
 }

@@ -10,18 +10,17 @@ public abstract class Animal : ELActor
     [SerializeField] protected HungerBar hungerBar;
     [SerializeField] protected StaminaBar staminaBar;
     [SerializeField] protected HealthBar healthBar;
+    [SerializeField] protected AgeBar ageBar;
     [SerializeField] protected float damage = 1f;
     [SerializeField] protected float rotationSpeed = 180f;
     [SerializeField] protected float acceleration = 1f;
     [SerializeField] protected float walkSpeed = 1;
     [SerializeField] protected float runSpeed = 2;
-    [SerializeField] private float babyScale = 0.5f;
-    [SerializeField] private float adultScale = 1f;
+    [SerializeField] private float minScalePercentage = 50f;
     [SerializeField] protected Sex sex = Sex.F;
-    [SerializeField] protected uint age = 0;
-    [SerializeField] protected uint maxAge = 100;
     [SerializeField] protected List<string> predatorTags = new List<string>();
     [SerializeField] protected uint biteSize = 1;
+    [SerializeField] uint startAge = 0;
 
     private Animator _animator;
 
@@ -34,10 +33,11 @@ public abstract class Animal : ELActor
     public bool isEating { get; protected set; }
 
     protected List<Animal> offspring = new List<Animal>();
-
     protected Animal mother;
+    protected Animal father;
+    protected Animal partner;
 
-    protected internal enum Sex { M, F }
+    public enum Sex { M, F }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -53,6 +53,8 @@ public abstract class Animal : ELActor
         this._isAirbornHash = Animator.StringToHash("isAirborn");
         this._isEatingHash = Animator.StringToHash("isEating");
 
+        this.lifeTime.minutes += (int)this.startAge;
+
         this.Idle();
     }
 
@@ -65,6 +67,19 @@ public abstract class Animal : ELActor
         {
             this.Die();
         }
+        if (this.GetAgeBar().GetAgePercentage(this.GetAgeBar().GetMaxAge()) >= 100)
+        {
+            this.Die();
+        }
+
+        this.GetAgeBar().SetAge((uint)(
+            /* (this.lifeTime.seconds + (60 * this.lifeTime.minutes) + (3600 * this.lifeTime.hours)) */  // Age up every second
+            (this.lifeTime.minutes) + (60 * this.lifeTime.hours) // Age up every minute
+        /* (this.lifeTime.hours) */ // Age up every hour
+        ));
+
+        this.SetScale((this.maxScale * Mathf.Max(this.minScalePercentage, this.GetAgeBar().GetAgePercentage(this.GetAgeBar().GetAdultAge()))) / 100);
+
         this.behaviourTree.Evaluate();
 
         this.isWalking = _animator.GetBool(_isWalkingHash);
@@ -217,27 +232,116 @@ public abstract class Animal : ELActor
         return true;
     }
 
-    public List<Animal> getOffspring()
+    public Sex GetSex()
+    {
+        return this.sex;
+    }
+
+    public List<Animal> GetOffspring()
     {
         return offspring;
+    }
+
+    public void AddOffspring(Animal offspring)
+    {
+        this.offspring.Add(offspring);
+    }
+
+    public uint GetAge()
+    {
+        return (uint)Mathf.RoundToInt(this.GetAgeBar().GetCurrent());
+    }
+
+    public uint GetMaxAge()
+    {
+        return this.GetAgeBar().GetMaxAge();
     }
 
     /// <summary>
     /// Instantiates offspring which this instance will be the parent of.
     /// Animal has to be of the Female biological sex.
     /// </summary>
-    public void instantiateOffspring()
+    public Animal instantiateOffspring()
     {
-        if (this.sex != Sex.F) return;
+        if (this.sex != Sex.F) return null;
         Animal newOffspring = Instantiate(this.ownKindGameObject, transform.position, transform.rotation).GetComponent<Animal>();
-        newOffspring.SetScale(new Vector3(this.babyScale, this.babyScale, this.babyScale));
+        newOffspring.SetScale(this.maxScale * (this.minScalePercentage / 100));
         newOffspring.SetMother(this);
+        newOffspring.startAge = 0;
         offspring.Add(newOffspring);
+        return newOffspring;
+    }
+    public Animal GetMother()
+    {
+        return this.mother;
     }
 
     public void SetMother(Animal mother)
     {
         this.mother = mother;
+    }
+
+    public Animal GetFather()
+    {
+        return this.father;
+    }
+
+    public void SetFather(Animal father)
+    {
+        this.father = father;
+    }
+
+    public Animal GetPartner()
+    {
+        return this.partner;
+    }
+
+    public bool IsPotentialPartner(Animal animal)
+    {
+        return this.sex != animal.sex && this.GetAge() >= this.GetAgeBar().GetAdultAge() && this.GetPartner() == null;
+    }
+
+    public void SetPartner(Animal partner)
+    {
+        this.partner = partner;
+    }
+
+    public bool SendMateRequest(Animal animal)
+    {
+        if (!animal.RetrieveMateRequest(this))
+        {
+            return false;
+        }
+        this.SetPartner(animal);
+        if (this.sex == Sex.F)
+        {
+            Animal newOffspring = this.instantiateOffspring();
+            newOffspring.father = animal;
+        }
+        else if (this.sex == Sex.M)
+        {
+            this.offspring.AddRange(this.partner.offspring);
+        }
+        return true;
+    }
+
+    public bool RetrieveMateRequest(Animal animal)
+    {
+        if (!animal.IsPotentialPartner(this))
+        {
+            return false;
+        }
+        this.SetPartner(animal);
+        if (this.sex == Sex.F)
+        {
+            Animal newOffspring = this.instantiateOffspring();
+            newOffspring.father = animal;
+        }
+        else if (this.sex == Sex.M)
+        {
+            this.offspring.AddRange(this.partner.offspring);
+        }
+        return true;
     }
 
     public List<string> GetPredatorTags()
@@ -270,6 +374,11 @@ public abstract class Animal : ELActor
         return this.healthBar;
     }
 
+    public AgeBar GetAgeBar()
+    {
+        return this.ageBar;
+    }
+
     public uint GetBiteSize()
     {
         return this.biteSize;
@@ -277,11 +386,11 @@ public abstract class Animal : ELActor
 
     public void Attack(Animal animal)
     {
-        animal.GetDamaged(this.damage);
+        animal.ReceiveDamage(this.damage);
         // TODO: Animations
     }
 
-    public void GetDamaged(float damage)
+    public void ReceiveDamage(float damage)
     {
         this.GetHealthBar().RemoveHealthPoints(damage);
         // TODO: Animations

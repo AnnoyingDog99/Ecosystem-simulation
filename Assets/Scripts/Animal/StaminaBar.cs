@@ -14,7 +14,7 @@ public class StaminaBar : MonoBehaviour
     [SerializeField] public uint minimumRunPercentage { get; protected set; } = 25;
     [SerializeField] public uint minimumWalkPercentage { get; protected set; } = 5;
 
-    float current;
+    [SerializeField] float current;
     float recoveryDelayTimer;
 
     // Start is called before the first frame update
