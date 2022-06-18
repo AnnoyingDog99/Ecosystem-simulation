@@ -16,7 +16,6 @@ public abstract class Animal : ELActor
     [SerializeField] protected float acceleration = 1f;
     [SerializeField] protected float walkSpeed = 1;
     [SerializeField] protected float runSpeed = 2;
-    [SerializeField] private float minScalePercentage = 50f;
     [SerializeField] protected Sex sex = Sex.F;
     [SerializeField] protected List<string> predatorTags = new List<string>();
     [SerializeField] protected uint biteSize = 1;
@@ -67,18 +66,23 @@ public abstract class Animal : ELActor
         {
             this.Die();
         }
-        if (this.GetAgeBar().GetAgePercentage(this.GetAgeBar().GetMaxAge()) >= 100)
+        if (this.GetAgeBar().GetAgePercentage(this.GetAgeBar().GetMaxAge()) >= 100 || this.GetHungerBar().GetHungerPercentage() <= 0)
         {
             this.Die();
         }
 
         this.GetAgeBar().SetAge((uint)(
-            /* (this.lifeTime.seconds + (60 * this.lifeTime.minutes) + (3600 * this.lifeTime.hours)) */  // Age up every second
+            // (this.lifeTime.seconds + (60 * this.lifeTime.minutes) + (3600 * this.lifeTime.hours))  // Age up every second
             (this.lifeTime.minutes) + (60 * this.lifeTime.hours) // Age up every minute
-        /* (this.lifeTime.hours) */ // Age up every hour
+            // (this.lifeTime.hours) */ // Age up every hour
         ));
 
-        this.SetScale((this.maxScale * Mathf.Max(this.minScalePercentage, this.GetAgeBar().GetAgePercentage(this.GetAgeBar().GetAdultAge()))) / 100);
+        Vector3 newScale = (this.maxScale * GetAgeBar().GetAgePercentage(this.GetAgeBar().GetAdultAge()) / 100);
+        if (Vector3.Distance(this.minScale, this.maxScale) < Vector3.Distance(newScale, this.maxScale))
+        {
+            newScale = this.minScale;
+        }
+        SetScale(newScale);
 
         this.behaviourTree.Evaluate();
 
@@ -265,7 +269,7 @@ public abstract class Animal : ELActor
     {
         if (this.sex != Sex.F) return null;
         Animal newOffspring = Instantiate(this.ownKindGameObject, transform.position, transform.rotation).GetComponent<Animal>();
-        newOffspring.SetScale(this.maxScale * (this.minScalePercentage / 100));
+        newOffspring.SetScale(this.minScale);
         newOffspring.SetMother(this);
         newOffspring.startAge = 0;
         offspring.Add(newOffspring);

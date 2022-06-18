@@ -14,6 +14,10 @@ GameObject:
   - component: {fileID: 2211136985860309221}
   - component: {fileID: 1134835464505260623}
   - component: {fileID: 3437094518659626983}
+  - component: {fileID: 3153542545325790267}
+  - component: {fileID: 8087496023254560958}
+  - component: {fileID: 5742581592148433973}
+  - component: {fileID: 8027409757050259421}
   - component: {fileID: 6124935124707699958}
   - component: {fileID: 4228187036631775911}
   - component: {fileID: 4323249531715589686}
@@ -52,23 +56,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afddcbdbb0f50a44b5971246a2a3058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxCollider: {fileID: 0}
+  ownKindGameObject: {fileID: 0}
+  agent: {fileID: 6124935124707699958}
+  foodPoints: 10
+  minScale: {x: 0.5, y: 0.5, z: 0.5}
+  maxScale: {x: 1, y: 1, z: 1}
   behaviourTree: {fileID: 1134835464505260623}
   memory: {fileID: 3437094518659626983}
-  body: {fileID: 0}
-  agent: {fileID: 6124935124707699958}
+  sight: {fileID: 0}
+  hungerBar: {fileID: 0}
+  staminaBar: {fileID: 0}
+  healthBar: {fileID: 0}
+  ageBar: {fileID: 0}
+  damage: 1
   rotationSpeed: 270
   acceleration: 10
   walkSpeed: 5
   runSpeed: 10
-  offspringGameObject: {fileID: 4228187036631775915}
-  babyScale: 0.5
-  adultScale: 1
+  minScalePercentage: 50
   sex: 1
-  age: 0
-  maxAge: 100
   predatorTags:
   - Fox
-  preyTags: []
+  biteSize: 1
+  startAge: 0
+  plantTags: []
 --- !u!114 &3428171420315788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +102,7 @@ MonoBehaviour:
   obstacleMasks:
   - serializedVersion: 2
     m_Bits: 128
+  reactionSpeed: 0.2
 --- !u!114 &2211136985860309221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6dbfebefb5dfa0c1b34f829678ddebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPredatorDistance: 0
+  minRestTime: 0
+  maxMatingDistance: 0
+  maxPlantDistance: 0
   bunny: {fileID: 4228187036631775912}
 --- !u!114 &3437094518659626983
 MonoBehaviour:
@@ -141,9 +158,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   predatorMemorySpan: 5
   ownKindMemorySpan: 5
-  preyMemorySpan: 5
   obstacleMemorySpan: 0
   plantMemorySpan: 0
+--- !u!114 &3153542545325790267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228187036631775915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  recoveryRate: 1
+  recoveryDelay: 2
+  walkingCost: 0.5
+  runningCost: 1.5
+  isTiredPercentage: 50
+  current: 0
+--- !u!114 &8087496023254560958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228187036631775915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 10
+  regenRate: 1
+  regenDelay: 5
+  current: 0
+--- !u!114 &5742581592148433973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228187036631775915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  efficiency: 0
+  rate: 0.2
+  idlePenalty: 0.5
+  walkingPenalty: 1
+  runningPenalty: 1.5
+  regeneratingPenalty: 1
+  hungryPercentage: 50
+  starvingPercentage: 10
+  current: 0
+--- !u!114 &8027409757050259421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228187036631775915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  babyAge: 0
+  childAge: 10
+  adultAge: 20
+  max: 50
+  current: 0
 --- !u!195 &6124935124707699958
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -904,7 +904,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ageBar
       value: 
-      objectReference: {fileID: 2059865760}
+      objectReference: {fileID: 2059865747}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: damage
@@ -923,18 +923,18 @@ PrefabInstance:
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: startAge
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 2059865752}
+      objectReference: {fileID: 2059865749}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: hungerBar
       value: 
-      objectReference: {fileID: 2059865741}
+      objectReference: {fileID: 2059865748}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_Enabled
@@ -942,9 +942,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
+      propertyPath: minScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: minScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: minScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 2059865742}
+      objectReference: {fileID: 2059865750}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: boxCollider
@@ -1059,6 +1074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CollisionDetection
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5742581592148433973, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: rate
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6124935124707699958, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -1176,63 +1196,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1825774589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1753537996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753537995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 10
-  regenRate: 1
-  regenDelay: 5
-  current: 0
---- !u!114 &1753537997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753537995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  recoveryRate: 1
-  recoveryDelay: 5
-  walkingCost: 1
-  runningCost: 3
-  isTiredPercentage: 50
-  current: 0
---- !u!114 &1753537998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753537995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  efficiency: 50
-  rate: 0.5
-  idlePenalty: 0.5
-  walkingPenalty: 1
-  runningPenalty: 1.5
-  regeneratingPenalty: 1
-  hungryPercentage: 50
-  starvingPercentage: 5
-  current: 0
 --- !u!65 &1753538000 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
@@ -1251,11 +1214,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1753538008
+--- !u!114 &1753538011 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8027409757050259421, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753537995}
   m_Enabled: 1
@@ -1263,11 +1226,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  babyAge: 0
-  childAge: 10
-  adultAge: 20
-  max: 100
-  current: 0
+--- !u!114 &1753538012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5742581592148433973, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1753538013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8087496023254560958, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1753538014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3153542545325790267, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1825774589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753537995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1795524880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4228187036631775915, guid: 31db349cde1078aa4abc6c333e7f2621,
@@ -1369,7 +1363,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ageBar
       value: 
-      objectReference: {fileID: 1753538008}
+      objectReference: {fileID: 1753538011}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: damage
@@ -1394,12 +1388,12 @@ PrefabInstance:
         type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 1753537996}
+      objectReference: {fileID: 1753538013}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: hungerBar
       value: 
-      objectReference: {fileID: 1753537998}
+      objectReference: {fileID: 1753538012}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_Enabled
@@ -1409,7 +1403,7 @@ PrefabInstance:
         type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 1753537997}
+      objectReference: {fileID: 1753538014}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: boxCollider
@@ -1453,7 +1447,7 @@ PrefabInstance:
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.711074
+      value: -4.7
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -1463,7 +1457,7 @@ PrefabInstance:
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.988369
+      value: 32.8
       objectReference: {fileID: 0}
     - target: {fileID: 4228187036631775914, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
@@ -1525,6 +1519,11 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5742581592148433973, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: hungryPercentage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6124935124707699958, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: m_Height
@@ -1561,74 +1560,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5586746edb288448c30c44b0e8e093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2059865741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795524880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  efficiency: 50
-  rate: 0.5
-  idlePenalty: 0.5
-  walkingPenalty: 1
-  runningPenalty: 1.5
-  regeneratingPenalty: 1
-  hungryPercentage: 50
-  starvingPercentage: 5
-  current: 0
---- !u!114 &2059865742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795524880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  recoveryRate: 1
-  recoveryDelay: 5
-  walkingCost: 1
-  runningCost: 3
-  isTiredPercentage: 50
-  current: 0
 --- !u!65 &2059865744 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4228187036631775911, guid: 31db349cde1078aa4abc6c333e7f2621,
     type: 3}
   m_PrefabInstance: {fileID: 1484662407}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2059865752
+--- !u!114 &2059865747 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795524880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 10
-  regenRate: 1
-  regenDelay: 5
-  current: 0
---- !u!114 &2059865760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8027409757050259421, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484662407}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795524880}
   m_Enabled: 1
@@ -1636,11 +1578,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  babyAge: 0
-  childAge: 10
-  adultAge: 20
-  max: 100
-  current: 0
+--- !u!114 &2059865748 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5742581592148433973, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484662407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2059865749 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8087496023254560958, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484662407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2059865750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3153542545325790267, guid: 31db349cde1078aa4abc6c333e7f2621,
+    type: 3}
+  m_PrefabInstance: {fileID: 1484662407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795524880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2126545859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7136047097241510424, guid: 5ea34e5e3550605c1943cb3799451ad7,
@@ -1653,11 +1626,11 @@ BoxCollider:
     type: 3}
   m_PrefabInstance: {fileID: 7136047097315896479}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2126545868
+--- !u!114 &2126545890 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 932318631859133275, guid: 5ea34e5e3550605c1943cb3799451ad7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7136047097315896479}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126545859}
   m_Enabled: 1
@@ -1665,56 +1638,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max: 100
-  recoveryRate: 1
-  recoveryDelay: 5
-  walkingCost: 1
-  runningCost: 3
-  isTiredPercentage: 50
-  current: 0
---- !u!114 &2126545869
+--- !u!114 &2126545899 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126545859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  efficiency: 0
-  rate: 1
-  idlePenalty: 0.1
-  walkingPenalty: 0.5
-  runningPenalty: 1
-  regeneratingPenalty: 1
-  hungryPercentage: 40
-  starvingPercentage: 5
-  current: 0
---- !u!114 &2126545879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126545859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 10
-  regenRate: 1
-  regenDelay: 5
-  current: 0
---- !u!114 &2126545889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3147656484318420945, guid: 5ea34e5e3550605c1943cb3799451ad7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7136047097315896479}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126545859}
   m_Enabled: 1
@@ -1722,11 +1650,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  babyAge: 0
-  childAge: 10
-  adultAge: 20
-  max: 50
-  current: 0
+--- !u!114 &2126545900 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7072278700324181544, guid: 5ea34e5e3550605c1943cb3799451ad7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7136047097315896479}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126545859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7136047097315896479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1734,6 +1669,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 932318631859133275, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: runningCost
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 932318631859133275, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: walkingCost
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 932318631859133275, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: isTiredPercentage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965589442490181626, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: rate
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965589442490181626, guid: 5ea34e5e3550605c1943cb3799451ad7,
+        type: 3}
+      propertyPath: hungryPercentage
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510415, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_Enabled
@@ -1762,7 +1722,7 @@ PrefabInstance:
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64
+      value: -63.994865
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
@@ -1772,27 +1732,27 @@ PrefabInstance:
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.67
+      value: 26.904982
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.6980302
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.7160683
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
@@ -1802,7 +1762,7 @@ PrefabInstance:
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 91.462
       objectReference: {fileID: 0}
     - target: {fileID: 7136047097241510420, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
@@ -1818,7 +1778,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ageBar
       value: 
-      objectReference: {fileID: 2126545889}
+      objectReference: {fileID: 2126545899}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: damage
@@ -1838,7 +1798,7 @@ PrefabInstance:
         type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 2126545879}
+      objectReference: {fileID: 2126545900}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: m_Enabled
@@ -1848,7 +1808,7 @@ PrefabInstance:
         type: 3}
       propertyPath: staminaBar
       value: 
-      objectReference: {fileID: 2126545868}
+      objectReference: {fileID: 2126545890}
     - target: {fileID: 7136047097241510421, guid: 5ea34e5e3550605c1943cb3799451ad7,
         type: 3}
       propertyPath: boxCollider

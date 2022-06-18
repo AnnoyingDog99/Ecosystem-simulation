@@ -14,6 +14,8 @@ public abstract class ELActor : MonoBehaviour
     protected LifeTime lifeTime = new LifeTime();
     public bool isDead { get; protected set; } = false;
     private List<ELActor> actorsBeingTouched = new List<ELActor>();
+
+    protected float currentFoodPoints;
     protected internal class LifeTime
     {
         public int seconds = 0;
@@ -52,6 +54,8 @@ public abstract class ELActor : MonoBehaviour
             Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
         }
 
+        this.currentFoodPoints = this.foodPoints;
+
         InvokeRepeating("handleLifeTime", 1, 1);
     }
 
@@ -61,7 +65,7 @@ public abstract class ELActor : MonoBehaviour
         // Remove dead actor
         if (this.isDead)
         {
-            StartCoroutine(DestroyAfterDelay(10));
+            StartCoroutine(DestroyAfterDelay(20));
         }
     }
 
@@ -153,20 +157,21 @@ public abstract class ELActor : MonoBehaviour
     // Take a bite of this actor and return the amount of foodpoints.
     public virtual float GetEaten(float biteSize)
     {
-        float eatenFoodPoints = Mathf.Min(biteSize, GetCurrentFoodPoints());
-        int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * biteSize);
+        // Debug.Log(this.GetCurrentFoodPoints());
+        float eatenFoodPoints = Mathf.Min(biteSize, this.GetCurrentFoodPoints());
+        int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * eatenFoodPoints);
         this.Shrink(percentageEaten);
         return eatenFoodPoints;
     }
 
-    public int GetCurrentFoodPoints()
+    public float GetCurrentFoodPoints()
     {
-        return Mathf.RoundToInt(((float)this.foodPoints / 100) * (float)this.GetGrowthPercent());
+        return this.currentFoodPoints;
     }
 
-    public int GetGrowthPercent()
+    public int GetScalePercentage()
     {
-        float maxDistance = Vector3.Distance(this.maxScale, this.minScale);
+        float maxDistance = Vector3.Distance(this.maxScale, Vector3.zero);
         float currentDistance = Vector3.Distance(this.maxScale, this.GetScale());
         return Mathf.RoundToInt((100 / maxDistance) * (maxDistance - currentDistance));
     }
@@ -183,6 +188,6 @@ public abstract class ELActor : MonoBehaviour
 
     public bool IsFullyGrown()
     {
-        return (this.GetGrowthPercent() >= 100);
+        return (this.GetScalePercentage() >= 100);
     }
 }

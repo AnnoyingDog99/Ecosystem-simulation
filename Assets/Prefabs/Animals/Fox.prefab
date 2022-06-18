@@ -14,11 +14,13 @@ GameObject:
   - component: {fileID: 7136047097241510417}
   - component: {fileID: 7136047097241510415}
   - component: {fileID: 7136047097241510416}
+  - component: {fileID: 932318631859133275}
+  - component: {fileID: 5965589442490181626}
+  - component: {fileID: 7072278700324181544}
+  - component: {fileID: 3147656484318420945}
   - component: {fileID: 7136047097241510423}
   - component: {fileID: 7136047097241510418}
   - component: {fileID: 7136047097241510419}
-  - component: {fileID: 5965589442490181626}
-  - component: {fileID: 932318631859133275}
   m_Layer: 6
   m_Name: Fox
   m_TagString: Fox
@@ -57,21 +59,26 @@ MonoBehaviour:
   boxCollider: {fileID: 7136047097241510423}
   ownKindGameObject: {fileID: 7136047097241510424}
   agent: {fileID: 7136047097241510419}
+  foodPoints: 10
+  minScale: {x: 0.5, y: 0.5, z: 0.5}
+  maxScale: {x: 1, y: 1, z: 1}
   behaviourTree: {fileID: 7136047097241510415}
   memory: {fileID: 7136047097241510416}
   sight: {fileID: 7136047097241510422}
   hungerBar: {fileID: 5965589442490181626}
   staminaBar: {fileID: 932318631859133275}
+  healthBar: {fileID: 0}
+  ageBar: {fileID: 0}
+  damage: 1
   rotationSpeed: 90
   acceleration: 6
   walkSpeed: 6
   runSpeed: 12
-  babyScale: 0.5
-  adultScale: 1
+  minScalePercentage: 50
   sex: 1
-  age: 0
-  maxAge: 100
   predatorTags: []
+  biteSize: 1
+  startAge: 0
   preyTags:
   - Bunny
 --- !u!114 &7136047097241510422
@@ -133,6 +140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPredatorDistance: 0
+  minRestTime: 0
+  maxMatingDistance: 0
   maxPreyDistance: 0
   fox: {fileID: 7136047097241510421}
 --- !u!114 &7136047097241510416
@@ -151,6 +160,80 @@ MonoBehaviour:
   ownKindMemorySpan: 5
   obstacleMemorySpan: 5
   preyMemorySpan: 5
+--- !u!114 &932318631859133275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136047097241510424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  recoveryRate: 1
+  recoveryDelay: 2
+  walkingCost: 0.5
+  runningCost: 2
+  isTiredPercentage: 20
+  current: 0
+--- !u!114 &5965589442490181626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136047097241510424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 100
+  efficiency: 0
+  rate: 0.1
+  idlePenalty: 1
+  walkingPenalty: 2
+  runningPenalty: 3
+  regeneratingPenalty: 1
+  hungryPercentage: 60
+  starvingPercentage: 5
+  current: 0
+--- !u!114 &7072278700324181544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136047097241510424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max: 10
+  regenRate: 1
+  regenDelay: 5
+  current: 0
+--- !u!114 &3147656484318420945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136047097241510424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  babyAge: 0
+  childAge: 10
+  adultAge: 20
+  max: 50
+  current: 0
 --- !u!65 &7136047097241510423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -202,43 +285,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5965589442490181626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7136047097241510424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  efficiency: 0
-  rate: 1
-  idlePenalty: 1
-  walkingPenalty: 2
-  runningPenalty: 3
-  hungryPercentage: 40
-  starvingPercentage: 5
---- !u!114 &932318631859133275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7136047097241510424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  recoveryRate: 1
-  recoveryDelay: 5
-  walkingCost: 1
-  runningCost: 3
 --- !u!1001 &7136047096875878914
 PrefabInstance:
   m_ObjectHideFlags: 0

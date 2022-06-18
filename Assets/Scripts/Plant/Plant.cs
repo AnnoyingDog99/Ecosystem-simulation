@@ -40,13 +40,21 @@ public class Plant : ELActor
     public override float GetEaten(float biteSize)
     {
         growthRecoveryTimer = growthRecoveryTime;
+        this.currentFoodPoints = Mathf.RoundToInt(((float)this.foodPoints / 100) * (float)this.GetScalePercentage());
         float eatenFoodPoints = Mathf.Min(biteSize, GetCurrentFoodPoints());
         int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * biteSize);
         this.Shrink(percentageEaten);
-        if (GetGrowthPercent() <= minimumScalePercentage)
+        if (this.GetScalePercentage() <= minimumScalePercentage)
         {
             this.isDead = true;
         }
         return eatenFoodPoints;
+    }
+
+    public int GetGrowthPercent()
+    {
+        float maxDistance = Vector3.Distance(this.maxScale, this.minScale);
+        float currentDistance = Vector3.Distance(this.maxScale, this.GetScale());
+        return Mathf.RoundToInt((100 / maxDistance) * (maxDistance - currentDistance));
     }
 }
