@@ -76,7 +76,6 @@ public abstract class ELActor : MonoBehaviour
         Destroy(this);
     }
 
-
     protected virtual void OnTriggerEnter(Collider collider)
     {
         // TODO: Handle mouse click
@@ -89,6 +88,7 @@ public abstract class ELActor : MonoBehaviour
                 this.actorsBeingTouched.Add(actor);
             }
         }
+
     }
 
     protected virtual void OnTriggerStay(Collider collider)

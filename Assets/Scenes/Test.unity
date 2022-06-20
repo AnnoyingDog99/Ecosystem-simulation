@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 286589029}
   - component: {fileID: 286589028}
   - component: {fileID: 286589027}
+  - component: {fileID: 286589030}
+  - component: {fileID: 286589031}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +209,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+--- !u!114 &286589030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286589026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d401e143e573f9c935e25a4f143a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &286589031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286589026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a1f12672826703897d4a1c52499fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraBehaviour: {fileID: 286589030}
+  distance: 10
+  xSpeed: 1
+  ySpeed: 1
+  yMinLimit: -90
+  yMaxLimit: 90
+  constantDistance: 10
+  smoothTime: 5
 --- !u!1 &516534806
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +939,11 @@ PrefabInstance:
       propertyPath: ageBar
       value: 
       objectReference: {fileID: 2059865747}
+    - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
+        type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 286589028}
     - target: {fileID: 4228187036631775912, guid: 31db349cde1078aa4abc6c333e7f2621,
         type: 3}
       propertyPath: damage
