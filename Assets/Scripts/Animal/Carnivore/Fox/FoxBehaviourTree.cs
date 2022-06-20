@@ -11,6 +11,10 @@ public class FoxBehaviourTree : CarnivoreBehaviourTree
         base.Start();
         rootNode = new Selector(new List<Node>() {
             new Sequence(new List<Node>() {
+                new CheckForPredatorsNode(fox),
+                new FleeFromPredatorsNode(fox, this.maxPredatorDistance)
+            }),
+            new Sequence(new List<Node>() {
                 new IsTiredNode(fox, this.minRestTime),
                 new RestNode(fox)
             }),
