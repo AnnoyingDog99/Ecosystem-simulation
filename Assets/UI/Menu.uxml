@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Styles/Menu.uss?fileID=7433441132597879392&amp;guid=3d99f75f46af8aacca07ec5010463218&amp;type=3#Menu" />
+    <ui:VisualElement name="Body" style="flex-grow: 1; align-items: center; justify-content: center; padding-top: 0;">
+        <ui:VisualElement name="Logo" style="background-image: url(&apos;project://database/Assets/Icons/EcoLogic.png?fileID=2800000&amp;guid=8e984a86a19eb0805abc64dae272de5f&amp;type=3#EcoLogic&apos;); width: 807px; height: 193px; -unity-background-scale-mode: scale-to-fit;" />
+        <ui:GroupBox name="ButtonBox" style="align-items: center; justify-content: center;">
+            <ui:GroupBox name="PlayBox">
+                <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="button" />
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Icons/play-icon-512x512.png?fileID=2800000&amp;guid=42fcd1061e54861e5afa4a95c312c6b1&amp;type=3#play-icon-512x512&apos;); width: 37px; height: 70px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: 1px; left: 241px; rotate: -10deg;" />
+            </ui:GroupBox>
+            <ui:GroupBox name="SettingsBox">
+                <ui:Button text="Settings" display-tooltip-when-elided="true" name="SettingsButton" class="button" />
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Icons/settings-icon-512x512.png?fileID=2800000&amp;guid=3ab339e8819b04453a15a2d4c1a43bb1&amp;type=3#settings-icon-512x512&apos;); width: 37px; height: 87px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: -4px; left: 239px; rotate: 10deg;" />
+            </ui:GroupBox>
+            <ui:GroupBox name="QuitBox">
+                <ui:Button text="Quit" display-tooltip-when-elided="true" name="QuitButton" class="button" />
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Icons/exit-icon-512x512.png?fileID=2800000&amp;guid=a6553be597fa62af7bd81f27710ab42f&amp;type=3#exit-icon-512x512&apos;); width: 39px; height: 102px; -unity-background-scale-mode: scale-to-fit; position: absolute; top: -12px; left: 236px; rotate: -10deg;" />
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>
