@@ -16,10 +16,15 @@ public class ChasePreyNode : Node
     {
         this.animal = animal;
         this.maxPreyDistance = maxPreyDistance;
+
+        this.eatDelayTimer = this.eatDelay;
+        this.attackDelayTimer = 0;
     }
 
     public override NodeStates Evaluate()
     {
+        this.attackDelayTimer -= Time.deltaTime;
+        this.eatDelayTimer -= Time.deltaTime;
         /**
             Run to prey
         */
@@ -81,7 +86,7 @@ public class ChasePreyNode : Node
             if (closestPrey.isDead)
             {
                 // Eat Prey
-                if ((this.eatDelayTimer -= Time.deltaTime) < 0)
+                if ((this.eatDelayTimer) < 0)
                 {
                     this.animal.GetHungerBar().AddFoodPoints(closestPrey.GetEaten(this.animal.GetBiteSize()));
                     this.eatDelayTimer = this.eatDelay;
@@ -90,15 +95,17 @@ public class ChasePreyNode : Node
             else
             {
                 // Attack Prey
-                if ((this.attackDelayTimer -= Time.deltaTime) < 0)
+                if ((this.attackDelayTimer) < 0)
                 {
                     this.animal.Attack(closestPrey);
                     this.attackDelayTimer = this.attackDelay;
                 }
             }
 
-            return NodeStates.SUCCESS;
+            return NodeStates.RUNNING;
         }
+
+        Debug.Log("Not Eating");
 
         this.animal.RunTo(pathToClosesPrey);
 

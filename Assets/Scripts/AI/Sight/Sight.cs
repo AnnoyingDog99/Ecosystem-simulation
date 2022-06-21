@@ -8,13 +8,24 @@ public abstract class Sight : MonoBehaviour
     [Range(0, 360)]
     [SerializeField] protected float viewAngle;
 
-    [SerializeField] protected float heightMultiplier = 1.36f;
-
     [SerializeField] protected List<LayerMask> targetMasks = new List<LayerMask>();
     [SerializeField] protected List<LayerMask> obstacleMasks = new List<LayerMask>();
 
     protected List<Transform> visibleTargets = new List<Transform>();
     protected List<Transform> visibleObstacles = new List<Transform>();
+
+    private float heightMultiplier = 1.36f;
+
+    protected virtual void Start()
+    {
+        ELActor actor = GetComponent<ELActor>();
+        if (actor == null)
+        {
+            Debug.LogWarning("Sight not bound to Actor");
+            return;
+        }
+        this.heightMultiplier = actor.GetScale().y;
+    }
 
     public virtual float GetViewAngle()
     {

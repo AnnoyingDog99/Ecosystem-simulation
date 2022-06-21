@@ -79,7 +79,9 @@ public class ForageNode : Node
                 continue;
             }
 
+
             this.animal.Idle();
+
 
             // Eat Plant
             if ((this.eatDelayTimer -= Time.deltaTime) < 0)

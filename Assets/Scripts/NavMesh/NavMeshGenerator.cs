@@ -11,8 +11,8 @@ public class NavMeshGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        surface.BuildNavMesh();
-        StartCoroutine(RebuildNavMeshWithDelay(this.delay));
+        // surface.BuildNavMesh();
+        // StartCoroutine(RebuildNavMeshWithDelay(this.delay));
     }
 
     IEnumerator RebuildNavMeshWithDelay(float delay)
@@ -20,7 +20,7 @@ public class NavMeshGenerator : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            surface.BuildNavMesh();
+            // surface.BuildNavMesh();
         }
     }
 
