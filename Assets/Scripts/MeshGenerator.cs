@@ -51,7 +51,6 @@ public class MeshData
 
     public MeshData(int meshWidth, int meshHeight)
     {
-        //remove * 6 for non flat colors
         vertices = new Vector3[(meshWidth) * (meshHeight)]; 
         triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
         colors = new Color[(meshWidth) * (meshHeight)];

@@ -11,7 +11,7 @@ public class MapDisplay : MonoBehaviour
     public void DrawTexture(Texture2D texture)
     {
         textureRender.sharedMaterial.mainTexture = texture;
-        textureRender.transform.localScale = new Vector3(texture.width, 1, texture.height);
+        textureRender.transform.localScale = new Vector3(texture.width, 1, texture.height); //set size of the plane to the same size as the map
     }
 
     public void DrawMesh(MeshData meshData)
