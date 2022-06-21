@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bunny
+  - Fox
+  - Surface
+  - Grass
   layers:
   - Default
   - TransparentFX
@@ -11,9 +15,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Animals
+  - Obstacles
+  - Plants
   - 
   - 
   - 
