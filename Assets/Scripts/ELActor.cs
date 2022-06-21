@@ -65,6 +65,7 @@ public abstract class ELActor : MonoBehaviour
         // Remove dead actor
         if (this.isDead)
         {
+            this.agent.velocity = new Vector3(0, 0, 0);
             StartCoroutine(DestroyAfterDelay(20));
         }
     }

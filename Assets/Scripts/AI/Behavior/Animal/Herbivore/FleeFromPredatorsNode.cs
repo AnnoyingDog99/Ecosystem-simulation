@@ -75,7 +75,7 @@ public class FleeFromPredatorsNode : Node
 
         Vector3 direction = (animal.GetPosition() - averagePosition).normalized;
 
-        Vector3 newPosition = animal.GetPosition() + (direction * 1.15f);
+        Vector3 newPosition = animal.GetPosition() + (direction * 0.15f);
 
         if (!animal.RunTo(newPosition))
         {

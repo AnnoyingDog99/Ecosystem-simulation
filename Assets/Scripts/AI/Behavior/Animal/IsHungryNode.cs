@@ -5,7 +5,7 @@ public class IsHungryNode : Node
 {
     private Animal animal;
 
-    private float keepEatingTime = 100;
+    private float keepEatingTime = 10f;
     private float keepEatingTimer;
 
     public IsHungryNode(Animal animal)

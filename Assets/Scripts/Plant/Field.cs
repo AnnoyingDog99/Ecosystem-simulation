@@ -24,7 +24,6 @@ public abstract class Field : MonoBehaviour
         for (int i = 0; i < this.points.Count; i++) {
             this.points[i] += new Vector2(this.transform.position.x, this.transform.position.z);
         }
-        Debug.Log(this.points[0]);
         if (this.points.Count <= 0)
         {
             Debug.LogError("Field does not have enough room to initialize");

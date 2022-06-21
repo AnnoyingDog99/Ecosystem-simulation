@@ -6,8 +6,9 @@ public class BasicSight : Sight
 {
     [SerializeField] private float reactionSpeed = 0.2f;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         // Find anything in view with delay
         StartCoroutine(FindTargetsWithDelay(reactionSpeed));
         StartCoroutine(FindObstaclesWithDelay(reactionSpeed));
@@ -73,7 +74,7 @@ public class BasicSight : Sight
             }
             for (int j = 0; j < obstacleMasks.Count; j++)
             {
-                if (Physics.Raycast(transform.position + Vector3.up * heightMultiplier, dirToTarget, distToTarget, obstacleMasks[j]))
+                if (Physics.Raycast(transform.position + Vector3.up * this.GetHeightMultiplier(), dirToTarget, distToTarget, obstacleMasks[j]))
                 {
                     // Obstacles inbetween actor and target (target is not visible)
                     continue;
