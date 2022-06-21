@@ -78,8 +78,6 @@ public abstract class ELActor : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider collider)
     {
-        // TODO: Handle mouse click
-
         ELActor actor = collider.gameObject.GetComponent<ELActor>();
         if (actor != null)
         {
@@ -157,7 +155,6 @@ public abstract class ELActor : MonoBehaviour
     // Take a bite of this actor and return the amount of foodpoints.
     public virtual float GetEaten(float biteSize)
     {
-        // Debug.Log(this.GetCurrentFoodPoints());
         float eatenFoodPoints = Mathf.Min(biteSize, this.GetCurrentFoodPoints());
         int percentageEaten = Mathf.RoundToInt((100 / this.foodPoints) * eatenFoodPoints);
         this.Shrink(percentageEaten);

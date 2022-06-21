@@ -21,6 +21,10 @@ public abstract class Field : MonoBehaviour
         this.spreadTimer = this.spreadTime;
         float avgPointRadius = (referencePlant.GetMaxScale().x + referencePlant.GetMaxScale().y) / 2;
         this.points = PoissonDiscSampling.GeneratePoints(avgPointRadius, size, maxAmountOfPlants, 20);
+        for (int i = 0; i < this.points.Count; i++) {
+            this.points[i] += new Vector2(this.transform.position.x, this.transform.position.z);
+        }
+        Debug.Log(this.points[0]);
         if (this.points.Count <= 0)
         {
             Debug.LogError("Field does not have enough room to initialize");
