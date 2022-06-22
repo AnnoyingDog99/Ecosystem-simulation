@@ -23,7 +23,7 @@ public class FleeFromPredatorsNode : Node
         List<Animal> nearbyPredators = memory.GetPredatorsInMemory();
         if (nearbyPredators.Count <= 0)
         {
-            return NodeStates.FAILURE;
+            return NodeStates.SUCCESS;
         }
 
         float minDistance = -1f;

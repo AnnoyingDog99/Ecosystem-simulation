@@ -80,7 +80,6 @@ public static class PoissonDiscSampling
                 // if (pointIndex == -1) continue;
                 if (pointIndex != -1)
                 {
-
                     float sqrDistance = (candidatePoint - points[pointIndex]).sqrMagnitude;
                     if (sqrDistance < (cellRadius * cellRadius))
                     {

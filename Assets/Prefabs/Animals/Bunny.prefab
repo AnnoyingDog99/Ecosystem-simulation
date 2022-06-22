@@ -78,7 +78,7 @@ MonoBehaviour:
   predatorTags:
   - Fox
   biteSize: 1
-  startAge: 20
+  startAge: 0
   plantTags:
   - Grass
 --- !u!114 &4407793939364243722
