@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -26,17 +27,16 @@ public class UIController : MonoBehaviour
 
     void PlayButtonPressed()
     {
-        Debug.Log("Navigate to game");
+        SceneManager.LoadScene("Game");
     }
 
     void SettingsButtonPressed()
     {
-        Debug.Log("Navigate to settings menu");
+        SceneManager.LoadScene("Settings");
     }
 
     void QuitButtonPressed()
     {
-        Debug.Log("Quit game");
         Application.Quit();
     }
 }
