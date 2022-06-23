@@ -25,12 +25,12 @@ public class BunnyColor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bodyAndHead.material.color = bodyAndHeadColor;
-        eyes.material.color = eyeColor;
-        nose.material.color = noseColor;
-        innerEars.material.color = innerEarsColor;
-        paws.material.color = pawsColor;
-        tail.material.color = tailColor;
+        this.bodyAndHead.material.color = this.bodyAndHeadColor;
+        this.eyes.material.color = this.eyeColor;
+        this.nose.material.color = this.noseColor;
+        this.innerEars.material.color = this.innerEarsColor;
+        this.paws.material.color = this.pawsColor;
+        this.tail.material.color = this.tailColor;
     }
 
     // Update is called once per frame

@@ -4,10 +4,6 @@ using System.Collections.Generic;
 public class CheckForPotentialPartnersNode : Node
 {
     private Animal animal;
-    private float partnerSearchTime = 10f;
-    private float partnerSearchTimer;
-    private float partnerSearchCooldown = 10f;
-    private float partnerSearchCooldownTimer;
 
     public CheckForPotentialPartnersNode(Animal animal)
     {
@@ -16,16 +12,6 @@ public class CheckForPotentialPartnersNode : Node
 
     public override NodeStates Evaluate()
     {
-        if ((this.partnerSearchTimer -= Time.deltaTime) < 0)
-        {
-            if ((this.partnerSearchCooldownTimer -= Time.deltaTime) < 0)
-            {
-                this.partnerSearchTimer = this.partnerSearchTime;
-            }
-            return NodeStates.FAILURE;
-        }
-        this.partnerSearchCooldownTimer = this.partnerSearchCooldown;
-
         /**
             Search for a potential partner
         */

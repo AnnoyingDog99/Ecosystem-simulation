@@ -91,6 +91,7 @@ public class ChasePreyNode : Node
                     this.animal.GetHungerBar().AddFoodPoints(closestPrey.GetEaten(this.animal.GetBiteSize()));
                     this.eatDelayTimer = this.eatDelay;
                 }
+                return NodeStates.SUCCESS;
             }
             else
             {
@@ -104,8 +105,6 @@ public class ChasePreyNode : Node
 
             return NodeStates.RUNNING;
         }
-
-        Debug.Log("Not Eating");
 
         this.animal.RunTo(pathToClosesPrey);
 
