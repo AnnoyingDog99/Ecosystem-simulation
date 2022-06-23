@@ -8,6 +8,7 @@ public class AnimalBehaviourTree : BehaviourTree
     [SerializeField] protected float maxPredatorDistance;
     [SerializeField] protected float minRestTime;
     [SerializeField] protected float maxMatingDistance;
+    [SerializeField] protected float obstaclePreventionWeight;
 
     protected override void Start()
     {

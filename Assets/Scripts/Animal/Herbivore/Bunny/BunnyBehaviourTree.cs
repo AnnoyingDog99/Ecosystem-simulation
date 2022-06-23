@@ -12,7 +12,7 @@ public class BunnyBehaviourTree : HerbivoreBehaviourTree
         rootNode = new Selector(new List<Node>() {
             new Sequence(new List<Node>() {
                 new CheckForPredatorsNode(bunny),
-                new FleeFromPredatorsNode(bunny, this.maxPredatorDistance)
+                new FleeFromPredatorsNode(bunny, this.maxPredatorDistance, this.obstaclePreventionWeight)
             }),
             new Sequence(new List<Node>() {
                 new IsHungryNode(bunny),

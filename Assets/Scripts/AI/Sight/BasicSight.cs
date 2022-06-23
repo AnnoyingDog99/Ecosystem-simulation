@@ -6,6 +6,9 @@ public class BasicSight : Sight
 {
     [SerializeField] private float reactionSpeed = 0.2f;
 
+    // Used for detecting objects with a ray down (main purpose is detecting water)
+    public Vector3 angledDownRayDirection = new Vector3(3, 1, 0);
+
     protected override void Start()
     {
         base.Start();
@@ -17,8 +20,7 @@ public class BasicSight : Sight
     private void Update()
     {
         // Find anything straight ahead immediately
-        AddTargetsStraightAhead();
-        AddObstaclesStraightAhead();
+        this.AddTargetsAndObstaclesStraightAhead();
     }
 
     IEnumerator FindTargetsWithDelay(float delay)
@@ -84,20 +86,30 @@ public class BasicSight : Sight
         }
     }
 
-    private void AddTargetsStraightAhead()
+    private void AddTargetsAndObstaclesStraightAhead()
     {
         /** 
-            This will only add targets that are straight ahead
+            This will only add targets and obstacles that are straight ahead
         */
-        Ray ray = new Ray();
-        ray.origin = transform.position;
-        ray.direction = transform.forward;
-        RaycastHit hit = CastRay(transform.position, transform.forward, viewRadius);
-        if (RaycastHit.Equals(hit, default(RaycastHit))) return;
-        // Check if hit object has an obstacle layermask
+        RaycastHit hitStraightAhead = CastRay(transform.position, transform.forward, viewRadius);
+        if (!RaycastHit.Equals(hitStraightAhead, default(RaycastHit)))
+        {
+            this.AddTargetsHit(hitStraightAhead);
+            this.AddObstaclesHit(hitStraightAhead);
+        }
+
+        RaycastHit hitAtAnAngle = CastRay(transform.position, (new Vector3(transform.forward.x * angledDownRayDirection.x, angledDownRayDirection.y, transform.forward.z * angledDownRayDirection.z)), viewRadius);
+        if (!RaycastHit.Equals(hitAtAnAngle, default(RaycastHit)))
+        {
+            this.AddTargetsHit(hitAtAnAngle);
+            this.AddObstaclesHit(hitAtAnAngle);
+        }
+    }
+
+    private void AddTargetsHit(RaycastHit hit)
+    {
+        // Check if hit object has a target layermask
         if (!targetMasks.Contains(LayerMask.GetMask(LayerMask.LayerToName(hit.transform.gameObject.layer)))) return;
-        // It's not an obstacle if the actor is above it
-        if (((RaycastHit)hit).transform.position.y < transform.position.y) return;
         if (visibleTargets.Contains(((RaycastHit)hit).transform)) return;
         visibleTargets.Add(((RaycastHit)hit).transform);
     }
@@ -125,26 +137,28 @@ public class BasicSight : Sight
 
             RaycastHit hit = CastRay(transform.position, dirToObstacle, distToObstacle);
             if (RaycastHit.Equals(hit, default(RaycastHit))) return;
-            visibleObstacles.Add(hit.transform);
+            if (hit.transform.tag == "Surface") return;
+            visibleObstacles.Add(new ObstacleLocation(hit.transform, hit.point));
         }
     }
 
-    private void AddObstaclesStraightAhead()
+    private void AddObstaclesHit(RaycastHit hit)
     {
         /** 
             This will only add obstacles that are straight ahead
         */
-        Ray ray = new Ray();
-        ray.origin = transform.position;
-        ray.direction = transform.forward;
-        RaycastHit hit = CastRay(transform.position, transform.forward, viewRadius);
-        if (RaycastHit.Equals(hit, default(RaycastHit))) return;
         // Check if hit object has an obstacle layermask
         if (!obstacleMasks.Contains(LayerMask.GetMask(LayerMask.LayerToName(hit.transform.gameObject.layer)))) return;
-        // It's not an obstacle if the actor is above it
-        if (((RaycastHit)hit).transform.position.y < transform.position.y) return;
-        if (visibleObstacles.Contains(((RaycastHit)hit).transform)) return;
-        visibleObstacles.Add(((RaycastHit)hit).transform);
+        ObstacleLocation newObstacleLocation = new ObstacleLocation(hit.transform, hit.point);
+
+        // Remove any existing transforms with older positions
+        ObstacleLocation existingObstacleLocation = visibleObstacles.Find((visibleObstacle) => visibleObstacle.transform.GetInstanceID() == newObstacleLocation.transform.GetInstanceID());
+        if (existingObstacleLocation != null)
+        {
+            visibleObstacles.Remove(existingObstacleLocation);
+        }
+
+        visibleObstacles.Add(newObstacleLocation);
     }
 
     private RaycastHit CastRay(Vector3 origin, Vector3 direction, float distance)
@@ -158,9 +172,6 @@ public class BasicSight : Sight
             // Nothing was hit
             return default(RaycastHit);
         }
-        // It's not an obstacle if the actor is above it
-        if (hit.transform.position.y < transform.position.y) return default(RaycastHit);
-        if (visibleObstacles.Contains(hit.transform)) return default(RaycastHit);
         return hit;
     }
 

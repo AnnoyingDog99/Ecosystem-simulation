@@ -103,7 +103,10 @@ MonoBehaviour:
   obstacleMasks:
   - serializedVersion: 2
     m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 16
   reactionSpeed: 0.2
+  angledDownRayDirection: {x: -3, y: -1, z: 0}
 --- !u!114 &2560302449344567651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +146,7 @@ MonoBehaviour:
   maxPredatorDistance: 15
   minRestTime: 5
   maxMatingDistance: 90
+  obstaclePreventionWeight: 0.75
   maxPlantDistance: 15
   bunny: {fileID: 543252656249463598}
 --- !u!114 &1338852896685846113
@@ -244,7 +248,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 543252656249463597}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -253,7 +257,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.25
+  m_Height: 2.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

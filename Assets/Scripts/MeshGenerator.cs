@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MeshGenerator : MonoBehaviour
 {
-
     public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve heightCurve, int levelOfDetail, Color[] colourMap)
     {
         int width = heightMap.GetLength(0);
