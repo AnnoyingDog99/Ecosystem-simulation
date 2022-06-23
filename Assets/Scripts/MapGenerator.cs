@@ -3,11 +3,10 @@ using System.Collections;
 
 public class MapGenerator : MonoBehaviour
 {
-
     public enum DrawMode { NoiseMap, ColourMap, Mesh };
     public DrawMode drawMode;
 
-    const int mapChunkSize = 241;
+    public int mapChunkSize = 241;
     [Range(0, 6)]
     public int levelOfDetail;
     public float noiseScale;
@@ -48,7 +47,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        MapDisplay display = FindObjectOfType<MapDisplay>();
+        MapDisplay display = GetComponent<MapDisplay>();
         if (drawMode == DrawMode.NoiseMap)
         {
             display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));

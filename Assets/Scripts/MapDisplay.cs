@@ -17,6 +17,7 @@ public class MapDisplay : MonoBehaviour
     public void DrawMesh(MeshData meshData)
     {
         meshFilter.sharedMesh = meshData.CreateMesh();
+        meshRenderer.GetComponent<MeshCollider>().sharedMesh = meshFilter.sharedMesh;
     }
 
 }

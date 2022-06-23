@@ -27,7 +27,7 @@ public class BasicSightEditor : Editor
 
         Handles.color = Color.blue;
 
-        foreach (Transform visibleObstacle in basicSight.GetVisibleObstacles())
+        foreach (Sight.ObstacleLocation visibleObstacle in basicSight.GetVisibleObstacles())
         {
             Handles.DrawLine(basicSight.transform.position + Vector3.up * basicSight.GetHeightMultiplier(), visibleObstacle.position + Vector3.up * basicSight.GetHeightMultiplier());
         }

@@ -6,11 +6,13 @@ public class FleeFromPredatorsNode : Node
 {
     private Animal animal;
     private float maxPredatorDistance;
+    float obstaclePreventionWeight;
 
-    public FleeFromPredatorsNode(Animal animal, float maxPredatorDistance)
+    public FleeFromPredatorsNode(Animal animal, float maxPredatorDistance, float obstaclePreventionWeight)
     {
         this.animal = animal;
         this.maxPredatorDistance = maxPredatorDistance;
+        this.obstaclePreventionWeight = obstaclePreventionWeight;
     }
 
     public override NodeStates Evaluate()
@@ -23,12 +25,12 @@ public class FleeFromPredatorsNode : Node
         List<Animal> nearbyPredators = memory.GetPredatorsInMemory();
         if (nearbyPredators.Count <= 0)
         {
-            return NodeStates.FAILURE;
+            return NodeStates.SUCCESS;
         }
 
         float minDistance = -1f;
         float maxDistance = -1f;
-        
+
         /**
             Add nearby predators into the equation
         */
@@ -50,19 +52,17 @@ public class FleeFromPredatorsNode : Node
         /**
             Add possible obstacles into the equation
         */
-        foreach (Transform obstacle in animal.GetSight().GetVisibleObstacles())
+        foreach (Sight.ObstacleLocation obstacle in animal.GetSight().GetVisibleObstacles())
         {
-            if (obstacle.tag == "Surface") continue;
-            memory.AddObstacleMemory(obstacle.gameObject.GetComponent<Collider>());
+            memory.AddObstacleMemory(obstacle);
         }
-        float obstaclePreventionWeight = 0.15f;
-        List<Collider> obstacles = memory.GetObstaclesInMemory();
-        foreach (Collider obstacle in obstacles)
+        List<Sight.ObstacleLocation> obstacles = memory.GetObstaclesInMemory();
+        foreach (Sight.ObstacleLocation obstacle in obstacles)
         {
-            float distance = Vector3.Distance(animal.GetPosition(), obstacle.transform.position);
+            float distance = Vector3.Distance(animal.GetPosition(), obstacle.position);
             if (minDistance == -1 || distance < minDistance) minDistance = distance;
             if (distance > maxDistance) maxDistance = distance;
-            positions.Add(new Tuple<Vector3, float>(obstacle.transform.position * obstaclePreventionWeight, distance));
+            positions.Add(new Tuple<Vector3, float>(obstacle.position * obstaclePreventionWeight, distance));
         }
 
         Vector3 averagePosition = Vector3.zero;
@@ -75,7 +75,7 @@ public class FleeFromPredatorsNode : Node
 
         Vector3 direction = (animal.GetPosition() - averagePosition).normalized;
 
-        Vector3 newPosition = animal.GetPosition() + (direction * 0.15f);
+        Vector3 newPosition = animal.GetPosition() + (direction * 0.25f);
 
         if (!animal.RunTo(newPosition))
         {

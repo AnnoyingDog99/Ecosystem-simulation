@@ -12,7 +12,18 @@ public abstract class Sight : MonoBehaviour
     [SerializeField] protected List<LayerMask> obstacleMasks = new List<LayerMask>();
 
     protected List<Transform> visibleTargets = new List<Transform>();
-    protected List<Transform> visibleObstacles = new List<Transform>();
+
+    public class ObstacleLocation
+    {
+        public ObstacleLocation(Transform transform, Vector3 position)
+        {
+            this.transform = transform;
+            this.position = position;
+        }
+        public Transform transform;
+        public Vector3 position;
+    };
+    protected List<ObstacleLocation> visibleObstacles = new List<ObstacleLocation>();
 
     private float heightMultiplier = 1.36f;
 
@@ -47,7 +58,7 @@ public abstract class Sight : MonoBehaviour
         return this.visibleTargets;
     }
 
-    public virtual List<Transform> GetVisibleObstacles()
+    public virtual List<ObstacleLocation> GetVisibleObstacles()
     {
         return this.visibleObstacles;
     }

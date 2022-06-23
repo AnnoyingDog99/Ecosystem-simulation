@@ -11,7 +11,7 @@ public class AnimalMemory : ELActorMemory
 
     private List<Memory<Animal>> predators = new List<Memory<Animal>>();
     protected List<Memory<Animal>> ownKind = new List<Memory<Animal>>();
-    protected List<Memory<Collider>> obstacles = new List<Memory<Collider>>();
+    protected List<Memory<Sight.ObstacleLocation>> obstacles = new List<Memory<Sight.ObstacleLocation>>();
 
     // Start is called before the first frame update
     protected override void Start()
@@ -67,10 +67,10 @@ public class AnimalMemory : ELActorMemory
         return this.ownKind.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((ownKind) => ownKind != null);
     }
 
-    public void AddObstacleMemory(Collider obstacle)
+    public void AddObstacleMemory(Sight.ObstacleLocation obstacle)
     {
         // Check if memory doesn´t already exist
-        Memory<Collider> existingMemory = this.obstacles.Find((memory) => memory.GetMemoryContent().gameObject.GetInstanceID() == obstacle.gameObject.GetInstanceID());
+        Memory<Sight.ObstacleLocation> existingMemory = this.obstacles.Find((memory) => memory.GetMemoryContent().transform.gameObject.GetInstanceID() == obstacle.transform.gameObject.GetInstanceID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one
@@ -78,10 +78,10 @@ public class AnimalMemory : ELActorMemory
             return;
         }
 
-        this.obstacles.Add(new Memory<Collider>(obstacle, this.obstacleMemorySpan));
+        this.obstacles.Add(new Memory<Sight.ObstacleLocation>(obstacle, this.obstacleMemorySpan));
     }
 
-    public List<Collider> GetObstaclesInMemory()
+    public List<Sight.ObstacleLocation> GetObstaclesInMemory()
     {
         return this.obstacles.ConvertAll((fragment) => fragment.GetMemoryContent());
     }

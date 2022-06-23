@@ -13,6 +13,7 @@ public abstract class ELActor : MonoBehaviour
     [SerializeField] protected Vector3 maxScale = new Vector3(1, 1, 1);
     protected LifeTime lifeTime = new LifeTime();
     public bool isDead { get; protected set; } = false;
+    private bool queuedForDestruction = false;
     private List<ELActor> actorsBeingTouched = new List<ELActor>();
 
     protected float currentFoodPoints;
@@ -22,7 +23,7 @@ public abstract class ELActor : MonoBehaviour
         public int minutes = 0;
         public int hours = 0;
 
-        public void addSecond()
+        public void AddSecond()
         {
             if (seconds < 59)
             {
@@ -63,10 +64,16 @@ public abstract class ELActor : MonoBehaviour
     protected virtual void Update()
     {
         // Remove dead actor
-        if (this.isDead)
+        if (this.isDead && !this.queuedForDestruction)
         {
-            this.agent.velocity = new Vector3(0, 0, 0);
+            this.agent.ResetPath();
             StartCoroutine(DestroyAfterDelay(20));
+            this.queuedForDestruction = true;
+            return;
+        }
+        if (this.queuedForDestruction)
+        {
+            return;
         }
     }
 
@@ -108,7 +115,7 @@ public abstract class ELActor : MonoBehaviour
 
     private void handleLifeTime()
     {
-        lifeTime.addSecond();
+        lifeTime.AddSecond();
     }
 
     public Vector3 GetLifeTime()

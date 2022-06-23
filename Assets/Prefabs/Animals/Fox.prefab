@@ -100,7 +100,10 @@ MonoBehaviour:
   obstacleMasks:
   - serializedVersion: 2
     m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 16
   reactionSpeed: 0.2
+  angledDownRayDirection: {x: 3, y: 1, z: 0}
 --- !u!114 &795108036912713220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +147,7 @@ MonoBehaviour:
   maxPredatorDistance: 25
   minRestTime: 15
   maxMatingDistance: 15
+  obstaclePreventionWeight: 0.5
   maxPreyDistance: 30
   fox: {fileID: 795108036912713216}
 --- !u!114 &795108036912713221
