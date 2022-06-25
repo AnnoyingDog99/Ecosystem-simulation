@@ -77,15 +77,12 @@ public static class PoissonDiscSampling
             {
                 int pointIndex = grid[x, y] - 1;
 
-                // if (pointIndex == -1) continue;
-                if (pointIndex != -1)
+                if (pointIndex == -1) continue;
+                float sqrDistance = (candidatePoint - points[pointIndex]).sqrMagnitude;
+                if (sqrDistance < (cellRadius * cellRadius))
                 {
-                    float sqrDistance = (candidatePoint - points[pointIndex]).sqrMagnitude;
-                    if (sqrDistance < (cellRadius * cellRadius))
-                    {
-                        // Candidate is too close to the point
-                        return false;
-                    }
+                    // Candidate is too close to the point
+                    return false;
                 }
             }
         }

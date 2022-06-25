@@ -8,6 +8,7 @@ TagManager:
   - Fox
   - Surface
   - Grass
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Animals
   - Obstacles
   - Plants
-  - 
+  - Surfaces
   - 
   - 
   - 
