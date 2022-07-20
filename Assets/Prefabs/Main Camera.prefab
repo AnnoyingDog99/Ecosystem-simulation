@@ -154,11 +154,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 7732130030791838870}
   moveVelocity: 1
-  boostVelocity: 2
-  rotateAccelerationX: 10
-  rotateAccelerationY: 10
-  maxRotateVelocityX: 10
-  maxRotateVelocityY: 10
+  boostVelocity: 2.5
+  rotateAccelerationX: 15
+  rotateAccelerationY: 15
+  maxRotateVelocityX: 15
+  maxRotateVelocityY: 15
   mouseSmoothTime: 0
 --- !u!114 &7732130030791838870
 MonoBehaviour:
