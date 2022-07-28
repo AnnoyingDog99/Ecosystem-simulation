@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5426514793999746004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5426514793999746001}
+  - component: {fileID: 5426514793999746006}
+  - component: {fileID: 5426514793999746007}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5426514793999746001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426514793999746004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5426514793999746006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426514793999746004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e31c636d1ddcd48b2922bd7fd5b9a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawMode: 2
+  levelOfDetail: 0
+  noiseScale: 21.51
+  octaves: 7
+  persistance: 0.501
+  lacunarity: 1.59
+  seed: 5
+  offset: {x: 21.6, y: 0}
+  meshHeightMultiplier: 19
+  meshHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0014877319
+      value: -0.27035522
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.014882594
+      value: -0.24463297
+      inSlope: -0.0024276762
+      outSlope: -0.0024276762
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25281125
+      value: -0.17959365
+      inSlope: 1.0167733
+      outSlope: 1.0167733
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.353782
+      value: -0.01227504
+      inSlope: 0.014744777
+      outSlope: 0.014744777
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21570925
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.582891
+      value: 0.13629307
+      inSlope: 0.007677411
+      outSlope: 0.007677411
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.17734769
+    - serializedVersion: 3
+      time: 0.733054
+      value: 0.32930118
+      inSlope: 0.48256555
+      outSlope: 0.48256555
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.37216112
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8798122
+      value: 0.6276746
+      inSlope: 0.29330218
+      outSlope: 0.29330218
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.6761963
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  autoUpdate: 1
+  regions:
+  - name: Deep water
+    height: 0.2
+    colour: {r: 0, g: 0.027688269, b: 0.8962264, a: 0}
+  - name: Shallow Water
+    height: 0.34
+    colour: {r: 0, g: 0.59216976, b: 1, a: 0}
+  - name: sand
+    height: 0.45
+    colour: {r: 0.96629214, g: 1, b: 0, a: 0}
+  - name: grass
+    height: 0.7
+    colour: {r: 0.51766205, g: 0.7735849, b: 0, a: 0}
+  - name: dirt
+    height: 0.8
+    colour: {r: 0.6132076, g: 0.28856823, b: 0, a: 0}
+  - name: rock
+    height: 0.9
+    colour: {r: 0.3679245, g: 0.34890082, b: 0.34189212, a: 0}
+  - name: snow
+    height: 1
+    colour: {r: 0.99607843, g: 0.9882353, b: 1, a: 0}
+--- !u!114 &5426514793999746007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426514793999746004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f1d9a7aa5a9c64e82e62ee20a845ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureRender: {fileID: 0}
+  meshFilter: {fileID: 0}
+  meshRenderer: {fileID: 0}
