@@ -14,10 +14,6 @@ GameObject:
   - component: {fileID: 2560302449344567651}
   - component: {fileID: 3645718921199854537}
   - component: {fileID: 1338852896685846113}
-  - component: {fileID: 1649494904128785853}
-  - component: {fileID: 5556036850233682232}
-  - component: {fileID: 8256843406742128051}
-  - component: {fileID: 5926906950849404507}
   - component: {fileID: 7505152948793750896}
   - component: {fileID: 543252656249463585}
   - component: {fileID: 4406645640086033503}
@@ -56,31 +52,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afddcbdbb0f50a44b5971246a2a3058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 543252656249463585}
-  ownKindGameObject: {fileID: 543252656249463597}
   agent: {fileID: 7505152948793750896}
-  foodPoints: 10
-  minScale: {x: 0.05, y: 0.05, z: 0.05}
-  maxScale: {x: 0.1, y: 0.1, z: 0.1}
+  boundingBox: {fileID: 0}
+  animator: {fileID: 0}
   behaviourTree: {fileID: 3645718921199854537}
   memory: {fileID: 1338852896685846113}
   sight: {fileID: 4407793939364243722}
-  hungerBar: {fileID: 8256843406742128051}
-  staminaBar: {fileID: 1649494904128785853}
-  healthBar: {fileID: 5556036850233682232}
-  ageBar: {fileID: 5926906950849404507}
-  damage: 1
-  rotationSpeed: 270
-  acceleration: 1
-  walkSpeed: 1
-  runSpeed: 2
-  sex: 1
-  predatorTags:
-  - Fox
-  biteSize: 1
-  startAge: 0
-  plantTags:
-  - Grass
+  hungerModel: {fileID: 0}
+  landAnimalModel: {fileID: 0}
+  herbivoreModel: {fileID: 0}
 --- !u!114 &4407793939364243722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +86,6 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 16
   reactionSpeed: 0.2
-  angledDownRayDirection: {x: -3, y: -1, z: 0}
 --- !u!114 &2560302449344567651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,81 +143,6 @@ MonoBehaviour:
   predatorMemorySpan: 20
   ownKindMemorySpan: 20
   obstacleMemorySpan: 20
-  plantMemorySpan: 20
---- !u!114 &1649494904128785853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543252656249463597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc036bdad647d5d2912669d0b02f6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  recoveryRate: 1
-  recoveryDelay: 2
-  walkingCost: 0.5
-  runningCost: 1.5
-  isTiredPercentage: 50
-  current: 0
---- !u!114 &5556036850233682232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543252656249463597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed3dae8e7518818eb8db4c328ff9bb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 10
-  regenRate: 1
-  regenDelay: 5
-  current: 0
---- !u!114 &8256843406742128051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543252656249463597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e24b3ce9303b0140a07d2d7e699d06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max: 100
-  efficiency: 50
-  rate: 0.2
-  idlePenalty: 0.5
-  walkingPenalty: 1
-  runningPenalty: 1.5
-  regeneratingPenalty: 1
-  hungryPercentage: 50
-  starvingPercentage: 10
-  current: 0
---- !u!114 &5926906950849404507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543252656249463597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e78408974d22c07a848178efaad48a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  babyAge: 0
-  childAge: 10
-  adultAge: 20
-  max: 50
-  current: 0
 --- !u!195 &7505152948793750896
 NavMeshAgent:
   m_ObjectHideFlags: 0

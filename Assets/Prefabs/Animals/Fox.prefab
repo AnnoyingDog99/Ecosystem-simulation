@@ -56,19 +56,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6806d666356745a87ec9daa2f450d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 795108036912713218}
+  boundingBox: {fileID: 0}
   ownKindGameObject: {fileID: 795108036912713229}
   agent: {fileID: 795108036912713222}
   foodPoints: 10
   minScale: {x: 0.05, y: 0.05, z: 0.05}
   maxScale: {x: 0.1, y: 0.1, z: 0.1}
+  _animator: {fileID: 0}
   behaviourTree: {fileID: 795108036912713242}
   memory: {fileID: 795108036912713221}
   sight: {fileID: 795108036912713219}
-  hungerBar: {fileID: 4236366038021082095}
-  staminaBar: {fileID: 7273556742137788238}
-  healthBar: {fileID: 731086769781897789}
-  ageBar: {fileID: 4876878808335332292}
+  hungerTracker: {fileID: 4236366038021082095}
+  staminaTracker: {fileID: 7273556742137788238}
+  healthTracker: {fileID: 731086769781897789}
+  ageTracker: {fileID: 4876878808335332292}
   damage: 5
   rotationSpeed: 180
   acceleration: 1
@@ -103,7 +104,6 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 16
   reactionSpeed: 0.2
-  angledDownRayDirection: {x: 3, y: 1, z: 0}
 --- !u!114 &795108036912713220
 MonoBehaviour:
   m_ObjectHideFlags: 0
