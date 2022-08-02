@@ -16,19 +16,34 @@ public class ELActorScaleController : Controller
         this.actor = GetComponentInParent<IScalable>();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (this.isScalingOverTime) {
+        base.Update();
+        if (this.isScalingOverTime)
+        {
             this.isScalingOverTime = this.ScaleOverTime();
         }
     }
 
+    public void SetScale(Vector3 newScale)
+    {
+        // Stop scaling over time
+        this.isScalingOverTime = false;
+
+        float x = Mathf.Clamp(newScale.x, this.actor.GetMinScale().x, this.actor.GetMaxScale().x);
+        float y = Mathf.Clamp(newScale.y, this.actor.GetMinScale().y, this.actor.GetMaxScale().y);
+        float z = Mathf.Clamp(newScale.z, this.actor.GetMinScale().z, this.actor.GetMaxScale().z);
+        this.actor.SetScale(new Vector3(x, y, z));
+    }
+
     private bool ScaleOverTime()
     {
-        if ((this.timer += Time.deltaTime) > time) {
+        if ((this.timer += Time.deltaTime) > time)
+        {
             return false;
         }
-        if (this.actor.GetScale() == this.currentTargetScale) {
+        if (this.actor.GetScale() == this.currentTargetScale)
+        {
             return false;
         }
         this.SetScale(this.actor.GetScale() + (this.scaleStep * Time.deltaTime));
@@ -42,15 +57,7 @@ public class ELActorScaleController : Controller
         return Mathf.RoundToInt((100 / maxDistance) * (maxDistance - currentDistance));
     }
 
-    public void SetScale(Vector3 newScale) 
-    {
-        float x = Mathf.Clamp(newScale.x, this.actor.GetMinScale().x, this.actor.GetMaxScale().x);
-        float y = Mathf.Clamp(newScale.y, this.actor.GetMinScale().y, this.actor.GetMaxScale().y);
-        float z = Mathf.Clamp(newScale.z, this.actor.GetMinScale().z, this.actor.GetMaxScale().z);
-        this.actor.SetScale(new Vector3(x, y, z));
-    }
-
-    public void ScaleOverTime(Vector3 targetScale, float seconds) 
+    public void ScaleOverTime(Vector3 targetScale, float seconds)
     {
         this.timer = 0;
         this.time = seconds;

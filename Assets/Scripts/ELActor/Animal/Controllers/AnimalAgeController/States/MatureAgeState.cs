@@ -1,6 +1,6 @@
 public class MatureAnimalAgeState : AnimalAgeState, IAnimalAgeState
 {
-    public MatureAnimalAgeState(IAnimalAgeable animal) : base(animal)
+    public MatureAnimalAgeState(IAgeableAnimal animal) : base(animal)
     {
     }
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
+public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, IDamageableAnimal
 {
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] private AnimalMemory memory;
@@ -10,8 +10,10 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
     [SerializeField] private AnimalHungerModel hungerModel;
     [SerializeField] private NutritionalModel nutritionalModel;
     [SerializeField] private AnimalAgeModel ageModel;
+    [SerializeField] private AttackModel attackModel;
     private AnimalHungerController _hungerController;
     private AnimalAgeController _ageController;
+    private AnimalHealthController _healthController;
     private List<Animal> _offspring = new List<Animal>();
     private Animal _mother;
     private Animal _father;
@@ -24,6 +26,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
         base.Start();
         this._hungerController = GetComponent<AnimalHungerController>();
         this._ageController = GetComponent<AnimalAgeController>();
+        this._healthController = GetComponent<AnimalHealthController>();
     }
 
     // Update is called once per frame
@@ -31,6 +34,14 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
     {
         base.Update();
         this.behaviourTree.Evaluate();
+    }
+
+    public virtual void OnDeath()
+    {
+        this.GetAnimalHungerController().GetHungerTracker().Pause();
+        this.GetAnimalAgeController().GetAgeTracker().Pause();
+        this.GetAnimalHealthController().GetHealthTracker().Pause();
+        this.GetActorScaleController().SetScale(this.GetScale());
     }
 
     public AnimalAnimator GetAnimalAnimator()
@@ -128,5 +139,20 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
     public AnimalAgeController GetAnimalAgeController()
     {
         return this._ageController;
+    }
+
+    public AnimalHealthController GetAnimalHealthController()
+    {
+        return this._healthController;
+    }
+
+    public float GetAttackDamage()
+    {
+        return this.attackModel.GetAttackDamage();
+    }
+
+    public void GetDamaged(float damage)
+    {
+        this.GetAnimalHealthController().GetDamaged(damage);
     }
 }

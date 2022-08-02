@@ -8,6 +8,7 @@ public abstract class StatusTracker<T> : MonoBehaviour
     [SerializeField] protected float current = 100;
     [SerializeField] protected List<StatusTrackerAddon> addons = new List<StatusTrackerAddon>();
     protected Observable<T> status;
+    private bool isPaused = false;
 
     protected virtual void Awake()
     {
@@ -16,6 +17,7 @@ public abstract class StatusTracker<T> : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (this.IsPaused()) return;
         foreach (StatusTrackerAddon addon in this.addons)
         {
             this.current -= addon.CalculateCost();
@@ -38,6 +40,21 @@ public abstract class StatusTracker<T> : MonoBehaviour
         int percentage = Mathf.RoundToInt((100 / this.GetMax()) * this.GetCurrent());
         if (percentage < 0) percentage = 0;
         return (uint)percentage;
+    }
+
+    public void Pause()
+    {
+        this.isPaused = true;
+    }
+
+    public void Continue()
+    {
+        this.isPaused = false;
+    }
+
+    public bool IsPaused()
+    {
+        return this.isPaused;
     }
 
     public Observable<T> GetStatus()

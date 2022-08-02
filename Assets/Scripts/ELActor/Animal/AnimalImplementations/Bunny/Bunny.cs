@@ -24,11 +24,18 @@ public class Bunny : Animal, IHerbivore, ILandAnimal
         }
     }
 
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        this.GetLandAnimalMovementController().GetStaminaTracker().Pause();
+    }
+
     protected override void FirstUpdate()
     {
         base.FirstUpdate();
         // this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
         // this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
+        this.GetAnimalHealthController().GetDamaged(10f);
     }
 
     public LandAnimalMovementController GetLandAnimalMovementController()

@@ -33,7 +33,7 @@ public class LandAnimalMovementController : Controller
         });
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (this.HasReachedDestination())
         {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IOmnivore : IAnimal, IOmnivoreModel
+public interface IOmnivore : ICarnivore, IHerbivore, IOmnivoreModel
 {
 }

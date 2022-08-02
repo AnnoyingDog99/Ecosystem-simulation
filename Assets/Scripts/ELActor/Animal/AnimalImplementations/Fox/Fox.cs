@@ -20,6 +20,12 @@ public class Fox : Animal, ICarnivore, ILandAnimal
         base.Update();
     }
 
+    public override void OnDeath()
+    {
+        base.OnDeath();
+        this.GetLandAnimalMovementController().GetStaminaTracker().Pause();
+    }
+
     public LandAnimalMovementController GetLandAnimalMovementController()
     {
         return this.landMovementController;

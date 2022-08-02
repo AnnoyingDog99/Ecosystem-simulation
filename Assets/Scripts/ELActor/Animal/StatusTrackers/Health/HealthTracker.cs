@@ -15,6 +15,7 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
     protected override void Awake()
     {
         base.Awake();
+        this.regenDelayTimer = this.regenDelay;
         this.status = new Observable<HealthStatus>(HealthStatus.HEALTHY);
     }
 
@@ -22,6 +23,21 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
     protected override void Update()
     {
         base.Update();
+        if (this.IsPaused()) return;
+
+        if ((this.regenDelayTimer += Time.deltaTime) >= this.regenDelay)
+        {
+            // Clamp timer to delay time (to prevent overflow)
+            this.regenDelayTimer = this.regenDelay + 1f;
+
+            // Regenerate Health
+            this.current = Mathf.Min(this.current + (this.regenRate * Time.deltaTime), this.max);
+        }
+
+        if (this.GetCurrentPercentage() <= 0)
+        {
+            this.status.Set(HealthStatus.DEAD);
+        }
         if (this.GetCurrentPercentage() < this.dyingPercentage)
         {
             this.status.Set(HealthStatus.DYING);
@@ -34,14 +50,31 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
         {
             this.status.Set(HealthStatus.HEALTHY);
         }
+    }
 
-        this.current -= (2.5f * Time.deltaTime);
+    public void GetDamaged(float damage)
+    {
+        if (damage < 0) return;
+        this.current = Mathf.Max(0, this.current - damage);
+        this.regenDelayTimer = 0;
+    }
+
+    public void AddHealth(float health)
+    {
+        if (health < 0) return;
+        this.current = Mathf.Min(this.GetMax(), this.current + health);
+    }
+
+    public bool IsRegenerating()
+    {
+        return this.regenDelayTimer >= this.regenDelay;
     }
 
     public enum HealthStatus
     {
         HEALTHY,
         HURT,
-        DYING
+        DYING,
+        DEAD
     }
 }

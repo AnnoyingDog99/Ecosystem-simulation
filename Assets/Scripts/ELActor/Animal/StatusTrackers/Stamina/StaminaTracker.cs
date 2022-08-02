@@ -22,6 +22,8 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
     protected override void Update()
     {
         base.Update();
+        if (this.IsPaused()) return;
+
         if (this.GetCurrentPercentage() < this.exhaustedPercentage)
         {
             this.status.Set(StaminaStatus.EXHAUSTED);

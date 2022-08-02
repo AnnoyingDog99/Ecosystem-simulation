@@ -21,6 +21,8 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
     protected override void Update()
     {
         base.Update();
+        if (this.IsPaused()) return;
+
         if (this.GetCurrentPercentage() < this.starvingPercentage)
         {
             this.status.Set(HungerStatus.STARVING);

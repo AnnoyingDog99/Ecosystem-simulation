@@ -21,6 +21,8 @@ public class AgeTracker : StatusTracker<AgeTracker.AgeStatus>
     protected override void Update()
     {
         base.Update();
+        if (this.IsPaused()) return;
+
         if (this.GetCurrentPercentage() < this.maturePercentage)
         {
             this.status.Set(AgeStatus.YOUNG);
