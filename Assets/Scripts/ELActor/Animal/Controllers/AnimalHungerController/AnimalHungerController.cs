@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AnimalHungerController : MonoBehaviour
+public class AnimalHungerController : Controller
 {
     [SerializeField] private HungerTracker hungerTracker;
 

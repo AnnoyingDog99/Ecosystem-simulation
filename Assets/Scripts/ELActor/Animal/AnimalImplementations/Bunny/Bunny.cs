@@ -12,27 +12,23 @@ public class Bunny : Animal, IHerbivore, ILandAnimal
     {
         base.Start();
         this._landMovementController = GetComponent<LandAnimalMovementController>();
-
-        this.GetAnimalHungerController().GetHungerTracker().GetState().Subscribe((status) =>
-        {
-            Debug.Log(status);
-        });
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+        if (this.GetLandAnimalMovementController().HasReachedDestination())
+        {
+            this.GetLandAnimalMovementController().Idle();
+        }
     }
 
     protected override void FirstUpdate()
     {
         base.FirstUpdate();
-        if (this.GetLandAnimalMovementController().HasReachedDestination())
-        {
-            this.GetLandAnimalMovementController().Idle();
-        }
         this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
+        this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
     }
 
     public LandAnimalMovementController GetLandAnimalMovementController()

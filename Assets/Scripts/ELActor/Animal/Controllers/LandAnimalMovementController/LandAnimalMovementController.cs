@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LandAnimalMovementController : MonoBehaviour
+public class LandAnimalMovementController : Controller
 {
     [SerializeField] private StaminaTracker staminaTracker;
 

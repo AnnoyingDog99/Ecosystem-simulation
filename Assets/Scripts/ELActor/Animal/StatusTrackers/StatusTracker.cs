@@ -11,7 +11,7 @@ public abstract class StatusTracker<T> : MonoBehaviour
 
     protected virtual void Awake()
     {
-        
+
     }
 
     protected virtual void Update()

@@ -9,6 +9,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional
     [SerializeField] private Sight sight;
 
     [SerializeField] private AnimalHungerModel hungerModel;
+    [SerializeField] private NutritionalModel nutritionalModel;
 
     private AnimalHungerController _hungerController;
 
@@ -103,7 +104,15 @@ public abstract class Animal : ELActor, IAnimal, INutritional
 
     public virtual float GetEaten(float amount)
     {
-        return 1;
+        return this.nutritionalModel.GetEaten(amount);
+    }
+    public float GetMaxFoodPoints() 
+    {
+        return this.nutritionalModel.GetMaxFoodPoints();
+    }
+    public float GetCurrentFoodPoints() 
+    {
+        return this.nutritionalModel.GetCurrentFoodPoints();
     }
 
     public float GetBiteSize()

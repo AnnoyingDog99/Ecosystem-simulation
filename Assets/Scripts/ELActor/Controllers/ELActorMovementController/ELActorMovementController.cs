@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ELActorMovementController : MonoBehaviour
+public class ELActorMovementController : Controller
 {
     private IELActor actor;
     private IELActorMovementState movementState;

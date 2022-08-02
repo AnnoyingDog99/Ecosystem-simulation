@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 
-public interface IELActor
+public interface IELActor : IScaleModel
 {
     public NavMeshAgent GetAgent();
 
@@ -29,4 +29,6 @@ public interface IELActor
     public bool DoActorsCollide(IELActor actor);
 
     public ELActorMovementController GetActorMovementController();
+
+    public ELActorScaleController GetActorScaleController();
 }

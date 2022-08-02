@@ -3,12 +3,14 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class ELActor : MonoBehaviour, IELActor
+public abstract class ELActor : MonoBehaviour, IELActor, IScalable
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private BoxCollider boundingBox;
     [SerializeField] private ELAnimator animator;
+    [SerializeField] private ScaleModel scaleModel;
     private ELActorMovementController _actorMovementController;
+    private ELActorScaleController _actorScaleController;
     private List<IELActor> _collidingActors = new List<IELActor>();
 
     private bool firstUpdate = true;
@@ -17,7 +19,7 @@ public abstract class ELActor : MonoBehaviour, IELActor
     protected virtual void Start()
     {
         this._actorMovementController = GetComponent<ELActorMovementController>();
-
+        this._actorScaleController = GetComponent<ELActorScaleController>();
     }
 
     // Update is called once per frame
@@ -37,9 +39,7 @@ public abstract class ELActor : MonoBehaviour, IELActor
         {
             Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
         }
-        this.firstUpdate = false;
     }
-
 
     private void OnTriggerEnter(Collider collider)
     {
@@ -129,5 +129,20 @@ public abstract class ELActor : MonoBehaviour, IELActor
     public ELActorMovementController GetActorMovementController()
     {
         return this._actorMovementController;
+    }
+
+    public ELActorScaleController GetActorScaleController()
+    {
+        return this._actorScaleController;
+    }
+
+    public Vector3 GetMinScale()
+    {
+        return this.scaleModel.GetMinScale();
+    }
+
+    public Vector3 GetMaxScale()
+    {
+        return this.scaleModel.GetMaxScale();
     }
 }
