@@ -27,8 +27,8 @@ public class Bunny : Animal, IHerbivore, ILandAnimal
     protected override void FirstUpdate()
     {
         base.FirstUpdate();
-        this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
-        this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
+        // this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
+        // this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
     }
 
     public LandAnimalMovementController GetLandAnimalMovementController()

@@ -15,7 +15,7 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
     protected override void Awake()
     {
         base.Awake();
-        this.state = new Observable<StaminaStatus>(StaminaStatus.ENERGIZED);
+        this.status = new Observable<StaminaStatus>(StaminaStatus.ENERGIZED);
     }
 
     // Update is called once per frame
@@ -24,15 +24,15 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
         base.Update();
         if (this.GetCurrentPercentage() < this.exhaustedPercentage)
         {
-            this.state.Set(StaminaStatus.EXHAUSTED);
+            this.status.Set(StaminaStatus.EXHAUSTED);
         }
         else if (this.GetCurrentPercentage() < this.tiredPercentage)
         {
-            this.state.Set(StaminaStatus.TIRED);
+            this.status.Set(StaminaStatus.TIRED);
         }
         else
         {
-            this.state.Set(StaminaStatus.ENERGIZED);
+            this.status.Set(StaminaStatus.ENERGIZED);
         }
 
         this.current -= (2.5f * Time.deltaTime);

@@ -14,7 +14,7 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
     {
         base.Awake();
         this.animal = GetComponentInParent<IAnimal>();
-        this.state = new Observable<HungerStatus>(HungerStatus.SATISFIED);
+        this.status = new Observable<HungerStatus>(HungerStatus.SATISFIED);
     }
 
     // Update is called once per frame
@@ -23,15 +23,15 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
         base.Update();
         if (this.GetCurrentPercentage() < this.starvingPercentage)
         {
-            this.state.Set(HungerStatus.STARVING);
+            this.status.Set(HungerStatus.STARVING);
         }
         else if (this.GetCurrentPercentage() < this.hungryPercentage)
         {
-            this.state.Set(HungerStatus.HUNGRY);
+            this.status.Set(HungerStatus.HUNGRY);
         }
         else
         {
-            this.state.Set(HungerStatus.SATISFIED);
+            this.status.Set(HungerStatus.SATISFIED);
         }
     }
 

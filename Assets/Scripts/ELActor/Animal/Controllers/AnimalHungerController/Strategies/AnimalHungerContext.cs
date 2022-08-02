@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.AI;
-
 public class AnimalHungerContext
 {
     private IAnimalHungerStrategy strategy = null;

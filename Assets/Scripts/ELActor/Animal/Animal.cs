@@ -2,17 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Animal : ELActor, IAnimal, INutritional
+public abstract class Animal : ELActor, IAnimal, INutritional, IAnimalAgeable
 {
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] private AnimalMemory memory;
     [SerializeField] private Sight sight;
-
     [SerializeField] private AnimalHungerModel hungerModel;
     [SerializeField] private NutritionalModel nutritionalModel;
-
+    [SerializeField] private AnimalAgeModel ageModel;
     private AnimalHungerController _hungerController;
-
+    private AnimalAgeController _ageController;
     private List<Animal> _offspring = new List<Animal>();
     private Animal _mother;
     private Animal _father;
@@ -24,6 +23,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional
     {
         base.Start();
         this._hungerController = GetComponent<AnimalHungerController>();
+        this._ageController = GetComponent<AnimalAgeController>();
     }
 
     // Update is called once per frame
@@ -106,11 +106,11 @@ public abstract class Animal : ELActor, IAnimal, INutritional
     {
         return this.nutritionalModel.GetEaten(amount);
     }
-    public float GetMaxFoodPoints() 
+    public float GetMaxFoodPoints()
     {
         return this.nutritionalModel.GetMaxFoodPoints();
     }
-    public float GetCurrentFoodPoints() 
+    public float GetCurrentFoodPoints()
     {
         return this.nutritionalModel.GetCurrentFoodPoints();
     }
@@ -123,5 +123,10 @@ public abstract class Animal : ELActor, IAnimal, INutritional
     public AnimalHungerController GetAnimalHungerController()
     {
         return this._hungerController;
+    }
+
+    public AnimalAgeController GetAnimalAgeController()
+    {
+        return this._ageController;
     }
 }

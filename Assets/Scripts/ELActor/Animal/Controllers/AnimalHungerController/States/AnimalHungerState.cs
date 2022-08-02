@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.AI;
-
 public abstract class AnimalHungerState
 {
     protected AnimalHungerContext context;

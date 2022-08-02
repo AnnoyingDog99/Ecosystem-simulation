@@ -15,7 +15,7 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
     protected override void Awake()
     {
         base.Awake();
-        this.state = new Observable<HealthStatus>(HealthStatus.HEALTHY);
+        this.status = new Observable<HealthStatus>(HealthStatus.HEALTHY);
     }
 
     // Update is called once per frame
@@ -24,15 +24,15 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
         base.Update();
         if (this.GetCurrentPercentage() < this.dyingPercentage)
         {
-            this.state.Set(HealthStatus.DYING);
+            this.status.Set(HealthStatus.DYING);
         }
         else if (this.GetCurrentPercentage() < this.hurtPercentage)
         {
-            this.state.Set(HealthStatus.HURT);
+            this.status.Set(HealthStatus.HURT);
         }
         else
         {
-            this.state.Set(HealthStatus.HEALTHY);
+            this.status.Set(HealthStatus.HEALTHY);
         }
 
         this.current -= (2.5f * Time.deltaTime);

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class AnimalHungerController : Controller
 {
@@ -11,6 +10,7 @@ public class AnimalHungerController : Controller
     private void Start()
     {
         this.animal = GetComponentInParent<IAnimal>();
+        this.hungerState = new DefaultAnimalHungerState(this.animal);
     }
 
     public bool Eat(INutritional target)

@@ -16,9 +16,9 @@ public class LandAnimalMovementController : Controller
     {
         this.landAnimal = GetComponentInParent<ILandAnimal>();
 
-        this.staminaTracker.GetState().Subscribe((StaminaTracker.StaminaStatus state) =>
+        this.staminaTracker.GetStatus().Subscribe((StaminaTracker.StaminaStatus status) =>
         {
-            switch (state)
+            switch (status)
             {
                 case StaminaTracker.StaminaStatus.ENERGIZED:
                     this.landMovementState = new EnergizedLandAnimalMovementState(this.landAnimal);

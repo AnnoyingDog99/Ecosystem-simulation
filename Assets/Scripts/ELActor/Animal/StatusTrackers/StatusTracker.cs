@@ -7,7 +7,7 @@ public abstract class StatusTracker<T> : MonoBehaviour
     [SerializeField] protected float max = 100;
     [SerializeField] protected float current = 100;
     [SerializeField] protected List<StatusTrackerAddon> addons = new List<StatusTrackerAddon>();
-    protected Observable<T> state;
+    protected Observable<T> status;
 
     protected virtual void Awake()
     {
@@ -40,8 +40,8 @@ public abstract class StatusTracker<T> : MonoBehaviour
         return (uint)percentage;
     }
 
-    public Observable<T> GetState()
+    public Observable<T> GetStatus()
     {
-        return this.state;
+        return this.status;
     }
 }
