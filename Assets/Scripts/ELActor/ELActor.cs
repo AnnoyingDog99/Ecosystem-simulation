@@ -115,6 +115,16 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
         return gameObject.GetInstanceID();
     }
 
+    public int GetLayer()
+    {
+        return this.gameObject.layer;
+    }
+
+    public string GetTag()
+    {
+        return this.tag;
+    }
+
     public List<IELActor> GetCollidingActors()
     {
         this._collidingActors = this._collidingActors.FindAll((actor) => Director.Instance.ActorExists(actor));

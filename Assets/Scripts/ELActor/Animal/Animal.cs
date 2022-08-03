@@ -40,7 +40,7 @@ public abstract class Animal : ELActor, IAnimal
     {
         this.GetAnimalHungerController().GetHungerTracker().Pause();
         this.GetAnimalAgeController().GetAgeTracker().Pause();
-        this.GetActorHealthController().GetHealthTracker().Pause();
+        this.GetAnimalHealthController().GetHealthTracker().Pause();
         this.GetActorScaleController().SetScale(this.GetScale());
     }
 
@@ -126,6 +126,11 @@ public abstract class Animal : ELActor, IAnimal
         return this.nutritionalModel.GetCurrentFoodPoints();
     }
 
+    public void SetCurrentFoodPoints(float foodPoints)
+    {
+        this.nutritionalModel.SetCurrentFoodPoints(foodPoints);
+    }
+
     public float GetBiteSize()
     {
         return this.hungerModel.GetBiteSize();
@@ -141,10 +146,11 @@ public abstract class Animal : ELActor, IAnimal
         return this._ageController;
     }
 
-    public ELActorHealthController GetActorHealthController()
+    public ELActorHealthController GetAnimalHealthController()
     {
         return this._healthController;
     }
+
 
     public float GetAttackDamage()
     {
@@ -153,6 +159,6 @@ public abstract class Animal : ELActor, IAnimal
 
     public void GetDamaged(float damage)
     {
-        this.GetActorHealthController().GetDamaged(damage);
+        this.GetAnimalHealthController().GetDamaged(damage);
     }
 }

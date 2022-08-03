@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class ELActorScaleController : Controller
 {
     private IScalable actor;
-
     private float scaleOverTimeTimer = 0;
     private float scaleOverTimeTime = 0;
     private Vector3 currentTargetScale = Vector3.zero;

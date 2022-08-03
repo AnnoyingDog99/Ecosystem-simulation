@@ -11,12 +11,17 @@ public class NutritionalModel : MonoBehaviour, INutritionalModel
         return points;
     }
 
-    public float GetMaxFoodPoints() 
+    public float GetMaxFoodPoints()
     {
         return this.maxFoodPoints;
     }
-    public float GetCurrentFoodPoints() 
+    public float GetCurrentFoodPoints()
     {
         return this._currentFoodPoints;
+    }
+
+    public void SetCurrentFoodPoints(float foodPoints)
+    {
+        this._currentFoodPoints = foodPoints;
     }
 }

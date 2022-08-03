@@ -31,6 +31,8 @@ public interface IAnimal : IELActor, IAnimalHungerModel, IAnimalAgeModel, INutri
     public AnimalHungerController GetAnimalHungerController();
 
     public AnimalAgeController GetAnimalAgeController();
+
+    public ELActorHealthController GetAnimalHealthController();
 }
 
 public enum AnimalSex

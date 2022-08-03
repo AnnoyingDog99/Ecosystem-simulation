@@ -26,13 +26,13 @@ public class AnimalHealthController : ELActorHealthController
         {
             if (this.starvingDamageIdentifier == null)
             {
-                this.starvingDamageIdentifier = this.animal.GetActorHealthController().GetDamagedRepeatedly(0.5f, 2f, 2);
+                this.starvingDamageIdentifier = this.animal.GetAnimalHealthController().GetDamagedRepeatedly(0.5f, 2f, 2);
             }
-            this.animal.GetActorHealthController().RestartDamagedRepeatedly(this.starvingDamageIdentifier);
+            this.animal.GetAnimalHealthController().RestartDamagedRepeatedly(this.starvingDamageIdentifier);
         }
         else if (this.starvingDamageIdentifier != null)
         {
-            this.animal.GetActorHealthController().StopDamagedRepeatedly(this.starvingDamageIdentifier);
+            this.animal.GetAnimalHealthController().StopDamagedRepeatedly(this.starvingDamageIdentifier);
             this.starvingDamageIdentifier = null;
         }
     }

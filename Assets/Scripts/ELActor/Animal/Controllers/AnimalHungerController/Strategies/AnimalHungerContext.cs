@@ -1,15 +1,15 @@
 public class AnimalHungerContext
 {
-    private IAnimalHungerStrategy strategy = null;
+    private IAnimalEatStrategy eatStrategy = null;
 
-    public void SetStrategy(IAnimalHungerStrategy strategy)
+    public void SetEatStrategy(IAnimalEatStrategy strategy)
     {
-        this.strategy = strategy;
+        this.eatStrategy = strategy;
     }
 
-    public bool ExecuteStrategy(IAnimal animal, INutritional target)
+    public bool ExecuteEatStrategy(IAnimal animal, INutritional target)
     {
-        if (this.strategy == null) return false;
-        return this.strategy.execute(animal, target);
+        if (this.eatStrategy == null) return false;
+        return this.eatStrategy.execute(animal, target);
     }
 }

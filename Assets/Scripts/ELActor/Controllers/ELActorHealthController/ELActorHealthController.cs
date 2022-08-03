@@ -25,7 +25,6 @@ public class ELActorHealthController : Controller
         this.actor = GetComponentInParent<IDamageable>();
         this.GetHealthTracker().GetStatus().Subscribe((HealthTracker.HealthStatus status) =>
         {
-            Debug.Log(status);
             if (status == HealthTracker.HealthStatus.DEAD)
             {
                 this.Die();

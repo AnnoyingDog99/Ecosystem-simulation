@@ -24,6 +24,10 @@ public interface IELActor : IScaleModel
 
     public int GetID();
 
+    public int GetLayer();
+
+    public string GetTag();
+
     public List<IELActor> GetCollidingActors();
 
     public bool DoActorsCollide(IELActor actor);
