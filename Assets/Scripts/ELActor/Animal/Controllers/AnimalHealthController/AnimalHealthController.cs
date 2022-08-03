@@ -1,49 +1,65 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AnimalHealthController : Controller
+public class AnimalHealthController : ELActorHealthController
 {
-    [SerializeField] private HealthTracker healthTracker;
+    private Animal animal;
 
-    private IDamageableAnimal animal;
+    private bool isStarving = false;
+    private int starvingDamageIdentifier = -1;
 
-    private void Start()
+    protected override void Start()
     {
-        this.animal = GetComponentInParent<IDamageableAnimal>();
-        this.GetHealthTracker().GetStatus().Subscribe((HealthTracker.HealthStatus status) =>
-        {
-            if (status == HealthTracker.HealthStatus.DEAD)
-            {
-                this.Die();
-            }
-        });
+        base.Start();
+        this.animal = GetComponentInParent<Animal>();
     }
 
     protected override void Update()
     {
         base.Update();
+
+        if (this.isStarving)
+        {
+            if (this.starvingDamageIdentifier < 0)
+            {
+                this.starvingDamageIdentifier = this.animal.GetActorHealthController().GetDamagedRepeatedly(0.5f, 2f, 5);
+            }
+            this.animal.GetActorHealthController().RestartDamagedRepeatedly(this.starvingDamageIdentifier);
+        }
+        else if (this.starvingDamageIdentifier >= 0)
+        {
+            this.animal.GetActorHealthController().StopDamagedRepeatedly(this.starvingDamageIdentifier);
+            this.starvingDamageIdentifier = -1;
+        }
     }
 
-    public HealthTracker GetHealthTracker()
+    protected override void FirstUpdate()
     {
-        return this.healthTracker;
+        base.FirstUpdate();
+
+        this.animal.GetAnimalAgeController().GetAgeTracker().GetStatus().Subscribe((AgeTracker.AgeStatus status) =>
+        {
+            if (status == AgeTracker.AgeStatus.MAX)
+            {
+                this.Die();
+            }
+        });
+        
+        this.animal.GetAnimalHungerController().GetHungerTracker().GetStatus().Subscribe((HungerTracker.HungerStatus status) =>
+        {
+            if (status == HungerTracker.HungerStatus.STARVING)
+            {
+                this.isStarving = true;
+            }
+            else
+            {
+                this.isStarving = false;
+            }
+        });
     }
 
-    public bool IsDead()
+    public override void Die()
     {
-        return this.animal.GetAnimalAnimator().GetIsDeadBool();
-    }
-
-    public void Die()
-    {
-        this.GetHealthTracker().GetDamaged(this.GetHealthTracker().GetCurrent());
-        this.GetHealthTracker().Pause();
-        this.animal.GetAnimalAnimator().SetIsDeadBool(true);
-        this.animal.OnDeath();
-    }
-
-    public void GetDamaged(float damage)
-    {
-        this.GetHealthTracker().GetDamaged(damage);
+        base.Die();
     }
 }

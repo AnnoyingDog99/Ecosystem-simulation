@@ -35,7 +35,8 @@ public class Bunny : Animal, IHerbivore, ILandAnimal
         base.FirstUpdate();
         // this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
         // this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
-        this.GetAnimalHealthController().GetDamaged(10f);
+        // this.GetActorHealthController().GetDamaged(10f);
+        // this.GetActorHealthController().GetDamagedRepeatedly(1f, 1f, 4);
     }
 
     public LandAnimalMovementController GetLandAnimalMovementController()

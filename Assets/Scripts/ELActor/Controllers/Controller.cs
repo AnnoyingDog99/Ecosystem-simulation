@@ -3,6 +3,11 @@ public abstract class Controller : MonoBehaviour
 {
     private bool firstUpdate = true;
 
+    protected virtual void Start()
+    {
+        
+    }
+
     protected virtual void Update()
     {
         if (this.firstUpdate)

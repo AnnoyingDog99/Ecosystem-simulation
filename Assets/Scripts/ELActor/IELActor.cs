@@ -9,7 +9,7 @@ public interface IELActor : IScaleModel
 
     public BoxCollider GetBoundingBox();
 
-    public ELAnimator GetActorAnimator();
+    public ELActorAnimator GetActorAnimator();
 
     public Vector3 GetPosition();
 

@@ -7,7 +7,7 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private BoxCollider boundingBox;
-    [SerializeField] private ELAnimator animator;
+    [SerializeField] private ELActorAnimator animator;
     [SerializeField] private ScaleModel scaleModel;
     private ELActorMovementController _actorMovementController;
     private ELActorScaleController _actorScaleController;
@@ -80,7 +80,7 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
         return this.boundingBox;
     }
 
-    public ELAnimator GetActorAnimator()
+    public ELActorAnimator GetActorAnimator()
     {
         return this.animator;
     }

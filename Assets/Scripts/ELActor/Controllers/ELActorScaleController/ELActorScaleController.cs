@@ -5,13 +5,13 @@ public class ELActorScaleController : Controller
 {
     private IScalable actor;
 
-    private float timer = 0;
-    private float time = 0;
+    private float scaleOverTimeTimer = 0;
+    private float scaleOverTimeTime = 0;
     private Vector3 currentTargetScale = Vector3.zero;
     private Vector3 scaleStep = Vector3.zero;
     private bool isScalingOverTime = false;
 
-    private void Start()
+    protected override void Start()
     {
         this.actor = GetComponentInParent<IScalable>();
     }
@@ -38,7 +38,7 @@ public class ELActorScaleController : Controller
 
     private bool ScaleOverTime()
     {
-        if ((this.timer += Time.deltaTime) > time)
+        if ((this.scaleOverTimeTimer += Time.deltaTime) > this.scaleOverTimeTime)
         {
             return false;
         }
@@ -59,10 +59,10 @@ public class ELActorScaleController : Controller
 
     public void ScaleOverTime(Vector3 targetScale, float seconds)
     {
-        this.timer = 0;
-        this.time = seconds;
+        this.scaleOverTimeTimer = 0;
+        this.scaleOverTimeTime = seconds;
         this.currentTargetScale = targetScale;
-        this.scaleStep = (this.currentTargetScale - this.actor.GetScale()) / this.time;
+        this.scaleStep = (this.currentTargetScale - this.actor.GetScale()) / this.scaleOverTimeTime;
         this.isScalingOverTime = true;
     }
 }

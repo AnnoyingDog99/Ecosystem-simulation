@@ -1,6 +1,6 @@
-public interface IDamageable
+public interface IDamageable : IELActor
 {
-    public AnimalHealthController GetAnimalHealthController();
+    public ELActorHealthController GetActorHealthController();
     public void GetDamaged(float damage);
     public void OnDeath();
 }

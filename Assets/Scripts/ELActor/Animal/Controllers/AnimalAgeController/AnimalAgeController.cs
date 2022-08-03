@@ -5,7 +5,7 @@ public class AnimalAgeController : Controller
     private IAgeableAnimal animal;
     private IAnimalAgeState ageState;
 
-    private void Start()
+    protected override void Start()
     {
         this.animal = GetComponentInParent<IAgeableAnimal>();
     }

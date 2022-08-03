@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, IDamageableAnimal
+public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, IDamageable
 {
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] private AnimalMemory memory;
@@ -13,7 +13,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, I
     [SerializeField] private AttackModel attackModel;
     private AnimalHungerController _hungerController;
     private AnimalAgeController _ageController;
-    private AnimalHealthController _healthController;
+    private ELActorHealthController _healthController;
     private List<Animal> _offspring = new List<Animal>();
     private Animal _mother;
     private Animal _father;
@@ -26,7 +26,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, I
         base.Start();
         this._hungerController = GetComponent<AnimalHungerController>();
         this._ageController = GetComponent<AnimalAgeController>();
-        this._healthController = GetComponent<AnimalHealthController>();
+        this._healthController = GetComponent<ELActorHealthController>();
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, I
     {
         this.GetAnimalHungerController().GetHungerTracker().Pause();
         this.GetAnimalAgeController().GetAgeTracker().Pause();
-        this.GetAnimalHealthController().GetHealthTracker().Pause();
+        this.GetActorHealthController().GetHealthTracker().Pause();
         this.GetActorScaleController().SetScale(this.GetScale());
     }
 
@@ -141,7 +141,7 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, I
         return this._ageController;
     }
 
-    public AnimalHealthController GetAnimalHealthController()
+    public ELActorHealthController GetActorHealthController()
     {
         return this._healthController;
     }
@@ -153,6 +153,6 @@ public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, I
 
     public void GetDamaged(float damage)
     {
-        this.GetAnimalHealthController().GetDamaged(damage);
+        this.GetActorHealthController().GetDamaged(damage);
     }
 }

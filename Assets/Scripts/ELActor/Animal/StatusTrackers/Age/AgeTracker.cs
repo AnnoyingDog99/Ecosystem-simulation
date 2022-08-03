@@ -31,9 +31,13 @@ public class AgeTracker : StatusTracker<AgeTracker.AgeStatus>
         {
             this.status.Set(AgeStatus.MATURE);
         }
-        else
+        else if (this.GetCurrentPercentage() < 100)
         {
             this.status.Set(AgeStatus.OLD);
+        }
+        else
+        {
+            this.status.Set(AgeStatus.MAX);
         }
 
         this.current += (this.ageRate * Time.deltaTime);
@@ -82,6 +86,7 @@ public class AgeTracker : StatusTracker<AgeTracker.AgeStatus>
     {
         YOUNG,
         MATURE,
-        OLD
+        OLD,
+        MAX
     }
 }
