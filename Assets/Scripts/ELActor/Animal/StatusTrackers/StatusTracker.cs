@@ -30,9 +30,19 @@ public abstract class StatusTracker<T> : MonoBehaviour
         return this.current;
     }
 
+    public void SetCurrent(float value)
+    {
+        this.current = value;
+    }
+
     public float GetMax()
     {
         return this.max;
+    }
+
+    public void SetMax(float value)
+    {
+        this.max = value;
     }
 
     public uint GetCurrentPercentage()

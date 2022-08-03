@@ -17,12 +17,16 @@ public class AnimalHealthController : ELActorHealthController
     protected override void Update()
     {
         base.Update();
+        if (this.IsDead())
+        {
+            this.isStarving = false;
+        }
 
         if (this.isStarving)
         {
             if (this.starvingDamageIdentifier < 0)
             {
-                this.starvingDamageIdentifier = this.animal.GetActorHealthController().GetDamagedRepeatedly(0.5f, 2f, 5);
+                this.starvingDamageIdentifier = this.animal.GetActorHealthController().GetDamagedRepeatedly(0.5f, 2f, 2);
             }
             this.animal.GetActorHealthController().RestartDamagedRepeatedly(this.starvingDamageIdentifier);
         }
@@ -54,6 +58,19 @@ public class AnimalHealthController : ELActorHealthController
             else
             {
                 this.isStarving = false;
+            }
+            switch (status)
+            {
+                case HungerTracker.HungerStatus.STARVING:
+                    this.GetHealthTracker().SetRegenPenalty(100f);
+                    break;
+                case HungerTracker.HungerStatus.HUNGRY:
+                    this.GetHealthTracker().SetRegenPenalty(50f);
+                    break;
+                case HungerTracker.HungerStatus.SATISFIED:
+                default:
+                    this.GetHealthTracker().SetRegenPenalty(0f);
+                    break;
             }
         });
     }

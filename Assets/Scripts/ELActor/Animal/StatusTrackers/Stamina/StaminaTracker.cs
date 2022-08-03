@@ -36,8 +36,6 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
         {
             this.status.Set(StaminaStatus.ENERGIZED);
         }
-
-        this.current -= (2.5f * Time.deltaTime);
     }
 
     public enum StaminaStatus

@@ -10,6 +10,7 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
     [SerializeField] private uint dyingPercentage = 10;
 
     private float regenDelayTimer;
+    private float regenPercentagePenalty = 0f;
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -31,7 +32,7 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
             this.regenDelayTimer = this.regenDelay + 1f;
 
             // Regenerate Health
-            this.current = Mathf.Min(this.current + (this.regenRate * Time.deltaTime), this.max);
+            this.current = Mathf.Min(this.current + ((this.regenRate * ((100 - this.regenPercentagePenalty) / 100)) * Time.deltaTime), this.max);
         }
 
         if (this.GetCurrentPercentage() <= 0)
@@ -50,6 +51,12 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
         {
             this.status.Set(HealthStatus.HEALTHY);
         }
+    }
+
+    public void SetRegenPenalty(float penaltyPercentage)
+    {
+        this.regenPercentagePenalty = penaltyPercentage;
+        Debug.Log(this.regenPercentagePenalty);
     }
 
     public void GetDamaged(float damage)

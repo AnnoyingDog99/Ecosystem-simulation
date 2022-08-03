@@ -82,13 +82,13 @@ public class ELActorHealthController : Controller
 
     public virtual int GetDamagedRepeatedly(float damage, float interval, uint times)
     {
-        // Get damaged for {damage} each {interval} seconds, {times} times.
+        // Get damaged for {damage}, each {interval} seconds, {times} times.
         DamageRepeatedlyStruct damageRepeatedlyStruct = new DamageRepeatedlyStruct();
         damageRepeatedlyStruct.damageRepeatedlyDamage = damage;
         damageRepeatedlyStruct.damageRepeatedlyInterval = interval;
         damageRepeatedlyStruct.originalDamageRepeatedlyTimes = times;
         damageRepeatedlyStruct.damageRepeatedlyTimes = times;
-        damageRepeatedlyStruct.damageRepeatedlyTimer = 0;
+        damageRepeatedlyStruct.damageRepeatedlyTimer = interval;
         this.damageRepeatedlySources.Add(damageRepeatedlyStruct);
         return this.damageRepeatedlySources.Count - 1;
     }
@@ -96,12 +96,14 @@ public class ELActorHealthController : Controller
     public virtual void RestartDamagedRepeatedly(int index)
     {
         // Restart damage repeatedly
+        if (index >= this.damageRepeatedlySources.Count) return;
         DamageRepeatedlyStruct damageRepeatedlyStruct = this.damageRepeatedlySources[index];
         damageRepeatedlyStruct.damageRepeatedlyTimes = damageRepeatedlyStruct.originalDamageRepeatedlyTimes;
     }
 
     public virtual void StopDamagedRepeatedly(int index)
     {
+        if (index >= this.damageRepeatedlySources.Count) return;
         this.damageRepeatedlySources.RemoveAt(index);
     }
 }
