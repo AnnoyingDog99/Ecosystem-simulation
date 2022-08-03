@@ -7,7 +7,7 @@ public class AnimalHungerController : Controller
     private IAnimal animal;
     private IAnimalHungerState hungerState;
 
-    private void Start()
+    protected override void Start()
     {
         this.animal = GetComponentInParent<IAnimal>();
         this.hungerState = new DefaultAnimalHungerState(this.animal);

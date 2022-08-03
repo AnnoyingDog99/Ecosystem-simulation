@@ -6,7 +6,7 @@ public class ELActorMovementController : Controller
     private IELActor actor;
     private IELActorMovementState movementState;
 
-    private void Start()
+    protected override void Start()
     {
         this.actor = GetComponentInParent<IELActor>();
         this.movementState = new DefaultELActorMovementState(this.actor);

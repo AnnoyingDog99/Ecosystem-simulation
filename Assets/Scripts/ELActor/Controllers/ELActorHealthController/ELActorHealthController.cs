@@ -8,9 +8,10 @@ public class ELActorHealthController : Controller
 
     private IDamageable actor;
 
-    private List<DamageRepeatedlyStruct> damageRepeatedlySources = new List<DamageRepeatedlyStruct>();
-    private class DamageRepeatedlyStruct
+    private List<DamageRepeatedly> damageRepeatedlySources = new List<DamageRepeatedly>();
+    private class DamageRepeatedly
     {
+        public Identifier identifier;
         public float damageRepeatedlyDamage;
         public float damageRepeatedlyTimer;
         public float damageRepeatedlyInterval;
@@ -24,6 +25,7 @@ public class ELActorHealthController : Controller
         this.actor = GetComponentInParent<IDamageable>();
         this.GetHealthTracker().GetStatus().Subscribe((HealthTracker.HealthStatus status) =>
         {
+            Debug.Log(status);
             if (status == HealthTracker.HealthStatus.DEAD)
             {
                 this.Die();
@@ -41,19 +43,19 @@ public class ELActorHealthController : Controller
         }
         for (int i = this.damageRepeatedlySources.Count - 1; i >= 0; i--)
         {
-            DamageRepeatedlyStruct damageRepeatedlyStruct = damageRepeatedlySources[i];
-            if (damageRepeatedlyStruct.damageRepeatedlyTimes == 0)
+            DamageRepeatedly damageRepeatedly = damageRepeatedlySources[i];
+            if (damageRepeatedly.damageRepeatedlyTimes == 0)
             {
                 this.damageRepeatedlySources.RemoveAt(i);
                 continue;
             }
-            if ((damageRepeatedlyStruct.damageRepeatedlyTimer += Time.deltaTime) < damageRepeatedlyStruct.damageRepeatedlyInterval)
+            if ((damageRepeatedly.damageRepeatedlyTimer += Time.deltaTime) < damageRepeatedly.damageRepeatedlyInterval)
             {
                 continue;
             }
-            this.GetDamaged(damageRepeatedlyStruct.damageRepeatedlyDamage);
-            damageRepeatedlyStruct.damageRepeatedlyTimes--;
-            damageRepeatedlyStruct.damageRepeatedlyTimer = 0;
+            this.GetDamaged(damageRepeatedly.damageRepeatedlyDamage);
+            damageRepeatedly.damageRepeatedlyTimes--;
+            damageRepeatedly.damageRepeatedlyTimer = 0;
         }
     }
 
@@ -80,30 +82,32 @@ public class ELActorHealthController : Controller
         this.GetHealthTracker().GetDamaged(damage);
     }
 
-    public virtual int GetDamagedRepeatedly(float damage, float interval, uint times)
+    public virtual Identifier GetDamagedRepeatedly(float damage, float interval, uint times)
     {
         // Get damaged for {damage}, each {interval} seconds, {times} times.
-        DamageRepeatedlyStruct damageRepeatedlyStruct = new DamageRepeatedlyStruct();
-        damageRepeatedlyStruct.damageRepeatedlyDamage = damage;
-        damageRepeatedlyStruct.damageRepeatedlyInterval = interval;
-        damageRepeatedlyStruct.originalDamageRepeatedlyTimes = times;
-        damageRepeatedlyStruct.damageRepeatedlyTimes = times;
-        damageRepeatedlyStruct.damageRepeatedlyTimer = interval;
-        this.damageRepeatedlySources.Add(damageRepeatedlyStruct);
-        return this.damageRepeatedlySources.Count - 1;
+        DamageRepeatedly damageRepeatedly = new DamageRepeatedly();
+        damageRepeatedly.identifier = Identifier.GetIdentifier();
+        damageRepeatedly.damageRepeatedlyDamage = damage;
+        damageRepeatedly.damageRepeatedlyInterval = interval;
+        damageRepeatedly.originalDamageRepeatedlyTimes = times;
+        damageRepeatedly.damageRepeatedlyTimes = times;
+        damageRepeatedly.damageRepeatedlyTimer = interval;
+        this.damageRepeatedlySources.Add(damageRepeatedly);
+        return damageRepeatedly.identifier;
     }
 
-    public virtual void RestartDamagedRepeatedly(int index)
+    public virtual void RestartDamagedRepeatedly(Identifier identifier)
     {
         // Restart damage repeatedly
-        if (index >= this.damageRepeatedlySources.Count) return;
-        DamageRepeatedlyStruct damageRepeatedlyStruct = this.damageRepeatedlySources[index];
-        damageRepeatedlyStruct.damageRepeatedlyTimes = damageRepeatedlyStruct.originalDamageRepeatedlyTimes;
+        DamageRepeatedly damageRepeatedly = this.damageRepeatedlySources.Find((source) => source.identifier == identifier);
+        if (damageRepeatedly == null) return;
+        damageRepeatedly.damageRepeatedlyTimes = damageRepeatedly.originalDamageRepeatedlyTimes;
     }
 
-    public virtual void StopDamagedRepeatedly(int index)
+    public virtual void StopDamagedRepeatedly(Identifier identifier)
     {
-        if (index >= this.damageRepeatedlySources.Count) return;
-        this.damageRepeatedlySources.RemoveAt(index);
+        DamageRepeatedly damageRepeatedly = this.damageRepeatedlySources.Find((source) => source.identifier == identifier);
+        if (damageRepeatedly == null) return;
+        this.damageRepeatedlySources.Remove(damageRepeatedly);
     }
 }

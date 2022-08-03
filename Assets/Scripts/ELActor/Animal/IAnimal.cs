@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public interface IAnimal : IELActor, IAnimalHungerModel
+public interface IAnimal : IELActor, IAnimalHungerModel, IAnimalAgeModel, INutritional, IDamageable
 {
     public AnimalAnimator GetAnimalAnimator();
 
@@ -29,6 +29,8 @@ public interface IAnimal : IELActor, IAnimalHungerModel
     public AnimalSex GetSex();
 
     public AnimalHungerController GetAnimalHungerController();
+
+    public AnimalAgeController GetAnimalAgeController();
 }
 
 public enum AnimalSex

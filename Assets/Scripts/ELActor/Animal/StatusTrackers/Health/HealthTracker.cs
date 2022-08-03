@@ -56,7 +56,6 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
     public void SetRegenPenalty(float penaltyPercentage)
     {
         this.regenPercentagePenalty = penaltyPercentage;
-        Debug.Log(this.regenPercentagePenalty);
     }
 
     public void GetDamaged(float damage)

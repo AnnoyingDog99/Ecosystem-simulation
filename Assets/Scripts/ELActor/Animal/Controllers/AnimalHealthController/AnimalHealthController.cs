@@ -6,7 +6,7 @@ public class AnimalHealthController : ELActorHealthController
     private Animal animal;
 
     private bool isStarving = false;
-    private int starvingDamageIdentifier = -1;
+    private Identifier starvingDamageIdentifier = null;
 
     protected override void Start()
     {
@@ -24,16 +24,16 @@ public class AnimalHealthController : ELActorHealthController
 
         if (this.isStarving)
         {
-            if (this.starvingDamageIdentifier < 0)
+            if (this.starvingDamageIdentifier == null)
             {
                 this.starvingDamageIdentifier = this.animal.GetActorHealthController().GetDamagedRepeatedly(0.5f, 2f, 2);
             }
             this.animal.GetActorHealthController().RestartDamagedRepeatedly(this.starvingDamageIdentifier);
         }
-        else if (this.starvingDamageIdentifier >= 0)
+        else if (this.starvingDamageIdentifier != null)
         {
             this.animal.GetActorHealthController().StopDamagedRepeatedly(this.starvingDamageIdentifier);
-            this.starvingDamageIdentifier = -1;
+            this.starvingDamageIdentifier = null;
         }
     }
 
@@ -48,7 +48,7 @@ public class AnimalHealthController : ELActorHealthController
                 this.Die();
             }
         });
-        
+
         this.animal.GetAnimalHungerController().GetHungerTracker().GetStatus().Subscribe((HungerTracker.HungerStatus status) =>
         {
             if (status == HungerTracker.HungerStatus.STARVING)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class YoungAnimalGrowStrategy : IAnimalGrowStrategy
 {
-    public void execute(IAgeableAnimal animal)
+    public void execute(IAnimal animal)
     {
         // Grow to 75% of the potential scale (between min and max)
         Vector3 targetScale = animal.GetMinScale() + ((animal.GetMaxScale() - animal.GetMinScale()) * 0.75f);

@@ -10,12 +10,17 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
     [SerializeField] private uint exhaustedPercentage = 10;
 
     private float recoveryDelayTimer;
+    private float recoveryPercentagePenalty = 0f;
+
+    private float prevValue;
 
     // Start is called before the first frame update
     protected override void Awake()
     {
         base.Awake();
         this.status = new Observable<StaminaStatus>(StaminaStatus.ENERGIZED);
+        this.recoveryDelayTimer = this.recoveryDelay;
+        this.prevValue = this.GetCurrent();
     }
 
     // Update is called once per frame
@@ -23,6 +28,22 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
     {
         base.Update();
         if (this.IsPaused()) return;
+
+        if (this.prevValue > this.GetCurrent())
+        {
+            // Stamina was used, wait for delay before recovering stamina
+            this.recoveryDelayTimer = 0;
+        }
+        this.prevValue = this.GetCurrent();
+
+        if ((this.recoveryDelayTimer += Time.deltaTime) >= this.recoveryDelay)
+        {
+            // Clamp timer to delay time (to prevent overflow)
+            this.recoveryDelayTimer = this.recoveryDelay + 1f;
+
+            // Regenerate Health
+            this.current = Mathf.Min(this.current + ((this.recoveryRate * ((100 - this.recoveryPercentagePenalty) / 100)) * Time.deltaTime), this.max);
+        }
 
         if (this.GetCurrentPercentage() < this.exhaustedPercentage)
         {
@@ -36,6 +57,11 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
         {
             this.status.Set(StaminaStatus.ENERGIZED);
         }
+    }
+
+    public void SetRecoveryPenalty(float penaltyPercentage)
+    {
+        this.recoveryPercentagePenalty = penaltyPercentage;
     }
 
     public enum StaminaStatus

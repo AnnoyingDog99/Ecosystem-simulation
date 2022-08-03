@@ -12,7 +12,7 @@ public class LandAnimalMovementController : Controller
     {
     }
 
-    private void Start()
+    protected override void Start()
     {
         this.landAnimal = GetComponentInParent<ILandAnimal>();
 
@@ -51,15 +51,13 @@ public class LandAnimalMovementController : Controller
         {
             this.landAnimal.GetLandAnimalAnimator().SetIsRunningBool(false);
         }
+        this.landAnimal.GetLandAnimalAnimator().SetIsIdleBool(true);
         this.landAnimal.GetAgent().ResetPath();
     }
 
     public bool IsIdle()
     {
-        return this.landAnimal.GetLandAnimalAnimator().GetIsWalkingBool()
-        && this.landAnimal.GetLandAnimalAnimator().GetIsRunningBool()
-        && this.landAnimal.GetLandAnimalAnimator().GetIsEatingBool()
-        && this.landAnimal.GetLandAnimalAnimator().GetIsDeadBool();
+        return this.landAnimal.GetLandAnimalAnimator().GetIsIdleBool();
     }
 
     public bool WalkTo(Vector3 position)

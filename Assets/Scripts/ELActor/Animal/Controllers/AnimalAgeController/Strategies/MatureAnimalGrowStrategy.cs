@@ -1,7 +1,7 @@
 using UnityEngine;
 public class MatureAnimalGrowStrategy : IAnimalGrowStrategy
 {
-    public void execute(IAgeableAnimal animal)
+    public void execute(IAnimal animal)
     {
         // Grow to 100% of the potential scale
         Vector3 targetScale = animal.GetMaxScale();

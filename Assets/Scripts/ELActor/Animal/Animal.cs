@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Animal : ELActor, IAnimal, INutritional, IAgeableAnimal, IDamageable
+public abstract class Animal : ELActor, IAnimal
 {
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] private AnimalMemory memory;
