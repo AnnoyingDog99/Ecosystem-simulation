@@ -29,8 +29,8 @@ public class AnimalMemory : ELActorMemory
 
     public void AddPredatorMemory(Animal predator)
     {
-        // Check if memory doesn't already exist, filter out predators that were destroyed
-        Memory<Animal> existingMemory = this.predators.FindAll((memory) => Director.Instance.ActorExists(memory.GetMemoryContent())).Find((memory) => memory.GetMemoryContent().GetID() == predator.GetID());
+        // Check if memory doesn't already exist
+        Memory<Animal> existingMemory = this.predators.Find((memory) => memory.GetMemoryContent().GetID() == predator.GetID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one
@@ -39,18 +39,19 @@ public class AnimalMemory : ELActorMemory
         }
 
         this.predators.Add(new Memory<Animal>(predator, predatorMemorySpan));
+        // Director.Instance.ActorExists(memory.GetMemoryContent())).Find((memory) =>
     }
 
     public List<Animal> GetPredatorsInMemory()
     {
-        // Return predators, filter out predators that were destroyed
-        return this.predators.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((predator) => Director.Instance.ActorExists(predator));
+        this.predators = this.predators.FindAll((fragment) => Director.Instance.ActorExists(fragment.GetMemoryContent()));
+        return this.predators.ConvertAll((fragment) => fragment.GetMemoryContent());
     }
 
     public void AddOwnKindMemory(Animal ownKind)
     {
-        // Check if memory doesn't already exist, filter out own kind that were destroyed
-        Memory<Animal> existingMemory = this.ownKind.FindAll((memory) => Director.Instance.ActorExists(memory.GetMemoryContent())).Find((memory) => memory.GetMemoryContent().GetID() == ownKind.GetID());
+        // Check if memory doesn't already exist
+        Memory<Animal> existingMemory = this.ownKind.Find((memory) => memory.GetMemoryContent().GetID() == ownKind.GetID());
         if (existingMemory != null)
         {
             // Refresh existing memory instead of adding new one
@@ -63,8 +64,8 @@ public class AnimalMemory : ELActorMemory
 
     public List<Animal> GetOwnKindInMemory()
     {
-        // Return predators, filter out own kind that were destroyed
-        return this.ownKind.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((ownKind) => Director.Instance.ActorExists(ownKind));
+        this.ownKind = this.ownKind.FindAll((fragment) => Director.Instance.ActorExists(fragment.GetMemoryContent()));
+        return this.ownKind.ConvertAll((fragment) => fragment.GetMemoryContent());
     }
 
     public void AddObstacleMemory(Sight.ObstacleLocation obstacle)

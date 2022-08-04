@@ -8,7 +8,7 @@ public class Director : MonoBehaviour
     public static Director Instance { get { return _instance; } }
 
     [SerializeField] private ActorFactory actorFactory;
-    private List<IELActor> actors = new List<IELActor>();
+    [SerializeField] private List<ELActor> actors = new List<ELActor>();
 
     private void Awake()
     {

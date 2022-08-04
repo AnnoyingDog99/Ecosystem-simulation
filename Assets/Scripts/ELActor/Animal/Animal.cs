@@ -7,6 +7,7 @@ public abstract class Animal : ELActor, IAnimal
     [SerializeField] protected BehaviourTree behaviourTree;
     [SerializeField] private AnimalMemory memory;
     [SerializeField] private Sight sight;
+    [SerializeField][TagSelector] public List<string> predatorTags = new List<string>();
     [SerializeField] private AnimalHungerModel hungerModel;
     [SerializeField] private NutritionalModel nutritionalModel;
     [SerializeField] private AnimalAgeModel ageModel;
@@ -57,6 +58,11 @@ public abstract class Animal : ELActor, IAnimal
     public AnimalMemory GetAnimalMemory()
     {
         return this.memory;
+    }
+
+    public List<string> GetPredatorTags()
+    {
+        return this.predatorTags;
     }
 
     public List<Animal> GetOffspring()

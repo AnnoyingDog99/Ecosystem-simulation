@@ -10,6 +10,8 @@ public interface IAnimal : IELActor, IAnimalHungerModel, IAnimalAgeModel, INutri
 
     public AnimalMemory GetAnimalMemory();
 
+    public List<string> GetPredatorTags();
+
     public List<Animal> GetOffspring();
 
     public void AddOffspring(Animal offspring);

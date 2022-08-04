@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// TODO: Convert to interface?
 public class CarnivoreMemory : AnimalMemory
 {
     [SerializeField] private float preyMemorySpan;
