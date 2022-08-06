@@ -1,6 +1,9 @@
 using UnityEngine;
 public class Grass : Plant, IGrass
 {
+    [SerializeField] private float growTime;
+    [SerializeField] private float growthRecoveryTime;
+
     protected override void Start()
     {
         base.Start();
@@ -14,6 +17,12 @@ public class Grass : Plant, IGrass
     {
         base.Update();
         if (this.GetPlantHealthController().IsDead()) return;
+
+        float maxDistance = Vector3.Distance(this.GetMinScale(), GetMaxScale());
+        float currentDistance = Vector3.Distance(this.GetScale(), GetMaxScale());
+
+        // Keep the size of the bounding box the same regardless of the actual scale of the object
+        this.GetBoundingBox().size = this.GetMaxScale() * (GetMaxScale().x / GetScale().x);
 
         // Set the amount food points equal to the amount of health
         this.SetCurrentFoodPoints(this.GetPlantHealthController().GetHealthTracker().GetCurrent());

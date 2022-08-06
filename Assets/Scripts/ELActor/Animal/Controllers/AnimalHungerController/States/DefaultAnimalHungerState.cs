@@ -9,15 +9,15 @@ public class DefaultAnimalHungerState : AnimalHungerState, IAnimalHungerState
 
     public bool Eat(INutritional target)
     {
-        if (target is IOmnivore)
+        if (this.animal is IOmnivore)
         {
             this.context.SetEatStrategy(new OmnivoreEatStrategy());
         }
-        else if (target is IHerbivore)
+        else if (this.animal is IHerbivore)
         {
             this.context.SetEatStrategy(new HerbivoreEatStrategy());
         }
-        else if (target is ICarnivore)
+        else if (this.animal is ICarnivore)
         {
             this.context.SetEatStrategy(new CarnivoreEatStrategy());
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HerbivoreModel : MonoBehaviour, IHerbivoreModel
 {
-    [SerializeField] private List<string> plantTags = new List<string>();
+    [SerializeField][TagSelector] public List<string> plantTags = new List<string>();
 
     // Start is called before the first frame update
     private void Start()

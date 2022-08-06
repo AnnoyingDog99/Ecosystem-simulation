@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 
-public interface IELActor : IScaleModel
+public interface IELActor
 {
     public NavMeshAgent GetAgent();
 

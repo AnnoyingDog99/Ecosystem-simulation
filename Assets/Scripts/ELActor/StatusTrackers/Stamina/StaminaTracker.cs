@@ -64,6 +64,16 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
         this.recoveryPercentagePenalty = penaltyPercentage;
     }
 
+    public float GetTiredPercentage()
+    {
+        return this.tiredPercentage;
+    }
+
+    public float GetExhaustedPercentage()
+    {
+        return this.exhaustedPercentage;
+    }
+
     public enum StaminaStatus
     {
         ENERGIZED,

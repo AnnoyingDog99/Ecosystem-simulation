@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-// TODO: Convert to interface?
-public class CarnivoreMemory : AnimalMemory
+public class CarnivoreMemoryModel : MonoBehaviour, ICarnivoreMemoryModel
 {
     [SerializeField] private float preyMemorySpan;
 
     // Memory containing prey and the last known position of that prey
     protected List<Memory<Tuple<Animal, Vector3>>> prey = new List<Memory<Tuple<Animal, Vector3>>>();
 
-    // Start is called before the first frame update
-    protected override void Start()
+    public void UpdateMemories(ELActorMemory parent)
     {
-        base.Start();
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-        UpdateMemories(prey);
+        parent.UpdateMemories(this.prey);
     }
 
     public void AddPreyMemory(Tuple<Animal, Vector3> animalAndPosition)

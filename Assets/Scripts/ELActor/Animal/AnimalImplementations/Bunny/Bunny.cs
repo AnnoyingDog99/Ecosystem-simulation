@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bunny : Animal, IHerbivore, ILandAnimal
+public class Bunny : Animal,
+IHerbivore,
+ILandAnimal,
+IHerbivoreLandAnimal /* Required for the ForageOnLandNode */
 {
     [SerializeField] private LandAnimalModel landAnimalModel;
     [SerializeField] private HerbivoreModel herbivoreModel;
@@ -71,5 +74,10 @@ public class Bunny : Animal, IHerbivore, ILandAnimal
     public BunnyMemory GetBunnyMemory()
     {
         return this.GetAnimalMemory() as BunnyMemory;
+    }
+
+    public IHerbivoreMemory GetHerbivoreMemory()
+    {
+        return this.GetBunnyMemory() as IHerbivoreMemory;
     }
 }

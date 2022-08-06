@@ -1,16 +1,23 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoxMemory : CarnivoreMemory
+public class FoxMemory : AnimalMemory, ICarnivoreMemoryModel
 {
-    protected override void Start()
+    [SerializeField] CarnivoreMemoryModel carnivoreMemoryModel;
+
+    public void UpdateMemories(ELActorMemory parent)
     {
-        base.Start();
+        this.carnivoreMemoryModel.UpdateMemories(parent);
     }
 
-    protected override void Update()
+    public void AddPreyMemory(Tuple<Animal, Vector3> animalAndPosition)
     {
-        base.Update();
+        this.carnivoreMemoryModel.AddPreyMemory(animalAndPosition);
+    }
+
+    public List<Tuple<Animal, Vector3>> GetPreyInMemory()
+    {
+        return this.carnivoreMemoryModel.GetPreyInMemory();
     }
 }

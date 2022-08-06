@@ -2,12 +2,12 @@ using UnityEngine;
 public class AnimalAgeController : Controller
 {
     [SerializeField] private AgeTracker ageTracker;
-    private IAnimal animal;
+    private Animal animal;
     private IAnimalAgeState ageState;
 
     protected override void Start()
     {
-        this.animal = GetComponentInParent<IAnimal>();
+        this.animal = GetComponentInParent<Animal>();
     }
 
     protected override void Update()

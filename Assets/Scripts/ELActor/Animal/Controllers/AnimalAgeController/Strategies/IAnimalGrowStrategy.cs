@@ -1,4 +1,4 @@
 public interface IAnimalGrowStrategy
 {
-    public void execute(IAnimal animal);
+    public void execute(Animal animal);
 }

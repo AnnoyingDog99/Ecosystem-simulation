@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class Plant : ELActor, IPlant
 {
-    [SerializeField] private float growTime;
-    [SerializeField] private float growthRecoveryTime;
     [SerializeField] private NutritionalModel nutritionalModel;
     private ELActorHealthController _plantHealthController;
 
@@ -29,7 +27,7 @@ public class Plant : ELActor, IPlant
 
     public void OnDeath()
     {
-        Debug.Log("Dead");
+        Director.Instance.QueueActorDestruction(this, 0f);
     }
 
     public virtual float GetEaten(float biteSize)

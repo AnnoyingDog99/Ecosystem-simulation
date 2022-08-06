@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BunnyMemory : HerbivoreMemory
+public class BunnyMemory : AnimalMemory, IHerbivoreMemory
 {
-    protected override void Start()
+    [SerializeField] HerbivoreMemoryModel herbivoreMemoryModel;
+
+    public void UpdateMemories(ELActorMemory parent)
     {
-        base.Start();
+        this.herbivoreMemoryModel.UpdateMemories(parent);
     }
 
-    protected override void Update()
+    public void AddPlantMemory(Plant plant)
     {
-        base.Update();
+        this.herbivoreMemoryModel.AddPlantMemory(plant);
+    }
+
+    public List<Plant> GetPlantsInMemory()
+    {
+        return this.herbivoreMemoryModel.GetPlantsInMemory();
     }
 }

@@ -7,7 +7,7 @@ public class AnimalAgeContext
         this.strategy = strategy;
     }
 
-    public void ExecuteStrategy(IAnimal animal)
+    public void ExecuteStrategy(Animal animal)
     {
         if (this.strategy == null) return;
         this.strategy.execute(animal);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarnivoreModel : MonoBehaviour, ICarnivoreModel
 {
-    [SerializeField] private List<string> preyTags = new List<string>();
+    [SerializeField][TagSelector] public List<string> preyTags = new List<string>();
 
 
     // Start is called before the first frame update

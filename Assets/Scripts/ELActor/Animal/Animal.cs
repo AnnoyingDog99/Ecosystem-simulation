@@ -43,6 +43,8 @@ public abstract class Animal : ELActor, IAnimal
         this.GetAnimalAgeController().GetAgeTracker().Pause();
         this.GetAnimalHealthController().GetHealthTracker().Pause();
         this.GetActorScaleController().SetScale(this.GetScale());
+
+        Director.Instance.QueueActorDestruction(this, 25f);
     }
 
     public AnimalAnimator GetAnimalAnimator()

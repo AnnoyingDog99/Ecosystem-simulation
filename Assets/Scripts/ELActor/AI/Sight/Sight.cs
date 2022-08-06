@@ -55,11 +55,11 @@ public abstract class Sight : MonoBehaviour
 
     public virtual List<Transform> GetVisibleTargets()
     {
-        return this.visibleTargets;
+        return this.visibleTargets.FindAll((target) => target != null);
     }
 
     public virtual List<ObstacleLocation> GetVisibleObstacles()
     {
-        return this.visibleObstacles;
+        return this.visibleObstacles.FindAll((obstacle) => obstacle != null);
     }
 }

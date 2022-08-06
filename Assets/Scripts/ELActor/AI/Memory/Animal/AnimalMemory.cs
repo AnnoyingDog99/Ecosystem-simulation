@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AnimalMemory : ELActorMemory
+public class AnimalMemory : ELActorMemory, IAnimalMemory
 {
     [SerializeField] private float predatorMemorySpan;
     [SerializeField] private float ownKindMemorySpan;

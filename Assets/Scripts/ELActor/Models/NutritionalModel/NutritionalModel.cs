@@ -6,7 +6,7 @@ public class NutritionalModel : MonoBehaviour, INutritionalModel
 
     public float GetEaten(float biteSize)
     {
-        float points = Mathf.Min(this._currentFoodPoints - biteSize, this._currentFoodPoints);
+        float points = Mathf.Min(biteSize, this._currentFoodPoints);
         this._currentFoodPoints -= points;
         return points;
     }

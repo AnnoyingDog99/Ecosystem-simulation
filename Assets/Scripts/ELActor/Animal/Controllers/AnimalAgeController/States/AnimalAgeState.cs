@@ -1,9 +1,9 @@
 public abstract class AnimalAgeState
 {
     protected AnimalAgeContext context;
-    protected IAnimal animal;
+    protected Animal animal;
 
-    public AnimalAgeState(IAnimal animal)
+    public AnimalAgeState(Animal animal)
     {
         this.animal = animal;
         this.context = new AnimalAgeContext();

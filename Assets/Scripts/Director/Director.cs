@@ -31,6 +31,7 @@ public class Director : MonoBehaviour
 
     public bool ActorExists(IELActor actor)
     {
+        if (actor.Equals(null)) return false;
         return this.actors.Find((_actor) => _actor.GetID() == actor.GetID()) != null;
     }
 
@@ -44,5 +45,6 @@ public class Director : MonoBehaviour
         yield return new WaitForSeconds(delay);
         this.actors.Remove(actor);
         Destroy(actor.gameObject);
+        Destroy(actor);
     }
 }

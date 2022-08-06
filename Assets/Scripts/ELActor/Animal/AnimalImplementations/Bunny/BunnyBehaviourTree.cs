@@ -14,14 +14,14 @@ public class BunnyBehaviourTree : HerbivoreBehaviourTree
                 new CheckForPredatorsNode(bunny),
                 new FleeFromPredatorsOnLandNode(bunny, this.maxPredatorDistance, this.obstaclePreventionWeight)
             }),
-            // new Sequence(new List<Node>() {
-            //     new IsHungryNode(bunny),
-            //     new ForageNode(bunny, maxPlantDistance)
-            // }),
-            // new Sequence(new List<Node>() {
-            //     new IsTiredNode(bunny, this.minRestTime),
-            //     new RestNode(bunny)
-            // }),
+            new Sequence(new List<Node>() {
+                new IsTiredNode(bunny),
+                new RestNode(bunny)
+            }),
+            new Sequence(new List<Node>() {
+                new IsHungryNode(bunny, this.minEatingTime),
+                new ForageNode(bunny, maxPlantDistance)
+            }),
             // new Sequence(new List<Node>() {
             //     new IsInHeatNode(bunny),
             //     new CheckForPotentialPartnersNode(bunny),
