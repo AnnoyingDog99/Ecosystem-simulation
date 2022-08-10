@@ -1,22 +1,17 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LandAnimalMovementController : Controller
+public class LandAnimalMovementController : AnimalMovementController
 {
-    [SerializeField] private StaminaTracker staminaTracker;
-
     private ILandAnimal landAnimal;
     private ILandAnimalMovementState landMovementState;
 
-    private void Awake()
-    {
-    }
-
     protected override void Start()
     {
+        base.Start();
         this.landAnimal = GetComponentInParent<ILandAnimal>();
 
-        this.staminaTracker.GetStatus().Subscribe((StaminaTracker.StaminaStatus status) =>
+        this.GetStaminaTracker().GetStatus().Subscribe((StaminaTracker.StaminaStatus status) =>
         {
             switch (status)
             {
@@ -133,10 +128,5 @@ public class LandAnimalMovementController : Controller
             }
         }
         return true;
-    }
-
-    public StaminaTracker GetStaminaTracker()
-    {
-        return this.staminaTracker;
     }
 }

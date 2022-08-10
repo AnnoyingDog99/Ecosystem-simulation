@@ -4,9 +4,12 @@ using UnityEngine;
 
 public abstract class ELActorMemory : MonoBehaviour, IELActorMemory
 {
+    ELActor actor;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        this.actor = GetComponent<ELActor>();
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public abstract class ELActorMemory : MonoBehaviour, IELActorMemory
 
     public void AddELActorMemory(ELActor actor, float memorySpan, List<Memory<ELActor>> memoriesCollection)
     {
+        if (actor.GetID() == this.GetID()) return;
         // Check if memory doesn´t already exist
         Memory<ELActor> existingMemory = memoriesCollection.Find((memory) => memory.GetMemoryContent().GetID() == actor.GetID());
         if (existingMemory != null)
@@ -43,5 +47,10 @@ public abstract class ELActorMemory : MonoBehaviour, IELActorMemory
         }
 
         memoriesCollection.Add(new Memory<ELActor>(actor, memorySpan));
+    }
+
+    protected int GetID()
+    {
+        return actor.GetID();
     }
 }

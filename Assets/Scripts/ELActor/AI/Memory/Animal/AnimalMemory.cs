@@ -29,6 +29,8 @@ public class AnimalMemory : ELActorMemory, IAnimalMemory
 
     public void AddPredatorMemory(Animal predator)
     {
+        if (predator.GetID() == this.GetID()) return;
+
         // Check if memory doesn't already exist
         Memory<Animal> existingMemory = this.predators.Find((memory) => memory.GetMemoryContent().GetID() == predator.GetID());
         if (existingMemory != null)
@@ -50,6 +52,8 @@ public class AnimalMemory : ELActorMemory, IAnimalMemory
 
     public void AddOwnKindMemory(Animal ownKind)
     {
+        if (ownKind.GetID() == this.GetID()) return;
+
         // Check if memory doesn't already exist
         Memory<Animal> existingMemory = this.ownKind.Find((memory) => memory.GetMemoryContent().GetID() == ownKind.GetID());
         if (existingMemory != null)

@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bunny : Animal,
-IHerbivore,
-ILandAnimal,
-IHerbivoreLandAnimal /* Required for the ForageOnLandNode */
+IHerbivoreLandAnimal, /* Required for the ForageOnLandNode */
+IFertileLandAnimal /* Required for the MateWithPartnerOnLandNode */
 {
     [SerializeField] private LandAnimalModel landAnimalModel;
     [SerializeField] private HerbivoreModel herbivoreModel;
@@ -36,10 +35,6 @@ IHerbivoreLandAnimal /* Required for the ForageOnLandNode */
     protected override void FirstUpdate()
     {
         base.FirstUpdate();
-        // this.GetLandAnimalMovementController().RunTo(new Vector3(25f, 0.28f, 42.2f));
-        // this.GetActorScaleController().ScaleOverTime(new Vector3(0.05f, 0.05f, 0.05f), 2f);
-        // this.GetActorHealthController().GetDamaged(10f);
-        // this.GetActorHealthController().GetDamagedRepeatedly(1f, 1f, 4);
     }
 
     public LandAnimalMovementController GetLandAnimalMovementController()

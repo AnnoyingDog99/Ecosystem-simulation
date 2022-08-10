@@ -26,7 +26,7 @@ public class Observable<T>
 
     public void Notify()
     {
-        foreach (Action<T> callback in this.callbacks.Values)
+        foreach (Action<T> callback in new List<Action<T>>(this.callbacks.Values))
         {
             callback(this.value);
         }

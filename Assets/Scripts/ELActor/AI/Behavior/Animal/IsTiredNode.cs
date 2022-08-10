@@ -12,8 +12,8 @@ public class IsTiredNode : Node
 
     public override NodeStates Evaluate()
     {
-        float currentStaminaPercentage = this.animal.GetActorMovementController().GetStaminaTracker().GetCurrentPercentage();
-        if (currentStaminaPercentage < this.animal.GetActorMovementController().GetStaminaTracker().GetTiredPercentage())
+        float currentStaminaPercentage = this.animal.GetAnimalMovementController().GetStaminaTracker().GetCurrentPercentage();
+        if (currentStaminaPercentage < this.animal.GetAnimalMovementController().GetStaminaTracker().GetTiredPercentage())
         {
             // Keep resting if animal is not energized
             this.keepResting = true;

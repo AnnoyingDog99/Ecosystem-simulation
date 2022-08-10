@@ -84,9 +84,9 @@ public class AgeTracker : StatusTracker<AgeTracker.AgeStatus>
 
     public enum AgeStatus
     {
-        YOUNG,
-        MATURE,
-        OLD,
-        MAX
+        YOUNG = 0,
+        MATURE = 1,
+        OLD = 2,
+        MAX = 3
     }
 }

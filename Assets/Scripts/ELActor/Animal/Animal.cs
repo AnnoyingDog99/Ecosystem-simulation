@@ -12,22 +12,22 @@ public abstract class Animal : ELActor, IAnimal
     [SerializeField] private NutritionalModel nutritionalModel;
     [SerializeField] private AnimalAgeModel ageModel;
     [SerializeField] private AttackModel attackModel;
+    [SerializeField] private AnimalFertilityModel fertilityModel;
+    private AnimalMovementController _movementController;
     private AnimalHungerController _hungerController;
     private AnimalAgeController _ageController;
     private ELActorHealthController _healthController;
-    private List<Animal> _offspring = new List<Animal>();
-    private Animal _mother;
-    private Animal _father;
-    private List<Animal> _partners = new List<Animal>();
-    private AnimalSex _sex;
+    private AnimalFertilityController _fertilityController;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        this._movementController = GetComponent<AnimalMovementController>();
         this._hungerController = GetComponent<AnimalHungerController>();
         this._ageController = GetComponent<AnimalAgeController>();
         this._healthController = GetComponent<ELActorHealthController>();
+        this._fertilityController = GetComponent<AnimalFertilityController>();
     }
 
     // Update is called once per frame
@@ -67,58 +67,55 @@ public abstract class Animal : ELActor, IAnimal
         return this.predatorTags;
     }
 
+
     public List<Animal> GetOffspring()
     {
-        return this._offspring;
+        return this.fertilityModel.GetOffspring();
     }
 
     public void AddOffspring(Animal offspring)
     {
-        this._offspring.Add(offspring);
+        this.fertilityModel.AddOffspring(offspring);
     }
 
     public Animal GetMother()
     {
-        if (this._mother != null && !Director.Instance.ActorExists(this._mother))
-        {
-            this.SetMother(null);
-        }
-        return this._mother;
+        return this.fertilityModel.GetMother();
     }
 
     public void SetMother(Animal mother)
     {
-        this._mother = mother;
+        this.fertilityModel.SetMother(mother);
     }
 
     public Animal GetFather()
     {
-        if (this._father != null && !Director.Instance.ActorExists(this._father))
-        {
-            this.SetFather(null);
-        }
-        return this._father;
+        return this.fertilityModel.GetFather();
     }
 
     public void SetFather(Animal father)
     {
-        this._father = father;
+        this.fertilityModel.SetFather(father);
     }
 
     public List<Animal> GetPartners()
     {
-        this._partners = this._partners.FindAll((_partner) => Director.Instance.ActorExists(_partner));
-        return this._partners;
+        return this.fertilityModel.GetPartners();
     }
 
     public void AddPartner(Animal partner)
     {
-        this._partners.Add(partner);
+        this.fertilityModel.AddPartner(partner);
     }
 
     public AnimalSex GetSex()
     {
-        return this._sex;
+        return this.fertilityModel.GetSex();
+    }
+
+    public void SetSex(AnimalSex sex)
+    {
+        this.fertilityModel.SetSex(sex);
     }
 
     public virtual float GetEaten(float amount)
@@ -142,6 +139,11 @@ public abstract class Animal : ELActor, IAnimal
     public float GetBiteSize()
     {
         return this.hungerModel.GetBiteSize();
+    }
+
+    public AnimalMovementController GetAnimalMovementController()
+    {
+        return this._movementController;
     }
 
     public AnimalHungerController GetAnimalHungerController()
@@ -168,5 +170,10 @@ public abstract class Animal : ELActor, IAnimal
     public void GetDamaged(float damage)
     {
         this.GetAnimalHealthController().GetDamaged(damage);
+    }
+
+    public AnimalFertilityController GetAnimalFertilityController()
+    {
+        return this._fertilityController;
     }
 }

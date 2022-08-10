@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,13 +14,22 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
     private ELActorScaleController _actorScaleController;
     private List<IELActor> _collidingActors = new List<IELActor>();
 
+    private Observable<ELActorInitializationState> actorInitializationState = new Observable<ELActorInitializationState>(ELActorInitializationState.NONE);
+
     private bool firstUpdate = true;
+
+    protected virtual void Awake()
+    {
+        this.actorInitializationState.Set(ELActorInitializationState.AWAKE);
+    }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
         this._actorMovementController = GetComponent<ELActorMovementController>();
         this._actorScaleController = GetComponent<ELActorScaleController>();
+
+        this.actorInitializationState.Set(ELActorInitializationState.STARTED);
     }
 
     // Update is called once per frame
@@ -39,6 +49,7 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
         {
             Debug.LogWarning("Failed to place Agent of ELActor on NavMesh");
         }
+        this.actorInitializationState.Set(ELActorInitializationState.UPDATING);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -155,4 +166,17 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
     {
         return this.scaleModel.GetMaxScale();
     }
+
+    public Observable<ELActorInitializationState> GetActorInitializationState()
+    {
+        return this.actorInitializationState;
+    }
+}
+
+public enum ELActorInitializationState
+{
+    NONE = 0,
+    AWAKE = 1,
+    STARTED = 2,
+    UPDATING = 3
 }

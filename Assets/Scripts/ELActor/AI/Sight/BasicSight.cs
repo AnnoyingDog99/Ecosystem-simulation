@@ -63,7 +63,7 @@ public class BasicSight : Sight
             // Target is within view angle
             float distToTarget = Vector3.Distance(transform.position, target.position);
 
-            if (target.gameObject?.GetComponent<Animal>()?.GetID() == gameObject?.GetComponentInParent<Animal>()?.GetID())
+            if (target.gameObject.GetInstanceID() == gameObject.GetInstanceID())
             {
                 // Ignore self
                 continue;
@@ -111,6 +111,7 @@ public class BasicSight : Sight
         // Check if hit object has a target layermask
         if (!targetMasks.Contains(LayerMask.GetMask(LayerMask.LayerToName(hit.transform.gameObject.layer)))) return;
         if (visibleTargets.Contains(((RaycastHit)hit).transform)) return;
+        if (hit.transform.GetInstanceID() == gameObject.GetInstanceID()) return;
         visibleTargets.Add(((RaycastHit)hit).transform);
     }
 

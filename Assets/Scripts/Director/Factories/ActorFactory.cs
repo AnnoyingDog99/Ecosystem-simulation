@@ -15,15 +15,35 @@ public class ActorFactory : MonoBehaviour
 
     public enum ActorType
     {
+        NONE,
+
         // Animals
         BUNNY,
         FOX,
 
-        // FIELDS
-        GRASSFIELD,
-
         // Plants
         GRASS
+    }
+
+    public static ActorFactory.ActorType TranslateClassToType(IELActor actor)
+    {
+        ActorFactory.ActorType type = ActorType.NONE;
+        switch (actor)
+        {
+            case Bunny:
+                type = ActorFactory.ActorType.BUNNY;
+                break;
+            case Fox:
+                type = ActorFactory.ActorType.FOX;
+                break;
+            case Grass:
+                type = ActorFactory.ActorType.GRASS;
+                break;
+            default:
+                type = ActorType.NONE;
+                break;
+        }
+        return type;
     }
 
     public GameObject CreateActor(ActorType type, Vector3 position, Quaternion rotation)
@@ -36,9 +56,6 @@ public class ActorFactory : MonoBehaviour
                 break;
             case ActorType.FOX:
                 gameObject = Instantiate(foxPrefab, position, rotation);
-                break;
-            case ActorType.GRASSFIELD:
-                gameObject = Instantiate(grassFieldPrefab, position, rotation);
                 break;
             case ActorType.GRASS:
                 gameObject = Instantiate(grassPrefab, position, rotation);

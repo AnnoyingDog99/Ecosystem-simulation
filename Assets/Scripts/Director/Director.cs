@@ -31,6 +31,7 @@ public class Director : MonoBehaviour
 
     public bool ActorExists(IELActor actor)
     {
+        if (actor == null) return false;
         if (actor.Equals(null)) return false;
         return this.actors.Find((_actor) => _actor.GetID() == actor.GetID()) != null;
     }

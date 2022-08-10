@@ -22,14 +22,14 @@ public class BunnyBehaviourTree : HerbivoreBehaviourTree
                 new IsHungryNode(bunny, this.minEatingTime),
                 new ForageNode(bunny, maxPlantDistance)
             }),
-            // new Sequence(new List<Node>() {
-            //     new IsInHeatNode(bunny),
-            //     new CheckForPotentialPartnersNode(bunny),
-            //     new MateWithPartnerNode(bunny, this.maxMatingDistance)
-            // }),
-            // new Sequence(new List<Node>() {
-            //     new WanderNode(bunny)
-            // })
+            new Sequence(new List<Node>() {
+                new IsInHeatNode(bunny),
+                new CheckForPotentialPartnersNode(bunny),
+                new MateWithPartnerOnLandNode(bunny, this.maxMatingDistance)
+            }),
+            new Sequence(new List<Node>() {
+                new HerbivoreWanderOnLandNode(bunny)
+            })
         });
     }
 

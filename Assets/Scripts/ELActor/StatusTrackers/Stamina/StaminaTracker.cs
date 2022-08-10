@@ -76,8 +76,8 @@ public class StaminaTracker : StatusTracker<StaminaTracker.StaminaStatus>
 
     public enum StaminaStatus
     {
-        ENERGIZED,
-        TIRED,
-        EXHAUSTED
+        ENERGIZED = 0,
+        TIRED = 1,
+        EXHAUSTED = 2
     }
 }

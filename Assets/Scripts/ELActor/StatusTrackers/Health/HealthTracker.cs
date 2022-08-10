@@ -78,9 +78,9 @@ public class HealthTracker : StatusTracker<HealthTracker.HealthStatus>
 
     public enum HealthStatus
     {
-        HEALTHY,
-        HURT,
-        DYING,
-        DEAD
+        HEALTHY = 0,
+        HURT = 1,
+        DYING = 2,
+        DEAD = 3
     }
 }

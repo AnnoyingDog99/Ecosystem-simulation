@@ -5,7 +5,7 @@ public class IsHungryNode : Node
 {
     private Animal animal;
 
-    private float keepEatingTime = 10f;
+    private float keepEatingTime = 30f;
     private float keepEatingTimer;
     private bool keepEating = false;
 
@@ -25,12 +25,11 @@ public class IsHungryNode : Node
         {
             this.keepEatingTimer += Time.deltaTime;
         }
-
         if (hungerPercentage >= 100)
         {
             this.keepEating = false;
         }
-        else if (hungerStatus == HungerTracker.HungerStatus.SATISFIED && this.keepEatingTimer >= this.keepEatingTime)
+        else if (hungerStatus <= HungerTracker.HungerStatus.SATISFIED && this.keepEatingTimer >= this.keepEatingTime)
         {
             this.keepEating = false;
         }
