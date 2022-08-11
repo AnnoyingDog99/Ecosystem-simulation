@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fox : Animal, ICarnivore, ILandAnimal
+public class Fox : Animal,
+ICarnivoreLandAnimal, /* Required for the ChasePreyOnLandNode */
+IFertileLandAnimal /* Required for the MateWithPartnerOnLandNode */
 {
-    [SerializeField] private LandAnimalMovementController landMovementController;
     [SerializeField] private LandAnimalModel landAnimalModel;
     [SerializeField] private CarnivoreModel carnivoreModel;
+
+    private LandAnimalMovementController _landMovementController;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        this._landMovementController = GetComponent<LandAnimalMovementController>();
     }
 
     // Update is called once per frame
@@ -28,7 +32,7 @@ public class Fox : Animal, ICarnivore, ILandAnimal
 
     public LandAnimalMovementController GetLandAnimalMovementController()
     {
-        return this.landMovementController;
+        return this._landMovementController;
     }
 
     public LandAnimalAnimator GetLandAnimalAnimator()
@@ -58,5 +62,10 @@ public class Fox : Animal, ICarnivore, ILandAnimal
     public FoxMemory GetFoxMemory()
     {
         return this.GetAnimalMemory() as FoxMemory;
+    }
+
+    public ICarnivoreMemory GetCarnivoreMemory()
+    {
+        return this.GetFoxMemory() as ICarnivoreMemory;
     }
 }

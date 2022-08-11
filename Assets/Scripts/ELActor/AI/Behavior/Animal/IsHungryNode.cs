@@ -33,7 +33,7 @@ public class IsHungryNode : Node
         {
             this.keepEating = false;
         }
-        else if (!this.keepEating)
+        else if (!this.keepEating && hungerStatus >= HungerTracker.HungerStatus.HUNGRY)
         {
             this.keepEating = true;
             this.keepEatingTimer = 0;

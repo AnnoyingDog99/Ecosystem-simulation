@@ -10,19 +10,19 @@ public class FoxBehaviourTree : CarnivoreBehaviourTree
     {
         base.Start();
         rootNode = new Selector(new List<Node>() {
-            // new Sequence(new List<Node>() {
-            //     new CheckForPredatorsNode(fox),
-            //     new FleeFromPredatorsNode(fox, this.maxPredatorDistance, this.obstaclePreventionWeight)
-            // }),
-            // new Sequence(new List<Node>() {
-            //     new IsTiredNode(fox, this.minRestTime),
-            //     new RestNode(fox)
-            // }),
-            // new Sequence(new List<Node>() {
-            //     new IsHungryNode(fox),
-            //     new CheckForPreyNode(fox),
-            //     new ChasePreyNode(fox, this.maxPreyDistance)
-            // }),
+            new Sequence(new List<Node>() {
+                new CheckForPredatorsNode(fox),
+                new FleeFromPredatorsOnLandNode(fox, this.maxPredatorDistance, this.obstaclePreventionWeight)
+            }),
+            new Sequence(new List<Node>() {
+                new IsTiredNode(fox),
+                new RestNode(fox)
+            }),
+            new Sequence(new List<Node>() {
+                new IsHungryNode(fox, this.minEatingTime),
+                new CheckForPreyNode(fox),
+                new ChasePreyNode(fox, this.maxPreyDistance)
+            }),
             // new Sequence(new List<Node>() {
             //     new IsInHeatNode(fox),
             //     new CheckForPotentialPartnersNode(fox),

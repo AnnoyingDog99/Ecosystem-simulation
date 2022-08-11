@@ -29,6 +29,8 @@ public class AnimalAgeController : Controller
                     this.ageState = new MatureAnimalAgeState(this.animal);
                     break;
                 case AgeTracker.AgeStatus.OLD:
+                case AgeTracker.AgeStatus.MAX:
+                default:
                     this.ageState = new OldAnimalAgeState(this.animal);
                     break;
             }

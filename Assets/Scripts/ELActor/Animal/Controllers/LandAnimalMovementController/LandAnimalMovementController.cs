@@ -36,7 +36,7 @@ public class LandAnimalMovementController : AnimalMovementController
         }
     }
 
-    public void Idle()
+    public override void Idle()
     {
         if (this.IsWalking())
         {
@@ -50,7 +50,7 @@ public class LandAnimalMovementController : AnimalMovementController
         this.landAnimal.GetAgent().ResetPath();
     }
 
-    public bool IsIdle()
+    public override bool IsIdle()
     {
         return this.landAnimal.GetLandAnimalAnimator().GetIsIdleBool();
     }

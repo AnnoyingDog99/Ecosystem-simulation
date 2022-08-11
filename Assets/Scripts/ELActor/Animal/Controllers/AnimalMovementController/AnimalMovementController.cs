@@ -10,6 +10,16 @@ public class AnimalMovementController : ELActorMovementController
         this.animal = GetComponentInParent<Animal>();
     }
 
+    public override void Idle()
+    {
+        base.Idle();
+    }
+
+    public override bool IsIdle()
+    {
+        return base.IsIdle();
+    }
+
     public StaminaTracker GetStaminaTracker()
     {
         return this.staminaTracker;

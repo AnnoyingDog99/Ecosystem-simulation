@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public interface IAnimal : IELActor, 
-IAnimalHungerModel, 
-IAnimalAgeModel, 
-IAnimalFertilityModel, 
+public interface IAnimal : IELActor,
+IAnimalHungerModel,
+IAnimalAgeModel,
+IAnimalFertilityModel,
+IAttackModel,
 INutritional,
 IDamageable
 {

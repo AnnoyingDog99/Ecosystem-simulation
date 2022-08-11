@@ -34,11 +34,13 @@ public abstract class Animal : ELActor, IAnimal
     protected override void Update()
     {
         base.Update();
+        if (this.GetAnimalHealthController().IsDead()) return;
         this.behaviourTree.Evaluate();
     }
 
     public virtual void OnDeath()
     {
+        this.GetAnimalMovementController().Idle();
         this.GetAnimalHungerController().GetHungerTracker().Pause();
         this.GetAnimalAgeController().GetAgeTracker().Pause();
         this.GetAnimalHealthController().GetHealthTracker().Pause();

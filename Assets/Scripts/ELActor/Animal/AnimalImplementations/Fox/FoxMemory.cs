@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoxMemory : AnimalMemory, ICarnivoreMemoryModel
+public class FoxMemory : AnimalMemory, ICarnivoreMemory
 {
     [SerializeField] CarnivoreMemoryModel carnivoreMemoryModel;
 

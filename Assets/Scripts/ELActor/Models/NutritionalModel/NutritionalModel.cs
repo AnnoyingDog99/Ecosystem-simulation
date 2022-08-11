@@ -1,27 +1,30 @@
 using UnityEngine;
 public class NutritionalModel : MonoBehaviour, INutritionalModel
 {
-    [SerializeField] private float maxFoodPoints;
-    private float _currentFoodPoints;
+    [SerializeField] private float foodPoints = 10;
+
+    private void Start()
+    {
+    }
 
     public float GetEaten(float biteSize)
     {
-        float points = Mathf.Min(biteSize, this._currentFoodPoints);
-        this._currentFoodPoints -= points;
+        float points = Mathf.Min(biteSize, this.foodPoints);
+        this.foodPoints -= points;
         return points;
     }
 
     public float GetMaxFoodPoints()
     {
-        return this.maxFoodPoints;
+        return this.foodPoints;
     }
     public float GetCurrentFoodPoints()
     {
-        return this._currentFoodPoints;
+        return this.foodPoints;
     }
 
     public void SetCurrentFoodPoints(float foodPoints)
     {
-        this._currentFoodPoints = foodPoints;
+        this.foodPoints = foodPoints;
     }
 }

@@ -6,6 +6,7 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
 {
     [SerializeField] private uint hungryPercentage = 50;
     [SerializeField] private uint starvingPercentage = 10;
+    [SerializeField] private float constantRate;
 
     private IAnimal animal;
 
@@ -22,6 +23,8 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
     {
         base.Update();
         if (this.IsPaused()) return;
+
+        this.current -= (this.constantRate * Time.deltaTime);
 
         if (this.GetCurrentPercentage() < this.starvingPercentage)
         {
