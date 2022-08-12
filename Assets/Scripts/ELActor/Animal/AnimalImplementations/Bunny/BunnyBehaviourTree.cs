@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BunnyBehaviourTree : HerbivoreBehaviourTree
 {
-    [SerializeField] Bunny bunny;
+    private Bunny bunny;
 
     protected override void Start()
     {
         base.Start();
+        this.bunny = GetComponent<Bunny>();
         rootNode = new Selector(new List<Node>() {
             new Sequence(new List<Node>() {
                 new CheckForPredatorsNode(bunny),

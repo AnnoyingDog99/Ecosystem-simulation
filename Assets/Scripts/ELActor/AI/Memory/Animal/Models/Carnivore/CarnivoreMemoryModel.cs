@@ -34,6 +34,6 @@ public class CarnivoreMemoryModel : MonoBehaviour, ICarnivoreMemoryModel
     public List<Tuple<Animal, Vector3>> GetPreyInMemory()
     {
         // Return prey, filter out prey that were destroyed
-        return prey.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((prey) => Director.Instance.ActorExists(prey.Item1));
+        return prey.ConvertAll((fragment) => fragment.GetMemoryContent()).FindAll((preyAndPosition) => Director.Instance.ActorExists(preyAndPosition.Item1));
     }
 }
