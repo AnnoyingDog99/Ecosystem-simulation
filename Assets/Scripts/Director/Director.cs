@@ -24,15 +24,16 @@ public class Director : MonoBehaviour
 
     public ELActor SpawnActor(ActorFactory.ActorType type, Vector3 position, Quaternion rotation)
     {
-        GameObject newActor = actorFactory.CreateActor(type, position, rotation);
-        this.actors.Add(newActor.GetComponent<ELActor>());
-        return newActor.GetComponent<ELActor>();
+        ELActor newActor = actorFactory.CreateActor(type, position, rotation).GetComponent<ELActor>();
+        this.actors.Add(newActor);
+        return newActor;
     }
 
     public bool ActorExists(IELActor actor)
     {
         if (actor == null) return false;
         if (actor.Equals(null)) return false;
+        this.actors = this.actors.FindAll((_actor) => _actor != null);
         return this.actors.Find((_actor) => _actor.GetID() == actor.GetID()) != null;
     }
 

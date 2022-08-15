@@ -11,6 +11,8 @@ public class Grass : Plant, IGrass
         // Set the max health equal to the amount of food points
         this.GetPlantHealthController().GetHealthTracker().SetMax(this.GetMaxFoodPoints());
 
+        this.SetScale(this.GetScaleBasedOnHealth());
+
     }
 
     protected override void Update()

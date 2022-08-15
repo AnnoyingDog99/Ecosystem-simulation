@@ -44,9 +44,11 @@ public class Field : MonoBehaviour, IField
         float randomNumber = Random.Range(-1, 1);
         Quaternion randomRotation = new Quaternion(randomNumber, 0, randomNumber, 1);
 
-        GameObject childPlantGameObject = Instantiate(referencePlant.gameObject, newPositionVector3, randomRotation);
-        childPlantGameObject.transform.parent = this.gameObject.transform;
-        this.plants.Add(childPlantGameObject.GetComponent<Plant>());
+        ELActor plant = Director.Instance.SpawnActor(ActorFactory.ActorType.GRASS, newPositionVector3, randomRotation);
+        // GameObject childPlantGameObject = Instantiate(referencePlant.gameObject, newPositionVector3, randomRotation);
+        plant.transform.parent = this.gameObject.transform;
+        this.plants.Add(plant as Plant);
+        
     }
 
     public Plant GetReferencePlant()
