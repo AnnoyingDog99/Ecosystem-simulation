@@ -5,13 +5,14 @@ using UnityEngine;
 public class FreeCam : MonoBehaviour
 {
     [SerializeField] protected MainCamera mainCamera;
-    [SerializeField] protected float moveVelocity = 1.0f;
-    [SerializeField] protected float boostVelocity = 2.0f;
+    [SerializeField] protected float moveVelocity = 1.5f;
+    [SerializeField] protected float boostVelocity = 3.0f;
+    [SerializeField] protected float maxBoostVelocity = 12.0f;
     [SerializeField] protected float rotateAccelerationX = 1.0f;
     [SerializeField] protected float rotateAccelerationY = 1.0f;
-    [SerializeField] protected float maxRotateVelocityX = 0.5f;
-    [SerializeField] protected float maxRotateVelocityY = 0.5f;
     [SerializeField] protected float mouseSmoothTime = 0f;
+
+    float velocity;
 
     private float rotationAxisY;
     private float rotationAxisX;
@@ -22,6 +23,8 @@ public class FreeCam : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         this.rotationAxisY = angles.x;
         this.rotationAxisX = angles.y;
+
+        this.velocity = this.moveVelocity;
     }
 
     // Update is called once per frame
@@ -33,7 +36,6 @@ public class FreeCam : MonoBehaviour
         }
 
         Vector3 direction = Vector3.zero;
-        float velocity = this.moveVelocity;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -67,18 +69,24 @@ public class FreeCam : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            velocity = this.boostVelocity;
+            this.velocity = Mathf.Min(this.maxBoostVelocity, Mathf.Max(this.boostVelocity, this.velocity + (10 * Time.deltaTime)));
+        }
+        else
+        {
+            this.velocity = this.moveVelocity;
         }
 
-        Vector3 position = this.transform.position + (direction * velocity * Time.deltaTime);
+        Vector3 position = this.transform.position + (direction * this.velocity * Time.deltaTime);
 
         float mouseVelocityX = 0;
         float mouseVelocityY = 0;
         // FIXME: Remove Hold down requirement before building
         if (Input.GetMouseButton(0))
         {
-            mouseVelocityX = Mathf.Clamp(mouseVelocityX + (Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime, -this.maxRotateVelocityX, this.maxRotateVelocityX);
-            mouseVelocityY = Mathf.Clamp(mouseVelocityY + (Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime, -this.maxRotateVelocityY, this.maxRotateVelocityX);
+            // mouseVelocityX = Mathf.Clamp(mouseVelocityX + (Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime, -this.maxRotateVelocityX, this.maxRotateVelocityX);
+            mouseVelocityX = mouseVelocityX + ((Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime * 10);
+            mouseVelocityY = mouseVelocityY + ((Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime * 10);
+            // mouseVelocityY = Mathf.Clamp(mouseVelocityY + (Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime, -this.maxRotateVelocityY, this.maxRotateVelocityX);
         }
 
         this.rotationAxisX += mouseVelocityX;
