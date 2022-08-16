@@ -68,12 +68,32 @@ public class HerbivoreWanderOnLandNode : WanderOnLandNode
         // Prioritize parents if not yet mature
         if (this.herbivoreLandAnimal.GetAnimalAgeController().GetAgeTracker().GetCurrent() < this.herbivoreLandAnimal.GetAnimalAgeController().GetAgeTracker().GetMatureAge())
         {
-            if (Director.Instance.ActorExists(this.herbivoreLandAnimal.GetMother()) || Director.Instance.ActorExists(this.herbivoreLandAnimal.GetFather()))
+            List<Vector3> parentPOIs = new List<Vector3>();
+            if (Director.Instance.ActorExists(this.herbivoreLandAnimal.GetMother()))
             {
-                List<Vector3> parentPOIs = ownKindMemory.FindAll((ownKind) => ownKind.GetID() == this.herbivoreLandAnimal.GetMother().GetID()
-                || ownKind.GetID() == this.herbivoreLandAnimal.GetFather().GetID()).ConvertAll((parent) => herbivoreLandAnimal.GetPosition());
-                this.POI = GetClosestPOI(parentPOIs, out pathToPOI);
+                foreach (Animal ownKind in ownKindMemory)
+                {
+                    if (ownKind.GetID() != this.herbivoreLandAnimal.GetMother().GetID())
+                    {
+                        continue;
+                    }
+                    partnerPOIs.Add(ownKind.GetPosition());
+                    break;
+                }
             }
+            if (Director.Instance.ActorExists(this.herbivoreLandAnimal.GetFather()))
+            {
+                foreach (Animal ownKind in ownKindMemory)
+                {
+                    if (ownKind.GetID() != this.herbivoreLandAnimal.GetFather().GetID())
+                    {
+                        continue;
+                    }
+                    partnerPOIs.Add(ownKind.GetPosition());
+                    break;
+                }
+            }
+            this.POI = GetClosestPOI(parentPOIs, out pathToPOI);
         }
 
         if (this.POI.HasValue)

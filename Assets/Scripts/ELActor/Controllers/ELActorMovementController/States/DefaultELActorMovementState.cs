@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class DefaultELActorMovementState : ELActorMovementState, IELActorMovementState
 {
-    public DefaultELActorMovementState(IELActor actor) : base(actor)
+    public DefaultELActorMovementState(ELActor actor) : base(actor)
     {
     }
 

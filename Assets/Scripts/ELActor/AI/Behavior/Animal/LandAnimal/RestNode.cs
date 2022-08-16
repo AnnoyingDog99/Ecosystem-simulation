@@ -12,7 +12,6 @@ public class RestNode : Node
 
     public override NodeStates Evaluate()
     {
-        Debug.Log("Resting");
         this.landAnimal.GetLandAnimalMovementController().Idle();
         return NodeStates.SUCCESS;
     }

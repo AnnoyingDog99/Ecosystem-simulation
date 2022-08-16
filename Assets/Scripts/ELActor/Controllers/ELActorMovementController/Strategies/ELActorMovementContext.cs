@@ -10,7 +10,7 @@ public class ELActorMovementContext
         this.strategy = strategy;
     }
 
-    public bool ExecuteStrategy(IELActor actor, Vector3 position, float maxDistance, int areaMask)
+    public bool ExecuteStrategy(ELActor actor, Vector3 position, float maxDistance, int areaMask)
     {
         if (this.strategy == null) return false;
         return this.strategy.execute(actor, position, maxDistance, areaMask);
