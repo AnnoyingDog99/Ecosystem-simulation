@@ -80,29 +80,25 @@ public class FreeCam : MonoBehaviour
 
         float mouseVelocityX = 0;
         float mouseVelocityY = 0;
-        // FIXME: Remove Hold down requirement before building
         if (Input.GetMouseButton(0))
         {
-            // mouseVelocityX = Mathf.Clamp(mouseVelocityX + (Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime, -this.maxRotateVelocityX, this.maxRotateVelocityX);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             mouseVelocityX = mouseVelocityX + ((Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime * 10);
             mouseVelocityY = mouseVelocityY + ((Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime * 10);
-            // mouseVelocityY = Mathf.Clamp(mouseVelocityY + (Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime, -this.maxRotateVelocityY, this.maxRotateVelocityX);
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         this.rotationAxisX += mouseVelocityX;
         this.rotationAxisY -= mouseVelocityY;
 
         this.rotationAxisY = Mathf.Clamp(this.rotationAxisY, -60f, 90f);
-        // rotationXAxis = ClampAngle(rotationXAxis, -90.0f, 90.0f);
-        // Quaternion fromRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
-        // Quaternion toRotation = Quaternion.Euler(this.rotationAxisY, this.rotationAxisX, 0);
-        // Quaternion rotation = toRotation;
 
         this.transform.position = position;
         this.transform.eulerAngles = new Vector3(this.rotationAxisY, this.rotationAxisX, 0f);
-
-
-        // this.mouseVelocityX = Mathf.Lerp(this.mouseVelocityX, 0, Time.deltaTime * this.mouseSmoothTime);
-        // this.mouseVelocityY = Mathf.Lerp(this.mouseVelocityY, 0, Time.deltaTime * this.mouseSmoothTime);
     }
 }

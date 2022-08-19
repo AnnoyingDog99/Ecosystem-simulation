@@ -27,8 +27,8 @@ GameObject:
   - component: {fileID: 5438216626219252130}
   - component: {fileID: 5438216626219252131}
   - component: {fileID: 5438216626219252156}
-  - component: {fileID: 5438216626219252145}
   - component: {fileID: 5438216626219252157}
+  - component: {fileID: 5438216626219252145}
   - component: {fileID: 5438216626219252158}
   - component: {fileID: 5438216626219252146}
   - component: {fileID: 5438216626219252159}
@@ -360,20 +360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biteSize: 1
---- !u!114 &5438216626219252145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4643395630881262523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f39acb5d2d7e994e7b69223fd9e3f146, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingCost: 1
-  runningCost: 2
 --- !u!114 &5438216626219252157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +380,20 @@ MonoBehaviour:
   recoveryDelay: 0
   tiredPercentage: 50
   exhaustedPercentage: 10
+--- !u!114 &5438216626219252145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643395630881262523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39acb5d2d7e994e7b69223fd9e3f146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingCost: 1
+  runningCost: 2
 --- !u!114 &5438216626219252158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,10 +409,10 @@ MonoBehaviour:
   max: 100
   current: 100
   addons:
-  - {fileID: 5438216626219252145}
+  - {fileID: 5438216626219252146}
   hungryPercentage: 50
   starvingPercentage: 10
-  constantRate: 0
+  constantRate: 0.001
 --- !u!114 &5438216626219252146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,8 +426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleCost: 0
-  walkingCost: 1
-  runningCost: 2
+  walkingCost: 0.01
+  runningCost: 0.02
 --- !u!114 &5438216626219252159
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,21 +21,18 @@ public class IsHungryNode : Node
         HungerTracker.HungerStatus hungerStatus = this.animal.GetAnimalHungerController().GetHungerTracker().GetStatus().Get();
         float hungerPercentage = this.animal.GetAnimalHungerController().GetHungerTracker().GetCurrentPercentage();
 
-        if (this.keepEating)
-        {
-            this.keepEatingTimer += Time.deltaTime;
-        }
-        if (hungerPercentage >= 100)
-        {
-            this.keepEating = false;
-        }
-        else if (hungerStatus <= HungerTracker.HungerStatus.SATISFIED && this.keepEatingTimer >= this.keepEatingTime)
-        {
-            this.keepEating = false;
-        }
-        else if (!this.keepEating && hungerStatus >= HungerTracker.HungerStatus.HUNGRY)
+        if (hungerStatus <= HungerTracker.HungerStatus.HUNGRY)
         {
             this.keepEating = true;
+        }
+        else if (hungerPercentage >= 100)
+        {
+            this.keepEating = false;
+            this.keepEatingTimer = 0;
+        }
+        else if (hungerStatus >= HungerTracker.HungerStatus.SATISFIED && (this.keepEatingTimer += Time.deltaTime) >= this.keepEatingTime)
+        {
+            this.keepEating = false;
             this.keepEatingTimer = 0;
         }
 

@@ -16,6 +16,7 @@ public class LandAnimalHungerAddon : StatusTrackerAddon
     public override float CalculateCost()
     {
         float cost = 0;
+        Debug.Log(this.walkingCost);
         if (this.landAnimal.GetLandAnimalMovementController().IsWalking())
         {
             cost += (this.walkingCost * Time.deltaTime);

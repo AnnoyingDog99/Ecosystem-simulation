@@ -22,6 +22,17 @@ public class Director : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // Add all initial actors of the scene
+        ELActor[] sceneActors = GameObject.FindObjectsOfType<ELActor>();
+        foreach (ELActor actor in sceneActors)
+        {
+            if (ActorExists(actor)) continue;
+            this.actors.Add(actor);
+        }
+    }
+
     public ELActor SpawnActor(ActorFactory.ActorType type, Vector3 position, Quaternion rotation)
     {
         ELActor newActor = actorFactory.CreateActor(type, position, rotation).GetComponent<ELActor>();

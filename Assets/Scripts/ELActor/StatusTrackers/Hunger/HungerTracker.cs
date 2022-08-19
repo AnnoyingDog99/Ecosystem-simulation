@@ -47,8 +47,8 @@ public class HungerTracker : StatusTracker<HungerTracker.HungerStatus>
 
     public enum HungerStatus
     {
-        SATISFIED = 0,
+        STARVING = 0,
         HUNGRY = 1,
-        STARVING = 2
+        SATISFIED = 2
     }
 }
