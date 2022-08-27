@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Scene" style="-unity-text-align: upper-center; justify-content: flex-start; align-items: center; width: 40%; margin-left: 20px; margin-right: 20px; margin-top: 20px; margin-bottom: 20px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; height: 300px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+        <ui:VisualElement name="ImageTextContainer" style="background-image: none; width: 100%; height: 100%; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: stretch-to-fill; background-color: rgb(50, 54, 71);">
+            <ui:VisualElement name="Image" style="background-image: url(&apos;project://database/Assets/Icons/a03.jpg?fileID=2800000&amp;guid=61e3bfdd8d2f03e4881703d25e712a66&amp;type=3#a03&apos;); width: 100%; height: 100%; max-width: none; max-height: none; min-width: auto; min-height: auto; -unity-background-scale-mode: scale-and-crop;" />
+            <ui:Label text="Title" display-tooltip-when-elided="true" name="Title" style="-unity-text-align: upper-center; color: rgb(255, 255, 255); font-size: 25px; -unity-font: resource(&apos;&apos;); -unity-font-style: normal;" />
+        </ui:VisualElement>
+        <ui:GroupBox>
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" class="small-button" style="justify-content: center; align-items: stretch; font-size: 22px;" />
+            <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Icons/play-icon-512x512.png?fileID=2800000&amp;guid=42fcd1061e54861e5afa4a95c312c6b1&amp;type=3#play-icon-512x512&apos;); width: 24px; -unity-background-scale-mode: stretch-to-fill; position: absolute; right: -3px; left: 150px; top: 26px; bottom: 30px; rotate: -10deg;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>
