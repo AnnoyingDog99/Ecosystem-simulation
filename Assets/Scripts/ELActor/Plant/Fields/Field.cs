@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class Field : MonoBehaviour, IField
+public class Field : ELActor, IField
 {
     [SerializeField] private Plant referencePlant;
     [SerializeField] private int maxAmountOfPlants;
@@ -12,12 +12,13 @@ public class Field : MonoBehaviour, IField
     private List<Plant> plants = new List<Plant>();
     protected List<Vector2> points = new List<Vector2>();
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         this.spreadTimer = 0;
 
         float avgPointRadius = (referencePlant.GetMaxScale().x + referencePlant.GetMaxScale().y) / 2;
-        this.points = PoissonDiscSampling.GeneratePoints(avgPointRadius, size, maxAmountOfPlants, 20);
+        this.points = PoissonDiscSampling.GeneratePoints(avgPointRadius, this.GetSize(), maxAmountOfPlants, 20);
         for (int i = 0; i < this.points.Count; i++)
         {
             this.points[i] += new Vector2(this.GetPosition().x - (this.GetSize().x / 2), this.GetPosition().z - (this.GetSize().y / 2));
@@ -29,9 +30,9 @@ public class Field : MonoBehaviour, IField
         }
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
-
+        base.Update();
     }
 
     public virtual void Spread()
@@ -48,7 +49,7 @@ public class Field : MonoBehaviour, IField
         // GameObject childPlantGameObject = Instantiate(referencePlant.gameObject, newPositionVector3, randomRotation);
         plant.transform.parent = this.gameObject.transform;
         this.plants.Add(plant as Plant);
-        
+
     }
 
     public Plant GetReferencePlant()
@@ -69,11 +70,6 @@ public class Field : MonoBehaviour, IField
     public Vector2 GetSize()
     {
         return this.size;
-    }
-
-    public Vector3 GetPosition()
-    {
-        return this.transform.position;
     }
 
     public float GetSpreadTime()
