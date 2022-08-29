@@ -10,7 +10,7 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
     [SerializeField] private ScaleModel scaleModel;
     private ELActorMovementController _actorMovementController;
     private ELActorScaleController _actorScaleController;
-    private List<IELActor> _collidingActors = new List<IELActor>();
+    [SerializeField] private List<ELActor> _collidingActors = new List<ELActor>();
 
     private Observable<ELActorInitializationState> actorInitializationState = new Observable<ELActorInitializationState>(ELActorInitializationState.NONE);
 
@@ -38,6 +38,13 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
             this.FirstUpdate();
             this.firstUpdate = false;
         }
+        for (int i = this._collidingActors.Count - 1; i >= 0; i--)
+        {
+            if (!Director.Instance.ActorExists(this._collidingActors[i]))
+            {
+                this._collidingActors.RemoveAt(i);
+            }
+        }
     }
 
     protected virtual void FirstUpdate()
@@ -61,10 +68,6 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
             }
         }
 
-    }
-
-    private void OnTriggerStay(Collider collider)
-    {
     }
 
     private void OnTriggerExit(Collider collider)
@@ -134,7 +137,7 @@ public abstract class ELActor : MonoBehaviour, IELActor, IScalable
         return this.tag;
     }
 
-    public List<IELActor> GetCollidingActors()
+    public List<ELActor> GetCollidingActors()
     {
         this._collidingActors = this._collidingActors.FindAll((actor) => Director.Instance.ActorExists(actor));
         return this._collidingActors;

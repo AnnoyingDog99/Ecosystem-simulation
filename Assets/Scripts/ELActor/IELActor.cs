@@ -28,7 +28,7 @@ public interface IELActor
 
     public string GetTag();
 
-    public List<IELActor> GetCollidingActors();
+    public List<ELActor> GetCollidingActors();
 
     public bool DoActorsCollide(IELActor actor);
 
