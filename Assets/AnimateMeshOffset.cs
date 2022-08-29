@@ -17,7 +17,7 @@ public class AnimateMeshOffset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mapGenerator.offset += new Vector2(1, 0) * Time.deltaTime;
+        mapGenerator.noiseSettings.offset += new Vector2(1, 0) * Time.deltaTime;
         mapGenerator.GenerateMap();
     }
 }

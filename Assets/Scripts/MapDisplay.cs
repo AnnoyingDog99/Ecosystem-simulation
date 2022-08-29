@@ -4,6 +4,7 @@ using System.Collections;
 public class MapDisplay : MonoBehaviour
 {
 
+    private Mesh mesh;
     public Renderer textureRender;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
@@ -16,7 +17,9 @@ public class MapDisplay : MonoBehaviour
 
     public void DrawMesh(MeshData meshData)
     {
-        meshFilter.sharedMesh = meshData.CreateMesh();
+        DestroyImmediate(mesh);
+        mesh = meshData.CreateMesh();
+        meshFilter.sharedMesh = mesh;
         meshRenderer.GetComponent<MeshCollider>().sharedMesh = meshFilter.sharedMesh;
     }
 
