@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &980457460593623462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980457460593623512}
+  - component: {fileID: 980457460593623513}
+  - component: {fileID: 980457460593623515}
+  m_Layer: 0
+  m_Name: Director
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &980457460593623512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980457460593623462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.46126652, y: -3.4945164, z: 4.0420637}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &980457460593623513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980457460593623462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1b49f8cf06ebd9eb91f7eb782e9053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorFactory: {fileID: 980457460593623515}
+  actors: []
+--- !u!114 &980457460593623515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980457460593623462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b2367c9acc2bdec5a5d55c252798ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bunnyPrefab: {fileID: 9029085757716161876, guid: 48062b590948e447395c0a16f0b314b8,
+    type: 3}
+  foxPrefab: {fileID: 4643395630881262523, guid: bcf5808d916bdd897896b23247caf35c,
+    type: 3}
+  grassFieldPrefab: {fileID: 8049094354944798886, guid: d95a46683a7839f4c85f9411775bce54,
+    type: 3}
+  grassPrefab: {fileID: 274671824965449053, guid: 1996d9329170d2481a71ae266ce40d92,
+    type: 3}

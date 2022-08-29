@@ -6,18 +6,11 @@ public class MapGenerator : MonoBehaviour
     public enum DrawMode { NoiseMap, ColourMap, Mesh };
     public DrawMode drawMode;
 
+    public NoiseSettings noiseSettings;
+
     public int mapChunkSize = 241;
     [Range(0, 6)]
     public int levelOfDetail;
-    public float noiseScale;
-
-    public int octaves;
-    [Range(0, 1)]
-    public float persistance;
-    public float lacunarity;
-
-    public int seed;
-    public Vector2 offset;
 
     public float meshHeightMultiplier;
     public AnimationCurve meshHeightCurve;
@@ -28,7 +21,7 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, noiseSettings);
 
         Color[] colourMap = new Color[mapChunkSize * mapChunkSize];
         for (int y = 0; y < mapChunkSize; y++)
@@ -62,15 +55,17 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    void OnValuesUpdated(){
+        if(!Application.isPlaying){
+            GenerateMap();
+        }
+    }
+
     void OnValidate()
     {
-        if (lacunarity < 1)
-        {
-            lacunarity = 1;
-        }
-        if (octaves < 0)
-        {
-            octaves = 0;
+        if(noiseSettings != null){
+            noiseSettings.OnValuesUpdated -= OnValuesUpdated;
+            noiseSettings.OnValuesUpdated += OnValuesUpdated;
         }
     }
 }

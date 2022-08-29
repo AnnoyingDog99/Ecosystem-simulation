@@ -39,6 +39,7 @@ public class CameraDragMouseOrbit : MonoBehaviour
             return;
         }
 
+
         if (Input.GetKey(this.exitOrbitKey))
         {
             this.mainCamera.unsetTarget();
@@ -46,12 +47,18 @@ public class CameraDragMouseOrbit : MonoBehaviour
         }
 
         Transform targetTransform = mainCamera.getCurrentTarget().transform;
-        
-        // FIXME: Remove Hold down requirement before building
+
         if (Input.GetMouseButton(0))
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             this.currentMouseVelocityX += this.mouseVelocityX * Input.GetAxis("Mouse X") * this.distance * 0.02f;
             this.currentMouseVelocityY += this.mouseVelocityY * Input.GetAxis("Mouse Y") * 0.02f;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
         this.rotationAxisX += this.currentMouseVelocityX;
         this.rotationAxisY -= this.currentMouseVelocityY;
