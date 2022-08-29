@@ -83,7 +83,7 @@ public class FreeCam : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
             mouseVelocityX = mouseVelocityX + ((Input.GetAxis("Mouse X") * this.rotateAccelerationX) * Time.deltaTime * 10);
             mouseVelocityY = mouseVelocityY + ((Input.GetAxis("Mouse Y") * this.rotateAccelerationY) * Time.deltaTime * 10);
         }
