@@ -70,7 +70,6 @@ public class MateWithPartnerOnLandNode : Node
             {
                 continue;
             }
-            Debug.Log("segs");
 
             this.animal.GetLandAnimalMovementController().Idle();
 
