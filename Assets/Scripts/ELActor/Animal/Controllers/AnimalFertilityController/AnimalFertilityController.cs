@@ -40,8 +40,6 @@ public class AnimalFertilityController : Controller
 
     public bool IsPotentialPartner(IFertileAnimal partner)
     {
-        if (partner == null) return false;
-        
         if (this.fertileAnimal.GetSex() == partner.GetSex())
         {
             return false;

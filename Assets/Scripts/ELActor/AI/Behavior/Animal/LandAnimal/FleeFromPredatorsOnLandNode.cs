@@ -6,8 +6,7 @@ public class FleeFromPredatorsOnLandNode : Node
 {
     private ILandAnimal landAnimal;
     private float maxPredatorDistance;
-    float obstaclePreventionWeight;
-
+    private float obstaclePreventionWeight;
     public FleeFromPredatorsOnLandNode(ILandAnimal landAnimal, float maxPredatorDistance, float obstaclePreventionWeight)
     {
         this.landAnimal = landAnimal;
@@ -17,6 +16,7 @@ public class FleeFromPredatorsOnLandNode : Node
 
     public override NodeStates Evaluate()
     {
+        float averageDenominator = 0;
         /**
             Run opposite direction of predator
         */
@@ -41,6 +41,7 @@ public class FleeFromPredatorsOnLandNode : Node
             if (minDistance == -1f || distance < minDistance) minDistance = distance;
             if (maxDistance == -1f || distance > maxDistance) maxDistance = distance;
             positions.Add(new Tuple<Vector3, float>(predator.GetPosition(), distance));
+            averageDenominator += 1f;
         }
 
         // Predator is too far away to consider a threat
@@ -60,18 +61,19 @@ public class FleeFromPredatorsOnLandNode : Node
         foreach (Sight.ObstacleLocation obstacle in obstacles)
         {
             float distance = Vector3.Distance(landAnimal.GetPosition(), obstacle.position);
-            if (minDistance == -1 || distance < minDistance) minDistance = distance;
-            if (distance > maxDistance) maxDistance = distance;
+            if (minDistance == -1f || distance < minDistance) minDistance = distance;
+            if (maxDistance == -1f || distance > maxDistance) maxDistance = distance;
             positions.Add(new Tuple<Vector3, float>(obstacle.position * obstaclePreventionWeight, distance));
+            averageDenominator += obstaclePreventionWeight;
         }
 
         Vector3 averagePosition = Vector3.zero;
         foreach (Tuple<Vector3, float> position in positions)
         {
             float normalizedDistance = ((1 + (maxDistance - position.Item2)) / (1 + (maxDistance - minDistance)));
-            averagePosition += (position.Item1 * normalizedDistance);
+            averagePosition += (position.Item1);
         }
-        averagePosition = averagePosition / nearbyPredators.Count;
+        averagePosition = averagePosition / averageDenominator;
 
         Vector3 direction = (landAnimal.GetPosition() - averagePosition).normalized;
 
