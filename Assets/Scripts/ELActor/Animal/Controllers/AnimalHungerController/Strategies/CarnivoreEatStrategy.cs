@@ -27,9 +27,7 @@ public class CarnivoreEatStrategy : IAnimalEatStrategy
             // Carnivore does not eat the target Animal
             return false;
         }
-        Debug.Log(carnivore.GetAnimalHungerController().GetHungerTracker().GetCurrent());
         carnivore.GetAnimalHungerController().GetHungerTracker().AddAmount(target.GetEaten(animal.GetBiteSize()));
-        Debug.Log(carnivore.GetAnimalHungerController().GetHungerTracker().GetCurrent());
         return true;
     }
 }

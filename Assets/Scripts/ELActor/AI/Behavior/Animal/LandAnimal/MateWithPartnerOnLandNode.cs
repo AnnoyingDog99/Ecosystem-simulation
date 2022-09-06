@@ -19,7 +19,7 @@ public class MateWithPartnerOnLandNode : Node
 
     public override NodeStates Evaluate()
     {
-        AnimalMemory memory = this.animal.GetAnimalMemory() as AnimalMemory;
+        AnimalMemory memory = this.animal.GetAnimalMemory();
 
         List<IFertileAnimal> potentialPartners = new List<IFertileAnimal>();
         foreach (Animal potentialPartner in memory.GetOwnKindInMemory())
@@ -70,6 +70,7 @@ public class MateWithPartnerOnLandNode : Node
             {
                 continue;
             }
+            Debug.Log("segs");
 
             this.animal.GetLandAnimalMovementController().Idle();
 
